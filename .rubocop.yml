@@ -1,0 +1,30 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - "rubocop-rails"
+  - "rubocop-performance"
+
+AllCops:
+  DisabledByDefault: true
+  Exclude:
+    - "**/templates/**/*"
+    - "**/vendor/**/*"
+    - app/views/**/*
+    - config/**/*
+    - config.ru
+    - node_modules/**/*
+    - db/migrate/*
+    - db/schema.rb
+    - storage/**/*
+    - tmp/**/*
+    - bin/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  Enabled: true
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
