@@ -4,5 +4,5 @@ class Calendar < ApplicationRecord
   validates :title, :year, presence: true
   validates :year, uniqueness: true
 
-  has_many :entries
+  has_many :entries, dependent: :destroy
 end
