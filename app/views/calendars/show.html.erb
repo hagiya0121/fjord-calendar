@@ -1,0 +1,11 @@
+<div class="container mx-auto px-5 bg-gray-200">
+  <div>
+    <div class="bg-gray-400 p-2 mb-4">
+      <h1 class="text-3xl font-bold"><%= @calendar.title %></h1>
+    </div>
+
+    <div class="prose bg-white mx-auto max-w-full p-2">
+        <%= markdown_to_html(@calendar.description).html_safe %>
+    </div>
+  </div>
+</div>

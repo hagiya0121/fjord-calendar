@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class CalendarsController < ApplicationController
+  def show
+    @calendar = Calendar.find(params[:id])
+  end
+
   def new
     @calendar = Calendar.new
   end
