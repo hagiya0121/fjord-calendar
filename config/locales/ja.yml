@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      calendar: "カレンダー"
+    attributes:
+      calendar:
+        title: "タイトル"
+        description: "説明"
+        year: "年"
+    errors:
+      models:
+        calendar:
+          attributes:
+            year:
+              format: "%{message}"
+              taken: "この年度のカレンダーはすでに作成されています"
