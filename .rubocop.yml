@@ -3,6 +3,7 @@ inherit_from: .rubocop_todo.yml
 require:
   - "rubocop-rails"
   - "rubocop-performance"
+  - "rubocop-rspec"
 
 AllCops:
   NewCops: enable
@@ -23,4 +24,10 @@ Style/Documentation:
   Enabled: false
 
 Rails/I18nLocaleTexts:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
   Enabled: false
