@@ -10,5 +10,11 @@
     <div class="prose bg-white mx-auto max-w-full p-2">
         <%= markdown_to_html(@calendar.description).html_safe %>
     </div>
+
+    <div class="bg-gray-400">
+      <%= month_calendar do |date| %>
+          <%= date.day %>
+      <% end %>
+    </div>
   </div>
 </div>
