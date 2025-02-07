@@ -2,6 +2,7 @@
 
 module CalendarsHelper
   def markdown_to_html(text)
-    Commonmarker.to_html(text, options: { extension: { header_ids: nil } })
+    converted_html = Commonmarker.to_html(text, options: { extension: { header_ids: nil } })
+    raw(converted_html) # rubocop:disable Rails/OutputSafety
   end
 end
