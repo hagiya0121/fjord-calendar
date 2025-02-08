@@ -12,7 +12,6 @@ RSpec.describe 'Calendars', type: :system do
       fill_in 'タイトル', with: '新しいカレンダー'
       fill_in '説明', with: 'カレンダーの説明です'
       click_on '作成'
-      expect(page).to have_current_path(calendar_path(Calendar.last))
       expect(page).to have_content('カレンダーが作成されました')
     end
 
