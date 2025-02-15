@@ -60,6 +60,7 @@ Rails.application.configure do
   config.active_job.verbose_enqueue_logs = true
 
   # Suppress logger output for asset requests.
+  config.assets.debug = true
   config.assets.quiet = true
 
   # Raises error for missing translations.
