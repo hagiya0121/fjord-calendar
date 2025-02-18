@@ -41,6 +41,9 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      - name: Install libvips
+        run: sudo apt-get update && sudo apt-get install -y libvips libvips-tools
+
       - name: Precompile assets
         run: bundle exec rake assets:precompile
 
