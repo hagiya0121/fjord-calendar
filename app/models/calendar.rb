@@ -8,6 +8,10 @@ class Calendar < ApplicationRecord
 
   has_many :entries, dependent: :destroy
 
+  def entry_on?(date)
+    entries.exists?(registration_date: date)
+  end
+
   private
 
   def set_year

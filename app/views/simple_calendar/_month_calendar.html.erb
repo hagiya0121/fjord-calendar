@@ -11,10 +11,11 @@
     <% end %>
 
     <% advent_dates(@calendar.year).each do |day| %>
-      <div class="aspect-square p-2 border border-gray-300 flex justify-between <%= today_class(day) %>">
+      <div class="<%= class_names(
+                        'aspect-square p-2 border border-gray-300 flex justify-between',
+                        'bg-yellow-100' => day == Time.zone.today
+                      ) %>">
         <% instance_exec(day, calendar.sorted_events_for(day), &passed_block) %>
-        <%= link_to '+', new_calendar_entry_path(@calendar, registration_date: day),
-                    data: { turbo_frame: 'entry_modal' } %>
       </div>
     <% end %>
   </div>

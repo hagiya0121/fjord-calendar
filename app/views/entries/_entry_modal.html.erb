@@ -5,7 +5,7 @@
     <div class="bg-gray-400 p-2 mb-4">
       <h1 class="text-xl font-bold">カレンダーに参加する</h1>
     </div>
-    <%= form_with model: [calendar, entry], remote: true do |form| %>
+    <%= form_with model: [calendar, entry] do |form| %>
       <% if entry.errors.any? %>
         <div class="text-red-500 mb-4">
           <ul>

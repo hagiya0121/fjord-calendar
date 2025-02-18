@@ -1,0 +1,22 @@
+<%= month_calendar(events: calendar.entries, attribute: :registration_date) do |date, entries| %>
+  <div class="relative w-full h-full">
+    <div class="absolute top-1 left-1 text-sm text-gray-500">
+      <%= date.day %>
+    </div>
+
+    <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
+                class: class_names(
+                  'absolute text-blue-500',
+                  'top-1 right-1 text-base' => calendar.entry_on?(date),
+                  'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl' => !calendar.entry_on?(date)
+                ),
+                data: { turbo_frame: 'entry_modal' } %>
+
+    <% entries.each do |entry| %>
+      <% if entry.user.avatar_url.attached? %>
+        <%= image_tag entry.user.avatar_url.variant(resize_to_limit: [40, 40]),
+                      class: 'w-8 h-8 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

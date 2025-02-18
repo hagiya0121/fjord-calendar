@@ -5,3 +5,7 @@
 <%= turbo_stream.update "flash-message" do %>
   <%= render "shared/flash" %>
 <% end %>
+
+<%= turbo_stream.update 'calendar' do %>
+  <%= render 'calendars/calendar', calendar: @calendar %>
+<% end %>

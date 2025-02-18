@@ -7,4 +7,5 @@ class User < ApplicationRecord
   validates :provider_uid, uniqueness: true
 
   has_many :entries, dependent: :destroy
+  has_one_attached :avatar_url
 end

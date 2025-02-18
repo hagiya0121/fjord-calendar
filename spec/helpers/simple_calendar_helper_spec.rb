@@ -24,18 +24,4 @@ RSpec.describe SimpleCalendarHelper, type: :helper do
       expect(helper.advent_dates(2025)).to eq(Date.new(2025, 12, 1)..Date.new(2025, 12, 25))
     end
   end
-
-  describe '#today_class' do
-    it '今日の日付の場合は "bg-yellow-100" を返す' do
-      travel_to Time.zone.today do
-        expect(helper.today_class(Time.zone.today)).to eq('bg-yellow-100')
-      end
-    end
-
-    it '今日の日付以外のときは空文字を返す' do
-      travel_to Time.zone.today do
-        expect(helper.today_class(Time.zone.today - 1.day)).to eq('')
-      end
-    end
-  end
 end

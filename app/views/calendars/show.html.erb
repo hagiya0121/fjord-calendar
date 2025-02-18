@@ -9,8 +9,8 @@
 
   <div class="bg-gray-400">
     <%= turbo_frame_tag 'entry_modal' %>
-    <%= month_calendar do |date| %>
-        <%= date.day %>
-    <% end %>
+    <div id="calendar">
+      <%= render 'calendar', calendar: @calendar %>
+    </div>
   </div>
 </div>
