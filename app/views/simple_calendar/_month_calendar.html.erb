@@ -1,10 +1,4 @@
-<div class="simple-calendar bg-gray-100 p-2 my-2">
-  <div class="calendar-heading text-center mb-4">
-    <time datetime="<%= start_date.strftime('%Y-%m') %>" class="calendar-title text-xl font-bold text-gray-700">
-      <%= t('date.month_names')[start_date.month] %> <%= start_date.year %>
-    </time>
-  </div>
-
+<div class="bg-gray-100 p-2 my-2">
   <div class="grid grid-cols-7 bg-white">
     <% date_range.slice(0, 7).each do |day| %>
       <div class="py-2 text-center font-semibold text-gray-600 border-b bg-gray-200">
@@ -17,7 +11,10 @@
     <% end %>
 
     <% advent_dates(@calendar.year).each do |day| %>
-      <div class="aspect-square p-2 border border-gray-300 <%= today_class(day) %>">
+      <div class="<%= class_names(
+                        'aspect-square p-2 border border-gray-300 flex justify-between',
+                        'bg-yellow-100' => day == Time.zone.today
+                      ) %>">
         <% instance_exec(day, calendar.sorted_events_for(day), &passed_block) %>
       </div>
     <% end %>

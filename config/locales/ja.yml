@@ -2,11 +2,16 @@ ja:
   activerecord:
     models:
       calendar: "カレンダー"
+      entry: "記事"
     attributes:
       calendar:
         title: "タイトル"
         description: "説明"
         year: "年"
+      entry:
+        title: "タイトル"
+        url: "記事URL"
+        registration_date: "登録日"
     errors:
       models:
         calendar:

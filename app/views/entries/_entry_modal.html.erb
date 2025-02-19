@@ -1,0 +1,39 @@
+<div class="fixed inset-0 bg-gray-500 bg-opacity-25 flex items-center justify-center z-50"
+     data-controller="entry-modal"
+     data-action="click->entry-modal#closeOnOutsideClick">
+  <div class="bg-white p-6 max-w-lg">
+    <div class="bg-gray-400 p-2 mb-4">
+      <h1 class="text-xl font-bold">カレンダーに参加する</h1>
+    </div>
+    <%= form_with model: [calendar, entry] do |form| %>
+      <% if entry.errors.any? %>
+        <div class="text-red-500 mb-4">
+          <ul>
+            <% entry.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.hidden_field :registration_date, value: params[:registration_date] %>
+        <div class="bg-gray-400 p-2 mb-4">
+          <%= form.label :title, class: 'text-xl font-semibold block mb-1' %>
+          <%= form.text_field :title, class: 'w-full h-10' %>
+        </div>
+
+        <div class="bg-gray-400 p-2 mb-4">
+          <%= form.label :url, class: 'text-xl font-semibold block mb-1' %>
+          <%= form.text_field :url, class: 'w-full h-10' %>
+        </div>
+
+        <div class="bg-gray-400 flex justify-end gap-2">
+          <%= form.submit '保存', class: 'bg-blue-500 text-white px-4 py-2' %>
+          <%= button_tag 'キャンセル', type: 'button', data: { action: 'entry-modal#close' },
+                                  class: 'bg-blue-500 text-white px-4 py-2' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
