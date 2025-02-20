@@ -12,11 +12,16 @@
                 ),
                 data: { turbo_frame: 'entry_modal' } %>
 
-    <% entries.each do |entry| %>
-      <% if entry.user.avatar_url.attached? %>
-        <%= image_tag entry.user.avatar_url.variant(resize_to_limit: [40, 40]),
-                      class: 'w-8 h-8 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' %>
+    <div class="<%= class_names(
+      'absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center',
+      '-space-x-2' => entries.size >= 3
+    ) %>">
+      <% entries.each do |entry| %>
+        <% if entry.user.avatar_url.present? %>
+          <%= image_tag("#{request.base_url}#{entry.user.avatar_url}",
+            class: 'w-8 h-8 rounded-full') %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 <% end %>
