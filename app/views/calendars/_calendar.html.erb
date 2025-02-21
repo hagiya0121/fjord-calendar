@@ -4,13 +4,15 @@
       <%= date.day %>
     </div>
 
-    <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
-                class: class_names(
-                  'absolute text-blue-500',
-                  'top-1 right-1 text-base' => calendar.entry_on?(date),
-                  'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl' => !calendar.entry_on?(date)
-                ),
-                data: { turbo_frame: 'entry_modal' } %>
+    <% if (entry = entries.find { |e| e.user == User.last }) %>
+      <%= link_to '編集', edit_entry_path(entry, registration_date: date),
+                  class: 'absolute text-blue-500 top-1 right-1 text-base',
+                  data: { turbo_frame: 'entry_modal' } %>
+    <% else %>
+      <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
+                  class: 'absolute text-blue-500 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl',
+                  data: { turbo_frame: 'entry_modal' } %>
+    <% end %>
 
     <% entries.each do |entry| %>
       <% if entry.user.avatar_url.attached? %>
