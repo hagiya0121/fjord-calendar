@@ -6,11 +6,11 @@
       </div>
     <% end %>
 
-    <% start_weekday(@calendar.year).times do %>
+    <% start_weekday(start_date.year).times do %>
       <div class="aspect-square p-2 border border-gray-300 bg-gray-100"></div>
     <% end %>
 
-    <% advent_dates(@calendar.year).each do |day| %>
+    <% advent_dates(start_date.year).each do |day| %>
       <div class="<%= class_names(
                         'aspect-square p-2 border border-gray-300 flex justify-between',
                         'bg-yellow-100' => day == Time.zone.today
