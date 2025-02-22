@@ -59,4 +59,24 @@ RSpec.describe 'Entries', type: :system do
     # 他のユーザーが登録した記事の編集ボタンは表示されない
     # 未ログインユーザーが編集ページにアクセスできない
   end
+
+  describe 'カレンダーに登録した記事を削除' do
+    before do
+      calendar = create(:calendar)
+      user = create(:user)
+      create(:entry, calendar: calendar, user: user)
+      visit calendar_path(calendar)
+    end
+
+    it 'カレンダーに登録した記事を削除できる' do
+      click_link '編集'
+      page.accept_confirm do
+        click_link '削除'
+      end
+      expect(page).to have_content '記事を削除しました'
+      expect(page).to have_no_selector('img[src*="avatar.png"]')
+    end
+
+    # 自分の記事だけ削除できる
+  end
 end
