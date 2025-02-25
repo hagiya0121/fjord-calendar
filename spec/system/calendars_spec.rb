@@ -27,5 +27,7 @@ RSpec.describe 'Calendars', type: :system do
       click_on '作成'
       expect(page).to have_content('この年度のカレンダーはすでに作成されています')
     end
+
+    # 管理者ではないユーザーはカレンダー作成ページにアクセスできない
   end
 end

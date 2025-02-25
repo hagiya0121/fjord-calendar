@@ -1,3 +1,3 @@
 <%= turbo_frame_tag 'entry_modal' do %>
-  <%= render partial: 'entry_modal', locals: { calendar: @calendar, entry: @entry } %>
+  <%= render partial: 'entry_modal', locals: { calendar: @entry.calendar, entry: @entry } %>
 <% end %>
