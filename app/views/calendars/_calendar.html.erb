@@ -1,7 +1,10 @@
 <%= month_calendar(events: calendar.entries, attribute: :registration_date) do |date, entries| %>
   <div class="relative w-full h-full">
-    <div class="absolute top-1 left-1 text-sm text-gray-500">
+    <div class="absolute top-1 left-1 text-sm text-gray-500 text-center">
       <%= date.day %>
+      <div class="sm:hidden">
+        <%= t('date.abbr_day_names')[date.wday] %>
+      </div>
     </div>
 
     <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
@@ -12,14 +15,12 @@
                 ),
                 data: { turbo_frame: 'entry_modal' } %>
 
-    <div class="<%= class_names(
-      'absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center',
-      '-space-x-2' => entries.size >= 3
-    ) %>">
+    <div class="h-full w-full flex items-end p-1">
       <% entries.each do |entry| %>
         <% if entry.user.avatar_url.present? %>
           <%= image_tag("#{request.base_url}#{entry.user.avatar_url}",
-            class: 'w-8 h-8 rounded-full') %>
+                        style: "max-width: #{100 / [entries.size, 1].max}%;",
+                        class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
         <% end %>
       <% end %>
     </div>
