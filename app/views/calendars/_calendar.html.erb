@@ -1,7 +1,10 @@
 <%= month_calendar(events: calendar.entries, attribute: :registration_date) do |date, entries| %>
   <div class="relative w-full h-full">
-    <div class="absolute top-1 left-1 text-sm text-gray-500">
+    <div class="absolute top-1 left-1 text-sm text-gray-500 text-center">
       <%= date.day %>
+      <div class="sm:hidden">
+        <%= t('date.abbr_day_names')[date.wday] %>
+      </div>
     </div>
 
     <% if (entry = entries.find { |e| e.user == User.last }) %>
@@ -14,11 +17,14 @@
                   data: { turbo_frame: 'entry_modal' } %>
     <% end %>
 
-    <% entries.each do |entry| %>
-      <% if entry.user.avatar_url.attached? %>
-        <%= image_tag entry.user.avatar_url.variant(resize_to_limit: [40, 40]),
-                      class: 'w-8 h-8 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' %>
+    <div class="h-full w-full flex items-end p-1">
+      <% entries.each do |entry| %>
+        <% if entry.user.avatar_url.present? %>
+          <%= image_tag("#{request.base_url}#{entry.user.avatar_url}",
+                        style: "max-width: #{100 / [entries.size, 1].max}%;",
+                        class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 <% end %>

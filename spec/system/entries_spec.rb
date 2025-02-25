@@ -15,7 +15,7 @@ RSpec.describe 'Entries', type: :system do
       fill_in 'タイトル', with: 'テスト記事'
       click_button '保存'
       expect(page).to have_content '記事を登録しました'
-      expect(page).to have_selector('img[src*="avatar.png"]')
+      expect(page).to have_selector('img[src*="avatar1.png"]')
     end
 
     it 'タイトルが未入力だと記事登録に失敗する' do
