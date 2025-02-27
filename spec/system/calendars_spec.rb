@@ -63,4 +63,21 @@ RSpec.describe 'Calendars', type: :system do
       expect(page).to have_current_path(calendar_path(calendar))
     end
   end
+
+  describe 'カレンダーの削除' do
+    before do
+      create(:user, :admin)
+      calendar = create(:calendar)
+      visit calendar_path(calendar)
+    end
+
+    it 'カレンダーを削除できる' do
+      skip 'カレンダーの一覧機能を実装するまで保留'
+      click_on '編集'
+      accept_alert do
+        click_on '削除'
+      end
+      expect(page).to have_content('カレンダーを削除しました')
+    end
+  end
 end
