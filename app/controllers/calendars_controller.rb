@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class CalendarsController < ApplicationController
-  before_action :set_calendar, only: %i[show edit update]
+  before_action :set_calendar, only: %i[show edit update destroy]
+
+  def index; end
 
   def show; end
 
@@ -29,6 +31,11 @@ class CalendarsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @calendar.destroy
+    redirect_to calendars_path, notice: 'カレンダーを削除しました'
   end
 end
 
