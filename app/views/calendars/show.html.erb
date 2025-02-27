@@ -1,4 +1,10 @@
 <div class="container mx-auto px-5 bg-gray-200" data-controller="entry-modal">
+  <% if current_user.admin? %>
+    <div class="flex justify-end">
+      <%= link_to '編集', edit_calendar_path(@calendar), class: 'bg-blue-500 text-white px-4 py-2' %>
+    </div>
+  <% end %>
+
   <div class="bg-gray-400 p-2 mb-4">
     <h1 class="text-3xl font-bold"><%= @calendar.title %></h1>
   </div>

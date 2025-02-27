@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
   def create
     @entry = Entry.new(entry_params)
     @entry.calendar_id = params[:calendar_id]
-    @entry.user = User.last
+    @entry.user = current_user
 
     if @entry.save
       flash.now[:notice] = '記事を登録しました'
