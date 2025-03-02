@@ -3,6 +3,33 @@
 require 'rails_helper'
 
 RSpec.describe 'Calendars', type: :system do
+  describe 'カレンダーの一覧表示' do
+    let!(:calendars) do
+      (2015..2025).map do |year|
+        create(:calendar, year: year)
+      end
+    end
+
+    before { visit calendars_path }
+
+    it 'カレンダーが一覧表示される' do
+      calendars.each do |calendar|
+        expect(page).to have_content(calendar.title)
+      end
+    end
+
+    it 'カレンダーはyearの降順で表示される' do
+      years = all('[data-test="calendar"]').map { |element| element['data-year'].to_i }
+      expect(years).to eq years.sort.reverse
+    end
+
+    it 'カレンダーをクリックするとそのカレンダーの詳細ページに遷移する' do
+      create(:user)
+      click_on '2025年のカレンダーのタイトル'
+      expect(page).to have_current_path(calendar_path(calendars.last))
+    end
+  end
+
   describe 'カレンダーの新規作成' do
     before do
       create(:user)
@@ -72,11 +99,9 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it 'カレンダーを削除できる' do
-      skip 'カレンダーの一覧機能を実装するまで保留'
       click_on '編集'
-      accept_alert do
-        click_on '削除'
-      end
+      click_on '削除'
+      accept_confirm
       expect(page).to have_content('カレンダーを削除しました')
     end
   end

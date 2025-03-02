@@ -1,0 +1,12 @@
+<div class="container mx-auto px-2 bg-gray-200">
+  <% @calendars.each do |calendar| %>
+    <%= link_to calendar_path(calendar), data: { test: 'calendar', year: calendar.year } do %>
+      <div class="mb-8 p-2 bg-white hover:bg-gray-500 transition cursor-pointer">
+        <h2 class="bg-gray-400 p-2 text-center text-2xl font-bold rounded-lg">
+          <%= calendar.title %>
+        </h2>
+        <div><%= render calendar %></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

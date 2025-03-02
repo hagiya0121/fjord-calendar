@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :calendar do
-    title { 'カレンダーのタイトル' }
-    description { 'カレンダーの説明' }
     year { '2025' }
+    title { "#{year}年のカレンダーのタイトル" }
+    description { 'カレンダーの説明' }
   end
 end
