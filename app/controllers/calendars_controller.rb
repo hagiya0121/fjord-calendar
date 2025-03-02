@@ -3,7 +3,9 @@
 class CalendarsController < ApplicationController
   before_action :set_calendar, only: %i[show edit update destroy]
 
-  def index; end
+  def index
+    @calendars = Calendar.order(year: :desc)
+  end
 
   def show; end
 
