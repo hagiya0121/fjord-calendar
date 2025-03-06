@@ -37,6 +37,7 @@ RSpec.describe 'Entries', type: :system do
 
   describe 'カレンダーに登録した記事を更新' do
     before do
+      Entry.skip_callback(:validation, :before, :fetch_meta_info)
       calendar = create(:calendar)
       user = create(:user)
       create(:entry, calendar: calendar, user: user)
@@ -46,13 +47,13 @@ RSpec.describe 'Entries', type: :system do
     it 'カレンダーに登録した記事を更新できる' do
       click_link '編集'
       fill_in 'タイトル', with: '更新したタイトル'
-      fill_in 'URL', with: '更新したURL'
+      fill_in 'URL', with: 'http://example.com'
       click_button '保存'
       expect(page).to have_content('記事を更新しました')
 
       click_link '編集'
       expect(page).to have_field('entry[title]', with: '更新したタイトル')
-      expect(page).to have_field('entry[url]', with: '更新したURL')
+      expect(page).to have_field('entry[url]', with: 'http://example.com')
     end
 
     # 未ログインユーザーは編集ボタンが表示されない
@@ -69,9 +70,9 @@ RSpec.describe 'Entries', type: :system do
     end
 
     it 'カレンダーに登録した記事を削除できる' do
-      click_link '編集'
-      page.accept_confirm do
-        click_link '削除'
+      click_on '編集'
+      accept_confirm('記事を削除しますか？') do
+        click_on '削除'
       end
       expect(page).to have_content('記事を削除しました')
       expect(page).to have_no_selector('img[src*="avatar.png"]')

@@ -31,7 +31,7 @@
 
           <div class="flex-1 space-y-4">
             <div class="flex items-center space-x-2">
-              <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full' %>
+              <%= image_tag "#{request.base_url}#{entry.user.avatar_url}", class: 'w-8 h-8 rounded-full' %>
               <span class="text-sm font-semibold text-gray-900"><%= entry.user.name %></span>
             </div>
 

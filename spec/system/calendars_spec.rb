@@ -100,8 +100,9 @@ RSpec.describe 'Calendars', type: :system do
 
     it 'カレンダーを削除できる' do
       click_on '編集'
-      click_on '削除'
-      accept_confirm
+      accept_confirm('カレンダーを削除しますか？') do
+        click_on '削除'
+      end
       expect(page).to have_content('カレンダーを削除しました')
     end
   end
