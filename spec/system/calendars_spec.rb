@@ -10,7 +10,10 @@ RSpec.describe 'Calendars', type: :system do
       end
     end
 
-    before { visit calendars_path }
+    before do
+      visit calendars_path
+      create(:user)
+    end
 
     it 'カレンダーが一覧表示される' do
       calendars.each do |calendar|
@@ -100,8 +103,9 @@ RSpec.describe 'Calendars', type: :system do
 
     it 'カレンダーを削除できる' do
       click_on '編集'
-      click_on '削除'
-      accept_confirm
+      accept_confirm('カレンダーを削除しますか？') do
+        click_on '削除'
+      end
       expect(page).to have_content('カレンダーを削除しました')
     end
   end

@@ -24,7 +24,7 @@
         <%= form.submit class: 'bg-blue-500 text-white px-4 py-2' %>
         <%= link_to 'キャンセル', calendar, class: 'bg-blue-500 text-white px-4 py-2' %>
         <%= link_to '削除', calendar,
-                    data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' },
+                    data: { turbo_method: :delete, turbo_confirm: 'カレンダーを削除しますか？' },
                     class: 'bg-blue-500 text-white px-4 py-2' %>
       </div>
     </div>
