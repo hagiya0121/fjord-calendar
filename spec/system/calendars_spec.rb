@@ -10,7 +10,10 @@ RSpec.describe 'Calendars', type: :system do
       end
     end
 
-    before { visit calendars_path }
+    before do
+      visit calendars_path
+      create(:user)
+    end
 
     it 'カレンダーが一覧表示される' do
       calendars.each do |calendar|

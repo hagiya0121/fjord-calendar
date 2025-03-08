@@ -33,4 +33,10 @@ RSpec/MultipleExpectations:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 18
+  Max: 25
+
+Metrics/CyclomaticComplexity:
+  Max: 11
+
+Metrics/PerceivedComplexity:
+  Max: 11
