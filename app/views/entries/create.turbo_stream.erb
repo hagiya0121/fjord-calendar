@@ -1,0 +1,21 @@
+<%= turbo_stream.update "entry_modal" do %>
+  <div id="entry_modal" class="hidden"></div>
+<% end %>
+
+<%= turbo_stream.update "flash-message" do %>
+  <%= render "shared/flash" %>
+<% end %>
+
+<%= turbo_stream.update 'calendar' do %>
+  <%= render 'calendars/calendar', calendar: entry.calendar %>
+<% end %>
+
+<% if entry.previous_entry %>
+  <%= turbo_stream.after entry.previous_entry.registration_date do %>
+    <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.prepend "entries_list" do %>
+    <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
+  <% end %>
+<% end %>

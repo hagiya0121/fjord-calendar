@@ -7,5 +7,9 @@
 <% end %>
 
 <%= turbo_stream.update 'calendar' do %>
-  <%= render 'calendars/calendar', calendar: calendar %>
+  <%= render 'calendars/calendar', calendar: entry.calendar %>
+<% end %>
+
+<%= turbo_stream.replace entry.registration_date do %>
+  <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
 <% end %>

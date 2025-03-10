@@ -9,6 +9,12 @@ class Entry < ApplicationRecord
 
   before_save :fetch_meta_info
 
+  def previous_entry
+    Entry.where(calendar_id: calendar_id, registration_date: ...registration_date)
+         .order(registration_date: :desc)
+         .take
+  end
+
   private
 
   def url_valid
