@@ -12,10 +12,14 @@
 
 <% if entry.previous_entry %>
   <%= turbo_stream.after "entry_#{entry.previous_entry.registration_date}" do %>
-    <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
+    <%= render partial: 'entries/entries',
+                 collection: entry.entries_on_same_date,
+                 as: :entry %>
   <% end %>
 <% else %>
   <%= turbo_stream.prepend "entries_list" do %>
-    <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
+    <%= render partial: 'entries/entries',
+                 collection: entry.entries_on_same_date,
+                 as: :entry %>
   <% end %>
 <% end %>

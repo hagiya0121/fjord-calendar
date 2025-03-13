@@ -11,5 +11,7 @@
 <% end %>
 
 <%= turbo_stream.remove "entry_#{entry.registration_date}" do %>
-  <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
+  <%= render partial: 'entries/entries',
+             collection: entry.entries_on_same_date,
+             as: :entry %>
 <% end %>

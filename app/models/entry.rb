@@ -15,6 +15,10 @@ class Entry < ApplicationRecord
          .first
   end
 
+  def entries_on_same_date
+    calendar.entries.where(registration_date: registration_date)
+  end
+
   private
 
   def url_valid
