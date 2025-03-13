@@ -2,16 +2,8 @@
   <div id="entry_modal" class="hidden"></div>
 <% end %>
 
-<%= turbo_stream.update "flash-message" do %>
-  <%= render "shared/flash" %>
-<% end %>
+<%= turbo_stream.update "flash-message", partial: 'shared/flash' %>
 
-<%= turbo_stream.update 'calendar' do %>
-  <%= render 'calendars/calendar', calendar: entry.calendar %>
-<% end %>
+<%= turbo_stream.update 'calendar', partial: "calendars/calendar", locals: { calendar: entry.calendar } %>
 
-<%= turbo_stream.remove "entry_#{entry.registration_date}" do %>
-  <%= render partial: 'entries/entries',
-             collection: entry.entries_on_same_date,
-             as: :entry %>
-<% end %>
+<%= turbo_stream.remove "entry_#{entry.registration_date}" %>

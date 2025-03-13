@@ -21,8 +21,6 @@
   </div>
 
   <div id="entries_list" class="space-y-2">
-    <%= render partial: 'entries/entries',
-               collection: @calendar.entries.order(:registration_date),
-               as: :entry %>
+    <%= render @calendar.entries.order(:registration_date) %>
   </div>
 </div>
