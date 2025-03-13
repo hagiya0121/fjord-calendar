@@ -10,6 +10,6 @@
   <%= render 'calendars/calendar', calendar: entry.calendar %>
 <% end %>
 
-<%= turbo_stream.replace entry.registration_date do %>
+<%= turbo_stream.replace "entry_#{entry.registration_date}" do %>
   <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
 <% end %>

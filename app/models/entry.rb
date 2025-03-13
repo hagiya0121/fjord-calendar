@@ -12,7 +12,7 @@ class Entry < ApplicationRecord
   def previous_entry
     Entry.where(calendar_id: calendar_id, registration_date: ...registration_date)
          .order(registration_date: :desc)
-         .take
+         .first
   end
 
   private

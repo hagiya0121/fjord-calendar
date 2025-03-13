@@ -11,7 +11,7 @@
 <% end %>
 
 <% if entry.previous_entry %>
-  <%= turbo_stream.after entry.previous_entry.registration_date do %>
+  <%= turbo_stream.after "entry_#{entry.previous_entry.registration_date}" do %>
     <%= render 'entries', entries: entry.calendar.entries.where(registration_date: entry.registration_date) %>
   <% end %>
 <% else %>

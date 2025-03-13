@@ -22,13 +22,13 @@
                       'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl' => !calendar.entry_on?(date)
                     }
                   ),
-                  data: { turbo_frame: 'entry_modal' } %>
+                  data: { turbo_frame: 'entry_modal', test: date.to_s } %>
     <% end %>
 
     <div class="h-full w-full flex items-end p-1">
       <% entries.each do |entry| %>
         <% if entry.user.avatar_url.present? %>
-          <%= image_tag("#{request.base_url}#{entry.user.avatar_url}",
+          <%= image_tag(entry.user.avatar_url,
                         style: "max-width: #{100 / [entries.size, 1].max}%;",
                         class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
         <% end %>
