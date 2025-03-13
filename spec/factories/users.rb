@@ -5,7 +5,7 @@ FactoryBot.define do
     name { '一般ユーザー' }
     provider_uid { SecureRandom.uuid }
     role { 0 }
-    avatar_url { 'images/avatar1.png' }
+    avatar_url { 'http://example.com/avatar1.png' }
 
     trait :admin do
       role { 1 }

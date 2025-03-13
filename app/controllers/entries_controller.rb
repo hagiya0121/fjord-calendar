@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
 
     if @entry.save
       flash.now[:notice] = '記事を登録しました'
-      render :update_calendar, locals: { calendar: @entry.calendar }
+      render :create, locals: { entry: @entry }
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
   def update
     if @entry.update(entry_params)
       flash.now[:notice] = '記事を更新しました'
-      render :update_calendar, locals: { calendar: @entry.calendar }
+      render :update, locals: { entry: @entry }
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     flash.now[:notice] = '記事を削除しました'
-    render :update_calendar, locals: { calendar: @entry.calendar }
+    render :destroy, locals: { entry: @entry }
   end
 
   private
