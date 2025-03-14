@@ -21,8 +21,6 @@
   </div>
 
   <div id="entries_list" class="space-y-2">
-    <% @calendar.entries.order(:registration_date).group_by(&:registration_date).each do |date, entries| %>
-      <%= render 'entries/entries', entries: entries %>
-    <% end %>
+    <%= render @calendar.entries.order(:registration_date) %>
   </div>
 </div>

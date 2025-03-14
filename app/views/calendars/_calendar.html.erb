@@ -1,4 +1,4 @@
-<%= month_calendar(events: calendar.entries, attribute: :registration_date) do |date, entries| %>
+<%= month_calendar(events: calendar.entries.includes(:user), attribute: :registration_date) do |date, entries| %>
   <div class="relative w-full h-full">
     <div class="absolute top-1 left-1 text-sm text-gray-500 text-center">
       <%= date.day %>
@@ -27,11 +27,9 @@
 
     <div class="h-full w-full flex items-end p-1">
       <% entries.each do |entry| %>
-        <% if entry.user.avatar_url.present? %>
-          <%= image_tag(entry.user.avatar_url,
-                        style: "max-width: #{100 / [entries.size, 1].max}%;",
-                        class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
-        <% end %>
+        <%= image_tag(entry.user.avatar_url,
+                      style: "max-width: #{100 / [entries.size, 1].max}%;",
+                      class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
       <% end %>
     </div>
   </div>
