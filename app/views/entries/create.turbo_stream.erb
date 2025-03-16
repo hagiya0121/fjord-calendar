@@ -7,7 +7,7 @@
 <%= turbo_stream.update 'calendar', partial: "calendars/calendar", locals: { calendar: entry.calendar } %>
 
 <% if entry.previous_entry %>
-  <%= turbo_stream.after "entry_#{entry.previous_entry.registration_date}", entry  %>
+  <%= turbo_stream.after "entry_#{entry.previous_entry.id}", entry  %>
 <% else %>
   <%= turbo_stream.prepend "entries_list", entry %>
 <% end %>

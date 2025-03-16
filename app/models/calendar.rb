@@ -9,4 +9,8 @@ class Calendar < ApplicationRecord
   def entry_on?(date)
     entries.exists?(registration_date: date)
   end
+
+  def max_entries
+    (entries.count / 25) + 1
+  end
 end
