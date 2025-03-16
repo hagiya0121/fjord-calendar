@@ -6,4 +6,4 @@
 
 <%= turbo_stream.update 'calendar', partial: "calendars/calendar", locals: { calendar: entry.calendar } %>
 
-<%= turbo_stream.remove "entry_#{entry.registration_date}" %>
+<%= turbo_stream.remove "entry_#{entry.id}" %>

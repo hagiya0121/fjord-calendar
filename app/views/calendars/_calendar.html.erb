@@ -14,7 +14,7 @@
       <%= link_to '編集', edit_entry_path(entry, registration_date: date),
                   class: 'absolute text-blue-500 top-1 right-1 text-base',
                   data: { turbo_frame: 'entry_modal' } %>
-    <% elsif !index_action? %>
+    <% elsif !index_action? && entries.size < calendar.max_entries %>
       <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
                   class: class_names(
                     'absolute text-blue-500', {

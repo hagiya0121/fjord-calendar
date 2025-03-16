@@ -92,6 +92,22 @@ RSpec.describe 'Calendars', type: :system do
       click_on 'キャンセル'
       expect(page).to have_current_path(calendar_path(calendar))
     end
+
+    # 管理者だけに編集ボタンが見える
+  end
+
+  describe 'カレンダーの詳細' do
+    let(:calendar) { create(:calendar) }
+
+    before do
+      create(:user)
+      visit calendar_path(calendar)
+    end
+
+    it 'カレンダーのタイトルと説明が表示される' do
+      expect(page).to have_content('カレンダーのタイトル')
+      expect(page).to have_content('カレンダーの説明')
+    end
   end
 
   describe 'カレンダーの削除' do
