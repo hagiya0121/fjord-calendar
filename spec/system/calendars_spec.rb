@@ -125,4 +125,18 @@ RSpec.describe 'Calendars', type: :system do
       expect(page).to have_content('カレンダーを削除しました')
     end
   end
+
+  describe '登録記事情報のエクスポート' do
+    let(:calendar) { create(:calendar) }
+
+    it '登録記事情報をクリップボードにコピーできる' do
+      create(:user)
+      create(:entry, calendar: calendar)
+      visit calendar_path(calendar)
+      message = accept_alert do
+        click_on '記事のリンクをコピー'
+      end
+      expect(message).to have_content('コピーしました！')
+    end
+  end
 end

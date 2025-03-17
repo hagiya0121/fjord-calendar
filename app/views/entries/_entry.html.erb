@@ -7,16 +7,17 @@
     <div class="flex-1 space-y-4">
       <div class="flex items-center space-x-2">
         <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full' %>
-        <span class="text-sm font-semibold text-gray-900"><%= entry.user.name %></span>
+        <span data-copy-entries-target="name" class="text-sm font-semibold text-gray-900"><%= entry.user.name %></span>
       </div>
 
-      <div class="font-semibold text-gray-900">
+      <div data-copy-entries-target="title" class="font-semibold text-gray-900">
         <%= entry.title %>
       </div>
 
       <% if entry.url.present? %>
         <%= link_to entry.url,
-                    class: 'block border rounded-lg shadow-sm hover:shadow-lg flex items-center p-4 space-x-4' do %>
+                    class: 'block border rounded-lg shadow-sm hover:shadow-lg flex items-center p-4 space-x-4',
+                    data: { copy_entries_target: 'url' } do %>
           <div class="flex-1">
             <div class="font-semibold text-gray-900">
               <%= entry.meta_title %>
