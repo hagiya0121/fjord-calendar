@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: %i[edit update destroy]
 
   def new
-    @entry = Entry.new(calendar_id: params[:calendar_id])
+    @entry = Entry.new(calendar_id: params[:calendar_id], registration_date: params[:registration_date])
   end
 
   def edit; end
