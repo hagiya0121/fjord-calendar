@@ -10,7 +10,7 @@ export default class extends Controller {
       const url = this.urlTargets[i]?.href || "";
 
       return {
-        day: parseInt(this.dayTargets[i].textContent.trim(), 10),
+        day: parseInt(this.dayTargets[i].textContent.trim()),
         text: `  - :@${nameText}: ${nameText}: [${titleText}](${url})`,
       };
     });
