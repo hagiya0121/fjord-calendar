@@ -17,7 +17,7 @@
       <% end %>
 
       <div>
-        <%= form.hidden_field :registration_date, value: params[:registration_date] %>
+        <%= form.hidden_field :registration_date, value: entry.registration_date %>
         <div class="bg-gray-400 p-2 mb-4">
           <%= form.label :title, class: 'text-xl font-semibold block mb-1' %>
           <%= form.text_field :title, class: 'w-full h-10' %>
