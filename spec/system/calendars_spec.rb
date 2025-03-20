@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Calendars', type: :system do
+  include WebMockStubs
+
   describe 'カレンダーの一覧表示' do
     let!(:calendars) do
       (2015..2025).map do |year|
@@ -100,13 +102,23 @@ RSpec.describe 'Calendars', type: :system do
     let(:calendar) { create(:calendar) }
 
     before do
+      stub_all_requests
       create(:user)
+      create(:entry, calendar: calendar, url: 'http://example.com')
       visit calendar_path(calendar)
     end
 
     it 'カレンダーのタイトルと説明が表示される' do
       expect(page).to have_content('カレンダーのタイトル')
       expect(page).to have_content('カレンダーの説明')
+    end
+
+    it 'ユーザーアイコンが記事URLのリンクになっている' do
+      within('#calendar') do
+        expect(page).to have_link(nil, href: 'http://example.com') do
+          expect(page).to have_selector('img[src="http://example.com/avatar1.png"]')
+        end
+      end
     end
   end
 
