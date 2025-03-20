@@ -25,11 +25,19 @@
                   data: { turbo_frame: 'entry_modal', test: date.to_s } %>
     <% end %>
 
-    <div class="h-full w-full flex items-end p-1">
+    <div class="h-full w-full flex p-1">
       <% entries.each do |entry| %>
-        <%= image_tag(entry.user.avatar_url,
-                      style: "max-width: #{100 / [entries.size, 1].max}%;",
-                      class: 'rounded-full mx-auto object-contain max-h-[70%]') %>
+        <% if controller.action_name == "index" %>
+          <div class="w-full h-full flex items-end">
+            <%= image_tag(entry.user.avatar_url, class: 'rounded-full mx-auto max-h-[70%]') %>
+          </div>
+        <% else %>
+          <%= link_to entry.url, class: 'w-full h-full flex items-end' do %>
+            <%= image_tag(entry.user.avatar_url,
+                          class: class_names('rounded-full mx-auto max-h-[70%]',
+                                             'pointer-events-none opacity-50' => entry.url.blank?)) %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
