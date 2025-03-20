@@ -105,19 +105,29 @@ RSpec.describe 'Calendars', type: :system do
       stub_all_requests
       create(:user)
       create(:entry, calendar: calendar, url: 'http://example.com')
-      visit calendar_path(calendar)
     end
 
     it 'カレンダーのタイトルと説明が表示される' do
+      visit calendar_path(calendar)
       expect(page).to have_content('カレンダーのタイトル')
       expect(page).to have_content('カレンダーの説明')
     end
 
     it 'ユーザーアイコンが記事URLのリンクになっている' do
+      visit calendar_path(calendar)
       within('#calendar') do
         expect(page).to have_link(nil, href: 'http://example.com') do
           expect(page).to have_selector('img[src="http://example.com/avatar1.png"]')
         end
+      end
+    end
+
+    it '各年の12月1日が適切な曜日位置に表示されるようにオフセットセルが挿入される' do
+      (2000..2004).each do |year|
+        visit calendar_path(create(:calendar, year: year))
+        offset_cells = all('[data-test="offset_cell"]')
+        expected_offset = Date.new(year, 12, 1).cwday - 1
+        expect(offset_cells.size).to eq(expected_offset)
       end
     end
   end
