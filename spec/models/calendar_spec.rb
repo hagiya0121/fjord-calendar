@@ -34,4 +34,11 @@ RSpec.describe Calendar, type: :model do
       expect(calendar.max_entries).to be(3)
     end
   end
+
+  describe '#start_date' do
+    it 'カレンダーの年の12月1日を返す' do
+      calendar.year = 2025
+      expect(calendar.start_date).to eq(Date.new(2025, 12, 1))
+    end
+  end
 end

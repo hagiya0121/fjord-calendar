@@ -13,4 +13,8 @@ class Calendar < ApplicationRecord
   def max_entries
     (entries.count / 25) + 1
   end
+
+  def start_date
+    Date.new(year, 12, 1)
+  end
 end

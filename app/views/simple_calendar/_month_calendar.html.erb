@@ -5,13 +5,17 @@
                       'grid-cols-1 sm:grid-cols-7' => !index_action? }
                   ) %>">
 
-    <% date_range.first(7).each do |day| %>
-      <div class="<%= class_names(
-                        'py-2 text-center font-semibold text-gray-600 border-b bg-gray-200',
-                        'max-sm:hidden': !index_action?
-                      ) %>">
-        <%= t('date.abbr_day_names')[day.wday] %>
-      </div>
+    <% unless index_action? %>
+      <% date_range.first(7).each do |day| %>
+        <div class="py-2 text-center font-semibold
+                  text-gray-600 border-b bg-gray-200 max-sm:hidden">
+          <%= t('date.abbr_day_names')[day.wday] %>
+        </div>
+      <% end %>
+
+      <% start_weekday(start_date.year).times do %>
+        <div data-test="offset_cell" class="aspect-square p-2 border border-gray-300 bg-gray-100 max-sm:hidden"></div>
+      <% end %>
     <% end %>
 
     <% advent_dates(start_date.year).each do |date| %>
@@ -25,6 +29,5 @@
         <% instance_exec(date, calendar.sorted_events_for(date), &passed_block) %>
       </div>
     <% end %>
-
   </div>
 </div>
