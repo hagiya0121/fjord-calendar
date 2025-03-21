@@ -13,7 +13,7 @@
         </div>
       <% end %>
 
-      <% start_weekday(@calendar.year).times do %>
+      <% start_weekday(start_date.year).times do %>
         <div data-test="offset_cell" class="aspect-square p-2 border border-gray-300 bg-gray-100 max-sm:hidden"></div>
       <% end %>
     <% end %>
@@ -29,6 +29,5 @@
         <% instance_exec(date, calendar.sorted_events_for(date), &passed_block) %>
       </div>
     <% end %>
-
   </div>
 </div>

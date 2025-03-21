@@ -1,4 +1,5 @@
-<%= month_calendar(events: calendar.entries.includes(:user), attribute: :registration_date) do |date, entries| %>
+<%= month_calendar(start_date: calendar.start_date, events: calendar.entries.includes(:user),
+                   attribute: :registration_date) do |date, entries| %>
   <div class="relative w-full h-full">
     <div class="absolute top-1 left-1 text-sm text-gray-500 text-center">
       <%= date.day %>
