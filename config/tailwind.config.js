@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       animation: {
-        "fade-out-5s": "fadeOut 5s linear forwards",
+        "fade-out-5s": "fadeOut 1s linear forwards",
       },
     },
   },
