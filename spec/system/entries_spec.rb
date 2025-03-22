@@ -149,8 +149,11 @@ RSpec.describe 'Entries', type: :system do
       accept_confirm('記事を削除しますか？') do
         click_on '削除'
       end
+
       expect(page).to have_content('記事を削除しました')
-      expect(page).to have_no_selector('img[src*="avatar1.png"]')
+      within('#calendar') do
+        expect(page).to have_no_selector('img[src*="avatar1.png"]')
+      end
     end
 
     it '記事を削除すると記事リストから削除される' do
