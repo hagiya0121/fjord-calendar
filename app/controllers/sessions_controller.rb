@@ -4,7 +4,9 @@ class SessionsController < ApplicationController
   def create
     auth = request.env['omniauth.auth']
 
-    user = User.find_or_create_by(provider_uid: auth['uid']) do |u|
+    user = User.find_or_create_by(
+      provider: auth['provider'], provider_uid: auth['uid']
+    ) do |u|
       u.name = auth['info']['nickname']
       u.avatar_url = auth['info']['image']
     end
