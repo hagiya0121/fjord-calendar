@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :user do
     name { '一般ユーザー' }
+    provider { 'github' }
     provider_uid { SecureRandom.uuid }
     role { 0 }
     avatar_url { 'http://example.com/avatar1.png' }
