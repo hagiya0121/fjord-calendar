@@ -10,7 +10,7 @@
 
         <ul data-dropdown-target="menu" class="hidden bg-white z-50 text-sm absolute right-0 mt-2 w-32 border rounded shadow p-2">
           <li><%= link_to 'マイページ', '#' %></li>
-          <li><%= button_to 'ログアウト', '#', method: :delete %></li>
+          <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
         </ul>
       </div>
     <% else %>

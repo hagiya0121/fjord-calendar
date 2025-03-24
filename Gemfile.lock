@@ -130,6 +130,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.13.0)
+      devise (>= 4.9.0)
+      rails-i18n
     diff-lcs (1.5.1)
     domain_name (0.6.20240107)
     dotenv (3.1.7)
@@ -474,6 +477,7 @@ DEPENDENCIES
   commonmarker
   debug
   devise
+  devise-i18n
   dotenv-rails
   erb_lint
   factory_bot_rails
