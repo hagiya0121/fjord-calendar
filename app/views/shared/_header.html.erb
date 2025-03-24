@@ -10,11 +10,11 @@
 
         <ul data-dropdown-target="menu" class="hidden bg-white z-50 text-sm absolute right-0 mt-2 w-32 border rounded shadow p-2">
           <li><%= link_to 'マイページ', '#' %></li>
-          <li><%= button_to 'ログアウト', logout_path, method: :delete %></li>
+          <li><%= button_to 'ログアウト', '#', method: :delete %></li>
         </ul>
       </div>
     <% else %>
-      <%= button_to '登録する', '/auth/github', method: :post, data: { turbo: false } %>
+      <%= button_to '登録する', user_github_omniauth_authorize_path, method: :post, data: { turbo: false } %>
     <% end %>
   </div>
 </header>
