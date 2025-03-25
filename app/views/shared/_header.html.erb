@@ -14,7 +14,7 @@
         </ul>
       </div>
     <% else %>
-      <%= button_to '登録する', user_github_omniauth_authorize_path, method: :post, data: { turbo: false } %>
+      <%= button_to 'ログイン', user_github_omniauth_authorize_path, method: :post, data: { turbo: false } %>
     <% end %>
   </div>
 </header>
