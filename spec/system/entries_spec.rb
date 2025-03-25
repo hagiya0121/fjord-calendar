@@ -17,6 +17,7 @@ RSpec.describe 'Entries', type: :system do
     let(:entry_date) { '[data-test="2025-12-01"]' }
 
     before do
+      sign_in user
       visit calendar_path(calendar)
     end
 
@@ -99,6 +100,8 @@ RSpec.describe 'Entries', type: :system do
     before do
       create(:entry, calendar: calendar, user: user)
       visit calendar_path(calendar)
+      sign_in user
+      visit calendar_path(calendar)
     end
 
     it '登録した記事を更新できる' do
@@ -141,6 +144,7 @@ RSpec.describe 'Entries', type: :system do
   describe 'カレンダーに登録した記事を削除' do
     before do
       create(:entry, calendar: calendar, user: user)
+      sign_in user
       visit calendar_path(calendar)
     end
 

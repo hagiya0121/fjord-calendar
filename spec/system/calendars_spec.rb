@@ -66,13 +66,11 @@ RSpec.describe 'Calendars', type: :system do
 
   describe 'カレンダーの更新' do
     let(:calendar) { create(:calendar) }
-
-    before do
-      create(:user, :admin)
-      visit calendar_path(calendar)
-    end
+    let(:user) { build(:user, :admin) }
 
     it 'カレンダーを更新できる' do
+      sign_in user
+      visit calendar_path(calendar)
       click_on '編集'
       fill_in 'タイトル', with: '更新したタイトル'
       fill_in '説明', with: '更新した説明'
@@ -83,6 +81,8 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it '必須項目が空だとエラーが表示される' do
+      sign_in user
+      visit calendar_path(calendar)
       click_on '編集'
       fill_in 'タイトル', with: ''
       click_on '更新する'
@@ -90,6 +90,8 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
+      sign_in user
+      visit calendar_path(calendar)
       click_on '編集'
       click_on 'キャンセル'
       expect(page).to have_current_path(calendar_path(calendar))
@@ -133,13 +135,12 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの削除' do
-    before do
-      create(:user, :admin)
-      calendar = create(:calendar)
-      visit calendar_path(calendar)
-    end
+    let(:user) { build(:user, :admin) }
 
     it 'カレンダーを削除できる' do
+      sign_in user
+      calendar = create(:calendar)
+      visit calendar_path(calendar)
       click_on '編集'
       accept_confirm('カレンダーを削除しますか？') do
         click_on '削除'
