@@ -37,7 +37,8 @@ RSpec.describe 'Calendars', type: :system do
 
   describe 'カレンダーの新規作成' do
     before do
-      create(:user)
+      user = create(:user)
+      sign_in user
       visit new_calendar_path
     end
 
@@ -66,7 +67,7 @@ RSpec.describe 'Calendars', type: :system do
 
   describe 'カレンダーの更新' do
     let(:calendar) { create(:calendar) }
-    let(:user) { build(:user, :admin) }
+    let(:user) { create(:user, :admin) }
 
     it 'カレンダーを更新できる' do
       sign_in user
@@ -135,7 +136,7 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの削除' do
-    let(:user) { build(:user, :admin) }
+    let(:user) { create(:user, :admin) }
 
     it 'カレンダーを削除できる' do
       sign_in user
