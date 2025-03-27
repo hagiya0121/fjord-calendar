@@ -5,6 +5,11 @@ Rails.application.routes.draw do
     resources :entries, shallow: true
   end
 
-  get '/auth/github/callback', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy', as: :logout
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+  }
+
+  devise_scope :user do
+    delete 'users/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
 end

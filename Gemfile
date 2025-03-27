@@ -6,6 +6,8 @@ ruby '3.3.7'
 
 gem 'bootsnap', require: false
 gem 'commonmarker'
+gem 'devise'
+gem 'devise-i18n'
 gem 'http'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
