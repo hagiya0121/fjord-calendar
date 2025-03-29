@@ -91,9 +91,6 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_content('記事URLにアクセスできません')
       end
     end
-
-    # 未ログインユーザーには登録ボタンが表示されない
-    # 未ログインユーザーが記事登録ページにアクセスできない
   end
 
   describe 'カレンダーに登録した記事を更新' do
@@ -191,7 +188,7 @@ RSpec.describe 'Entries', type: :system do
       (1..25).each do |i|
         create(:entry, user: user, calendar: calendar, registration_date: "2025-12-#{i}")
       end
-
+      sign_in user
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(second_user)
       visit calendar_path(calendar)
 
@@ -206,6 +203,7 @@ RSpec.describe 'Entries', type: :system do
         create(:entry, user: second_user, calendar: calendar, registration_date: "2025-12-#{i}")
       end
 
+      sign_in user
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(third_user)
       visit calendar_path(calendar)
 

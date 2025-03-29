@@ -14,7 +14,6 @@ RSpec.describe 'Calendars', type: :system do
 
     before do
       visit calendars_path
-      create(:user)
     end
 
     it 'カレンダーが一覧表示される' do
@@ -36,41 +35,60 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの新規作成' do
-    before do
-      user = create(:user)
-      sign_in user
-      visit new_calendar_path
+    context '管理者の場合' do
+      let(:admin) { create(:user, :admin) }
+
+      before do
+        sign_in admin
+      end
+
+      it 'カレンダーが作成される' do
+        visit new_calendar_path
+        fill_in 'タイトル', with: '新しいカレンダー'
+        fill_in '説明', with: 'カレンダーの説明です'
+        click_on '登録する'
+        expect(page).to have_content('カレンダーが作成されました')
+      end
+
+      it '必須項目が空だとエラーが表示される' do
+        visit new_calendar_path
+        click_on '登録する'
+        expect(page).to have_content('タイトルを入力してください')
+      end
+
+      it '同じ年のカレンダーは作成できない' do
+        create(:calendar)
+        visit new_calendar_path
+        fill_in 'タイトル', with: '同じ年のカレンダー'
+        fill_in '説明', with: 'カレンダーの説明です'
+        click_on '登録する'
+        expect(page).to have_content('この年度のカレンダーはすでに作成されています')
+      end
     end
 
-    it 'カレンダーが作成される' do
-      fill_in 'タイトル', with: '新しいカレンダー'
-      fill_in '説明', with: 'カレンダーの説明です'
-      click_on '登録する'
-      expect(page).to have_content('カレンダーが作成されました')
+    context '未ログインユーザーの場合' do
+      it 'カレンダー新規作成ページにアクセスできない' do
+        visit new_calendar_path
+        expect(page).to have_content('ログインもしくはアカウント登録してください。')
+      end
     end
 
-    it '必須項目が空だとエラーが表示される' do
-      click_on '登録する'
-      expect(page).to have_content('タイトルを入力してください')
+    context '一般のログインユーザーの場合' do
+      it 'カレンダー新規作成ページにアクセスできない' do
+        sign_in build(:user)
+        visit new_calendar_path
+        expect(page).to have_content('アクセス権限がありません')
+      end
     end
-
-    it '同じ年のカレンダーは作成できない' do
-      create(:calendar)
-      fill_in 'タイトル', with: '同じ年のカレンダー'
-      fill_in '説明', with: 'カレンダーの説明です'
-      click_on '登録する'
-      expect(page).to have_content('この年度のカレンダーはすでに作成されています')
-    end
-
-    # 管理者ではないユーザーはカレンダー作成ページにアクセスできない
   end
 
   describe 'カレンダーの更新' do
     let(:calendar) { create(:calendar) }
-    let(:user) { create(:user, :admin) }
+    let(:admin) { create(:user, :admin) }
+    let(:user) { create(:user) }
 
     it 'カレンダーを更新できる' do
-      sign_in user
+      sign_in admin
       visit calendar_path(calendar)
       click_on '編集'
       fill_in 'タイトル', with: '更新したタイトル'
@@ -82,7 +100,7 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it '必須項目が空だとエラーが表示される' do
-      sign_in user
+      sign_in admin
       visit calendar_path(calendar)
       click_on '編集'
       fill_in 'タイトル', with: ''
@@ -91,18 +109,32 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
-      sign_in user
+      sign_in admin
       visit calendar_path(calendar)
       click_on '編集'
       click_on 'キャンセル'
       expect(page).to have_current_path(calendar_path(calendar))
     end
 
-    # 管理者だけに編集ボタンが見える
+    context '未ログインユーザーの場合' do
+      it '編集ページにアクセスできない' do
+        visit edit_calendar_path(calendar)
+        expect(page).to have_content('ログインもしくはアカウント登録してください。')
+      end
+    end
+
+    context '一般のログインユーザーの場合' do
+      it '編集ページにアクセスできない' do
+        sign_in user
+        visit edit_calendar_path(calendar)
+        expect(page).to have_content('アクセス権限がありません')
+      end
+    end
   end
 
   describe 'カレンダーの詳細' do
     let(:calendar) { create(:calendar) }
+    let(:user) { create(:user) }
 
     before do
       stub_all_requests
@@ -133,20 +165,46 @@ RSpec.describe 'Calendars', type: :system do
         expect(offset_cells.size).to eq(expected_offset)
       end
     end
+
+    context '一般のログインユーザーの場合' do
+      it '記事登録ボタンが表示される' do
+        sign_in user
+        visit calendar_path(calendar)
+        expect(page).to have_link('+')
+      end
+
+      it 'カレンダー編集ボタンが表示されない' do
+        sign_in user
+        visit calendar_path(calendar)
+        expect(page).not_to have_content('編集')
+      end
+    end
+
+    context '未ログインユーザーの場合' do
+      it '記事登録ボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_link('+')
+      end
+
+      it 'カレンダー編集ボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_content('編集')
+      end
+    end
   end
 
   describe 'カレンダーの削除' do
-    let(:user) { create(:user, :admin) }
+    let(:admin) { create(:user, :admin) }
+    let!(:calendar) { create(:calendar) }
 
-    it 'カレンダーを削除できる' do
-      sign_in user
-      calendar = create(:calendar)
-      visit calendar_path(calendar)
-      click_on '編集'
-      accept_confirm('カレンダーを削除しますか？') do
-        click_on '削除'
+    context '管理者の場合' do
+      it 'カレンダーを削除できる' do
+        sign_in admin
+        visit calendar_path(calendar)
+        click_on '編集'
+        accept_confirm { click_on '削除' }
+        expect(page).to have_content('カレンダーを削除しました')
       end
-      expect(page).to have_content('カレンダーを削除しました')
     end
   end
 
@@ -154,12 +212,8 @@ RSpec.describe 'Calendars', type: :system do
     let(:calendar) { create(:calendar) }
 
     it '登録記事情報をクリップボードにコピーできる' do
-      create(:user)
-      create(:entry, calendar: calendar)
       visit calendar_path(calendar)
-      message = accept_alert do
-        click_on '記事のリンクをコピー'
-      end
+      message = accept_alert { click_on '記事のリンクをコピー' }
       expect(message).to have_content('コピーしました！')
     end
   end
