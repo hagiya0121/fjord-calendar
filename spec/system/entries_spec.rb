@@ -10,64 +10,74 @@ RSpec.describe 'Entries', type: :system do
 
   before do
     stub_all_requests
-    user
   end
 
   describe 'カレンダーに記事を登録' do
     let(:entry_date) { '[data-test="2025-12-01"]' }
 
-    before do
-      sign_in user
-      visit calendar_path(calendar)
-    end
+    context 'ログインユーザーの場合' do
+      before do
+        sign_in user
+      end
 
-    it '記事を登録するとカレンダーにアイコンが表示される' do
-      find(entry_date).click
-      fill_in 'タイトル', with: 'テスト記事'
-      fill_in 'URL', with: 'http://example.com'
-      click_button '保存'
-      expect(page).to have_content('記事を登録しました')
-      expect(page).to have_selector('img[src*="avatar1.png"]')
-    end
+      it '記事を登録するとカレンダーにアイコンが表示される' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        fill_in 'タイトル', with: 'テスト記事'
+        fill_in 'URL', with: 'http://example.com'
+        click_button '保存'
+        expect(page).to have_content('記事を登録しました')
+        expect(page).to have_selector('img[src*="avatar1.png"]')
+      end
 
-    it '記事を登録すると記事リストに表示される' do
-      find(entry_date).click
-      fill_in 'タイトル', with: 'テスト記事'
-      click_button '保存'
+      it '記事を登録すると記事リストに表示される' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        fill_in 'タイトル', with: 'テスト記事'
+        click_button '保存'
 
-      expect(page).to have_content('一般ユーザー')
-      expect(page).to have_content('テスト記事')
-      expect(page).to have_selector('img[src*="avatar1.png"]')
-    end
+        expect(page).to have_content('一般ユーザー')
+        expect(page).to have_content('テスト記事')
+        expect(page).to have_selector('img[src*="avatar1.png"]')
+      end
 
-    it '記事URLを登録するとリンクプレビューが表示される' do
-      find(entry_date).click
-      fill_in 'タイトル', with: 'テスト記事'
-      fill_in 'URL', with: 'http://example.com'
-      click_button '保存'
-      expect(page).to have_content('リンクプレビューのタイトル')
-      expect(page).to have_content('リンクプレビューの説明')
-      expect(page).to have_selector("img[src*='og_image.png']")
-    end
+      it '記事URLを登録するとリンクプレビューが表示される' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        fill_in 'タイトル', with: 'テスト記事'
+        fill_in 'URL', with: 'http://example.com'
+        click_button '保存'
+        expect(page).to have_content('リンクプレビューのタイトル')
+        expect(page).to have_content('リンクプレビューの説明')
+        expect(page).to have_selector("img[src*='og_image.png']")
+      end
 
-    it 'OGPメタタグが存在しない場合はフォールバックの情報を表示する' do
-      find(entry_date).click
-      fill_in 'タイトル', with: 'テスト記事'
-      fill_in 'URL', with: 'http://example.com/meta_without'
-      click_button '保存'
-      expect(page).to have_content('フォールバック時のタイトル')
-      expect(page).to have_content('フォールバック時の説明')
-      expect(page).to have_selector("img[src*='favicon.png']")
-    end
+      it 'OGPメタタグが存在しない場合はフォールバックの情報を表示する' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        fill_in 'タイトル', with: 'テスト記事'
+        fill_in 'URL', with: 'http://example.com/meta_without'
+        click_button '保存'
+        expect(page).to have_content('フォールバック時のタイトル')
+        expect(page).to have_content('フォールバック時の説明')
+        expect(page).to have_selector("img[src*='favicon.png']")
+      end
 
-    it 'キャンセルボタンを押すと登録モーダルを閉じることができる' do
-      find(entry_date).click
-      click_button 'キャンセル'
-      expect(page.find('#entry_modal').text).to eq('')
+      it 'キャンセルボタンを押すと登録モーダルを閉じることができる' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        click_button 'キャンセル'
+        expect(page.find('#entry_modal').text).to eq('')
+      end
     end
 
     context '入力値が無効の場合' do
+      before do
+        sign_in user
+      end
+
       it 'タイトルが未入力だと記事登録に失敗する' do
+        visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: ''
         fill_in 'URL', with: 'http://example.com'
@@ -76,6 +86,7 @@ RSpec.describe 'Entries', type: :system do
       end
 
       it 'httpまたはhttpsで始まらないURLは登録できない' do
+        visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'ftp://ftp.example.com'
@@ -84,6 +95,7 @@ RSpec.describe 'Entries', type: :system do
       end
 
       it 'アクセスできないURLは登録できない' do
+        visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://invalid.example.com'
@@ -91,51 +103,88 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_content('記事URLにアクセスできません')
       end
     end
+
+    context '未ログインユーザー' do
+      it '記事登録ページにアクセスできない' do
+        visit new_calendar_entry_path(calendar)
+        expect(page).to have_content('ログインもしくはアカウント登録してください。')
+      end
+    end
   end
 
   describe 'カレンダーに登録した記事を更新' do
-    before do
-      create(:entry, calendar: calendar, user: user)
-      visit calendar_path(calendar)
-      sign_in user
-      visit calendar_path(calendar)
+    let(:user) { build(:user) }
+    let(:calendar) { create(:calendar) }
+    let!(:entry) { create(:entry, calendar: calendar, user: user) }
+
+    context 'ログインユーザーの場合' do
+      before do
+        sign_in user
+      end
+
+      it '登録した記事を更新できる' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        fill_in 'タイトル', with: '更新したタイトル'
+        fill_in 'URL', with: 'http://example.com/updated'
+        click_button '保存'
+        expect(page).to have_content('記事を更新しました')
+
+        click_on '編集'
+        expect(page).to have_field('entry[title]', with: '更新したタイトル')
+        expect(page).to have_field('entry[url]', with: 'http://example.com/updated')
+      end
+
+      it '登録した記事を更新すると記事リストが更新される' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        fill_in 'タイトル', with: '更新したタイトル'
+        fill_in 'URL', with: 'http://example.com/updated'
+        click_button '保存'
+        expect(page).to have_content('一般ユーザー')
+        expect(page).to have_content('更新したタイトル')
+        expect(page).to have_selector('img[src*="avatar1.png"]')
+      end
+
+      it '記事URLを更新するとリンクプレビューが更新される' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        fill_in 'タイトル', with: '更新したタイトル'
+        fill_in 'URL', with: 'http://example.com/updated'
+        click_button '保存'
+        expect(page).to have_content('更新されたリンクプレビューのタイトル')
+        expect(page).to have_content('更新されたリンクプレビューの説明')
+        expect(page).to have_selector("img[src*='updated_og_image.png']")
+      end
     end
 
-    it '登録した記事を更新できる' do
-      click_on '編集'
-      fill_in 'タイトル', with: '更新したタイトル'
-      fill_in 'URL', with: 'http://example.com/updated'
-      click_button '保存'
-      expect(page).to have_content('記事を更新しました')
+    context '未ログインユーザーの場合' do
+      it '記事編集ボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_link('編集')
+      end
 
-      click_on '編集'
-      expect(page).to have_field('entry[title]', with: '更新したタイトル')
-      expect(page).to have_field('entry[url]', with: 'http://example.com/updated')
+      it '記事編集ページにアクセスできない' do
+        visit edit_entry_path(entry.id)
+        expect(page).to have_content('ログインもしくはアカウント登録してください。')
+      end
     end
 
-    it '登録した記事を更新すると記事リストが更新される' do
-      click_on '編集'
-      fill_in 'タイトル', with: '更新したタイトル'
-      fill_in 'URL', with: 'http://example.com/updated'
-      click_button '保存'
-      expect(page).to have_content('一般ユーザー')
-      expect(page).to have_content('更新したタイトル')
-      expect(page).to have_selector('img[src*="avatar1.png"]')
-    end
+    context '記事の所有者以外のユーザーがログインしている場合' do
+      before do
+        sign_in build(:user, :second_user)
+      end
 
-    it '記事URLを更新するとリンクプレビューが更新される' do
-      click_on '編集'
-      fill_in 'タイトル', with: '更新したタイトル'
-      fill_in 'URL', with: 'http://example.com/updated'
-      click_button '保存'
-      expect(page).to have_content('更新されたリンクプレビューのタイトル')
-      expect(page).to have_content('更新されたリンクプレビューの説明')
-      expect(page).to have_selector("img[src*='updated_og_image.png']")
-    end
+      it '記事編集ボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_link('編集')
+      end
 
-    # 未ログインユーザーは編集ボタンが表示されない
-    # 他のユーザーが登録した記事の編集ボタンは表示されない
-    # 未ログインユーザーが編集ページにアクセスできない
+      it '記事編集ページにアクセスできない' do
+        visit edit_entry_path(entry.id)
+        expect(page).to have_content('アクセス権限がありません')
+      end
+    end
   end
 
   describe 'カレンダーに登録した記事を削除' do
@@ -164,8 +213,6 @@ RSpec.describe 'Entries', type: :system do
       end
       expect(page).to have_no_selector('#entry_2025-12-01')
     end
-
-    # 自分の記事だけ削除できる
   end
 
   describe '記事の登録制限' do

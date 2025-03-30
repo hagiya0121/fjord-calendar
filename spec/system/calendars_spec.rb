@@ -176,7 +176,7 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダー編集ボタンが表示されない' do
         sign_in user
         visit calendar_path(calendar)
-        expect(page).not_to have_content('編集')
+        expect(page).not_to have_link('編集')
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
-        expect(page).not_to have_content('編集')
+        expect(page).not_to have_link('編集')
       end
     end
   end
