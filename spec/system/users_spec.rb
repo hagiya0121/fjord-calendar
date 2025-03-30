@@ -38,15 +38,19 @@ RSpec.describe 'Users', type: :system do
     end
 
     context 'ログイン済みの場合' do
+      let(:user) { create(:user) }
+
+      before do
+        sign_in user
+      end
+
       it 'ヘッダーにログインユーザーのアイコンが表示される' do
         visit root_path
-        click_on 'ログイン'
         within('header') { expect(page).to have_selector('img[alt="プロフィール画像"]') }
       end
 
       it 'ログアウトできる' do
         visit root_path
-        click_on 'ログイン'
         within('header') { find('img[alt="プロフィール画像"]').click }
         click_on 'ログアウト'
         expect(page).to have_content('ログアウトしました。')

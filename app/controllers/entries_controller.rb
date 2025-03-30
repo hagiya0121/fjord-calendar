@@ -2,6 +2,8 @@
 
 class EntriesController < ApplicationController
   before_action :set_entry, only: %i[edit update destroy]
+  before_action :authenticate_user!
+  before_action :require_owner!, only: %i[edit update destroy]
 
   def new
     @entry = Entry.new(calendar_id: params[:calendar_id], registration_date: params[:registration_date])
@@ -45,5 +47,11 @@ class EntriesController < ApplicationController
 
   def entry_params
     params.require(:entry).permit(:title, :url, :registration_date)
+  end
+
+  def require_owner!
+    return if @entry.user == current_user
+
+    redirect_to root_path, alert: 'アクセス権限がありません'
   end
 end

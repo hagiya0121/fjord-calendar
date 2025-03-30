@@ -3,6 +3,7 @@
 class CalendarsController < ApplicationController
   before_action :set_calendar, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_admin!, except: %i[index show]
 
   def index
     @calendars = Calendar.order(year: :desc)
@@ -50,4 +51,10 @@ end
 
 def calendar_params
   params.require(:calendar).permit(:title, :description)
+end
+
+def authenticate_admin!
+  return if current_user&.admin?
+
+  redirect_to root_path, alert: 'アクセス権限がありません'
 end
