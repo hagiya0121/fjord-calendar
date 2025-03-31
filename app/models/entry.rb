@@ -2,7 +2,7 @@
 
 class Entry < ApplicationRecord
   validates :title, :registration_date, presence: true
-  validate :url_valid
+  validate :validate_url
 
   belongs_to :user
   belongs_to :calendar
@@ -17,19 +17,29 @@ class Entry < ApplicationRecord
 
   private
 
-  def url_valid
+  def validate_url
     return if url.blank?
 
-    unless url.match?(/\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/)
-      errors.add(:url, 'は http または https で始まるURLを入力してください')
+    unless url_format_valid?
+      errors.add(:url, 'の形式が不正です')
       return
     end
 
-    begin
-      HTTP.headers('User-Agent' => 'Mozilla/5.0').head(url)
-    rescue HTTP::ConnectionError
-      errors.add(:url, 'にアクセスできません')
-    end
+    errors.add(:url, 'にアクセスできません') unless url_accessible?
+  end
+
+  def url_format_valid?
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) && uri.host.present?
+  rescue URI::InvalidURIError
+    false
+  end
+
+  def url_accessible?
+    response = HTTP.headers('User-Agent' => 'Mozilla/5.0').head(url)
+    response.status.success?
+  rescue HTTP::ConnectionError
+    false
   end
 
   def fetch_meta_info
