@@ -1,6 +1,8 @@
 <header class="z-40 fixed top-0 bg-gray-300 w-full h-16">
   <div class="h-full container mx-auto flex items-center justify-between px-5">
-    <div class="text-lg font-bold">LOGO</div>
+    <div class="text-lg font-bold">
+      <%= link_to 'LOGO', root_path %>
+    </div>
 
     <% if current_user %>
       <div data-controller="dropdown" class="relative">
@@ -11,6 +13,9 @@
         <ul data-dropdown-target="menu" class="hidden bg-white z-50 text-sm absolute right-0 mt-2 w-32 border rounded shadow p-2">
           <li><%= link_to 'マイページ', '#' %></li>
           <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+          <% if current_user&.admin? %>
+            <li><%= link_to 'カレンダーを作成', new_calendar_path %></li>
+          <% end %>
         </ul>
       </div>
     <% else %>

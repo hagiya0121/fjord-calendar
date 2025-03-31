@@ -42,8 +42,10 @@ RSpec.describe 'Calendars', type: :system do
         sign_in admin
       end
 
-      it 'カレンダーが作成される' do
-        visit new_calendar_path
+      it 'カレンダーを作成できる' do
+        visit root_path
+        within('header') { find('img[alt="プロフィール画像"]').click }
+        click_on 'カレンダーを作成'
         fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
         click_on '登録する'
