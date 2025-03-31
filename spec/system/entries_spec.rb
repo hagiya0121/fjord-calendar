@@ -85,13 +85,13 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_content('タイトルを入力してください')
       end
 
-      it 'httpまたはhttpsで始まらないURLは登録できない' do
+      it '不正な形式の記事URLは登録できない' do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'ftp://ftp.example.com'
         click_button '保存'
-        expect(page).to have_content('記事URLは http または https で始まるURLを入力してください')
+        expect(page).to have_content('記事URLの形式が不正です')
       end
 
       it 'アクセスできないURLは登録できない' do
