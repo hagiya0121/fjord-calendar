@@ -30,5 +30,11 @@
         <% end %>
       <% end %>
     </div>
+
+    <% if current_user&.admin? %>
+      <%= link_to '編集', edit_entry_path(entry),
+                  class: 'text-blue-500 text-base',
+                  data: { turbo_frame: 'entry_modal' } %>
+    <% end %>
   </div>
 </div>

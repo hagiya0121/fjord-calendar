@@ -138,7 +138,6 @@ RSpec.describe 'Calendars', type: :system do
 
     before do
       stub_all_requests
-      create(:user)
       create(:entry, calendar: calendar, url: 'http://example.com')
     end
 
@@ -166,6 +165,28 @@ RSpec.describe 'Calendars', type: :system do
       end
     end
 
+    context '管理者の場合' do
+      let(:admin) { build(:user, :admin) }
+
+      it '記事登録ボタンが表示される' do
+        sign_in admin
+        visit calendar_path(calendar)
+        expect(page).to have_link('+')
+      end
+
+      it 'カレンダー編集ボタンが表示される' do
+        sign_in admin
+        visit calendar_path(calendar)
+        expect(page).to have_link('編集')
+      end
+
+      it '記事リストの記事に編集ボタンが表示される' do
+        sign_in admin
+        visit calendar_path(calendar)
+        within('#entries_list') { expect(page).to have_link('編集') }
+      end
+    end
+
     context '一般のログインユーザーの場合' do
       it '記事登録ボタンが表示される' do
         sign_in user
@@ -178,6 +199,12 @@ RSpec.describe 'Calendars', type: :system do
         visit calendar_path(calendar)
         expect(page).not_to have_link('編集')
       end
+
+      it '記事リストの記事に編集ボタンが表示されない' do
+        sign_in user
+        visit calendar_path(calendar)
+        within('#entries_list') { expect(page).not_to have_link('編集') }
+      end
     end
 
     context '未ログインユーザーの場合' do
@@ -189,6 +216,12 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
         expect(page).not_to have_link('編集')
+      end
+
+      it '記事リストの記事に編集ボタンが表示されない' do
+        sign_in user
+        visit calendar_path(calendar)
+        within('#entries_list') { expect(page).not_to have_link('編集') }
       end
     end
   end
