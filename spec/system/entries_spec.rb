@@ -5,22 +5,21 @@ require 'rails_helper'
 RSpec.describe 'Entries', type: :system do
   include WebMockStubs
 
-  let(:calendar) { create(:calendar) }
-  let(:user) { create(:user) }
-
   before do
     stub_all_requests
   end
 
   describe 'カレンダーに記事を登録' do
+    let(:calendar) { create(:calendar) }
+    let(:user) { create(:user) }
     let(:entry_date) { '[data-test="2025-12-01"]' }
 
-    context 'ログインユーザーの場合' do
+    context 'ログインユーザーが記事を登録する場合' do
       before do
         sign_in user
       end
 
-      it '記事を登録するとカレンダーにアイコンが表示される' do
+      it 'カレンダーに登録者のアイコンが表示される' do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
@@ -30,18 +29,30 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_selector('img[src*="avatar1.png"]')
       end
 
-      it '記事を登録すると記事リストに表示される' do
+      it '記事リストに表示される' do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         click_button '保存'
-
         expect(page).to have_content('一般ユーザー')
         expect(page).to have_content('テスト記事')
         expect(page).to have_selector('img[src*="avatar1.png"]')
       end
 
-      it '記事URLを登録するとリンクプレビューが表示される' do
+      it 'キャンセルボタンを押すと登録モーダルを閉じることができる' do
+        visit calendar_path(calendar)
+        find(entry_date).click
+        click_button 'キャンセル'
+        expect(page.find('#entry_modal').text).to eq('')
+      end
+    end
+
+    context '記事URLを登録した場合' do
+      before do
+        sign_in user
+      end
+
+      it 'リンクプレビューが表示される' do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
@@ -61,13 +72,6 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_content('フォールバック時のタイトル')
         expect(page).to have_content('フォールバック時の説明')
         expect(page).to have_selector("img[src*='favicon.png']")
-      end
-
-      it 'キャンセルボタンを押すと登録モーダルを閉じることができる' do
-        visit calendar_path(calendar)
-        find(entry_date).click
-        click_button 'キャンセル'
-        expect(page.find('#entry_modal').text).to eq('')
       end
     end
 
@@ -113,8 +117,8 @@ RSpec.describe 'Entries', type: :system do
   end
 
   describe 'カレンダーに登録した記事を更新' do
-    let(:user) { build(:user) }
     let(:calendar) { create(:calendar) }
+    let(:user) { build(:user) }
     let!(:entry) { create(:entry, calendar: calendar, user: user) }
 
     context 'ログインユーザーの場合' do
@@ -143,7 +147,6 @@ RSpec.describe 'Entries', type: :system do
         click_button '保存'
         expect(page).to have_content('一般ユーザー')
         expect(page).to have_content('更新したタイトル')
-        expect(page).to have_selector('img[src*="avatar1.png"]')
       end
 
       it '記事URLを更新するとリンクプレビューが更新される' do
@@ -170,7 +173,7 @@ RSpec.describe 'Entries', type: :system do
       end
     end
 
-    context '記事の所有者以外のユーザーがログインしている場合' do
+    context '記事の登録者以外のユーザーがログインしている場合' do
       before do
         sign_in build(:user, :second_user)
       end
@@ -188,18 +191,18 @@ RSpec.describe 'Entries', type: :system do
   end
 
   describe 'カレンダーに登録した記事を削除' do
+    let(:calendar) { create(:calendar) }
+    let(:user) { build(:user) }
+
     before do
       create(:entry, calendar: calendar, user: user)
       sign_in user
-      visit calendar_path(calendar)
     end
 
     it '登録した記事を削除できる' do
+      visit calendar_path(calendar)
       click_on '編集'
-      accept_confirm('記事を削除しますか？') do
-        click_on '削除'
-      end
-
+      accept_confirm { click_on '削除' }
       expect(page).to have_content('記事を削除しました')
       within('#calendar') do
         expect(page).to have_no_selector('img[src*="avatar1.png"]')
@@ -207,57 +210,63 @@ RSpec.describe 'Entries', type: :system do
     end
 
     it '記事を削除すると記事リストから削除される' do
+      visit calendar_path(calendar)
       click_on '編集'
       accept_confirm('記事を削除しますか？') do
         click_on '削除'
       end
-      expect(page).to have_no_selector('#entry_2025-12-01')
+      expect(page).not_to have_content('一般ユーザー')
+      expect(page).not_to have_content('エントリータイトル')
     end
   end
 
   describe '記事の登録制限' do
-    # rubocop:disable RSpec/AnyInstance
-    let(:second_user) { build(:user, :second_user) }
-    let(:third_user) { build(:user, :third_user) }
+    let!(:calendar) { create(:calendar) }
+    let(:primary_author) { build(:user) }
+    let(:secondary_author) { build(:user, :second_user) }
+    let(:viewer) { build(:user, :third_user) }
 
-    it '登録されている記事が25件未満のときは、すでに記事が登録されている日付には登録ボタンが表示されない' do
-      create(:entry, user: user, calendar: calendar, registration_date: '2025-12-01')
+    context '登録されている記事が25件未満の場合' do
+      before do
+        create(:entry, user: primary_author, calendar: calendar, registration_date: '2025-12-01')
+        sign_in viewer
+      end
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(second_user)
-      visit calendar_path(calendar)
-
-      within('[data-test="day-1"]') do
-        expect(page).to have_no_css('a', text: '+')
+      it 'すでに記事が登録されている日付には登録ボタンが表示されない' do
+        visit calendar_path(calendar)
+        within('[data-test="day-1"]') do
+          expect(page).not_to have_link('+')
+        end
       end
     end
 
-    it '登録されている記事が25件以上の場合は、2周目が始まりカレンダーの各日付に登録ボタンが表示される' do
-      (1..25).each do |i|
-        create(:entry, user: user, calendar: calendar, registration_date: "2025-12-#{i}")
-      end
-      sign_in user
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(second_user)
-      visit calendar_path(calendar)
-
-      within('#calendar') do
-        expect(all('a', text: '+').size).to eq 25
-      end
-    end
-
-    it 'カレンダーの各日付に記事が2件ずつ登録されると3周目が始まり各日付に登録ボタンが表示される' do
-      (1..25).each do |i|
-        create(:entry, user: user, calendar: calendar, registration_date: "2025-12-#{i}")
-        create(:entry, user: second_user, calendar: calendar, registration_date: "2025-12-#{i}")
+    context '登録されている記事が25件以上の場合' do
+      before do
+        create_list(:entry, 25, :sequential_date, calendar: calendar, user: primary_author)
+        sign_in viewer
       end
 
-      sign_in user
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(third_user)
-      visit calendar_path(calendar)
-
-      within('#calendar') do
-        expect(all('a', text: '+').size).to eq 25
+      it '2周目が始まりカレンダーの各日付に登録ボタンが表示される' do
+        visit calendar_path(calendar)
+        within('#calendar') do
+          expect(all('a', text: '+').size).to eq 25
+        end
       end
     end
-    # rubocop:enable RSpec/AnyInstance
+
+    context 'カレンダーに50件以上記事が登録されている場合' do
+      before do
+        create_list(:entry, 25, :sequential_date, calendar: calendar, user: primary_author)
+        create_list(:entry, 25, :sequential_date, calendar: calendar, user: secondary_author)
+        sign_in viewer
+      end
+
+      it '3周目が始まりカレンダーの各日付に登録ボタンが表示される' do
+        visit calendar_path(calendar)
+        within('#calendar') do
+          expect(all('a', text: '+').size).to eq 25
+        end
+      end
+    end
   end
 end

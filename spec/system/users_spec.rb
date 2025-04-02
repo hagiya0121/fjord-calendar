@@ -46,12 +46,12 @@ RSpec.describe 'Users', type: :system do
 
       it 'ヘッダーにログインユーザーのアイコンが表示される' do
         visit root_path
-        within('header') { expect(page).to have_selector('img[alt="プロフィール画像"]') }
+        within('header') { expect(page).to have_selector('img[src*="avatar1.png"]') }
       end
 
       it 'ログアウトできる' do
         visit root_path
-        within('header') { find('img[alt="プロフィール画像"]').click }
+        within('header') { find('img[src*="avatar1.png"]').click }
         click_on 'ログアウト'
         expect(page).to have_content('ログアウトしました。')
       end

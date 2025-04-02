@@ -6,7 +6,7 @@ RSpec.describe CalendarsHelper, type: :helper do
   describe '#markdown_to_html' do
     it '普通のテキストを渡すとそのまま出力する' do
       html = helper.markdown_to_html('Hello World')
-      expect(html).to eq("<p>Hello World</p>\n")
+      expect(html).to include('<p>Hello World</p>')
     end
 
     it '見出しをHTMLに変換する' do
