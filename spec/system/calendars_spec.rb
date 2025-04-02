@@ -6,45 +6,37 @@ RSpec.describe 'Calendars', type: :system do
   include WebMockStubs
 
   describe 'カレンダーの一覧表示' do
-    let!(:calendars) do
-      (2015..2025).map do |year|
-        create(:calendar, year: year)
-      end
-    end
-
-    before do
-      visit calendars_path
-    end
+    let!(:calendars) { create_list(:calendar, 5, :sequential_years) }
 
     it 'カレンダーが一覧表示される' do
+      visit calendars_path
       calendars.each do |calendar|
-        expect(page).to have_content(calendar.title)
+        expect(page).to have_link(calendar.title)
       end
     end
 
-    it 'カレンダーはyearの降順で表示される' do
-      years = all('[data-test="calendar"]').map { |element| element['data-year'].to_i }
-      expect(years).to eq years.sort.reverse
+    it 'カレンダー一覧が年の新しい順に表示される' do
+      visit calendars_path
+      years = all('[data-test="calendar"]').map { |e| e['data-year'].to_i }
+      expect(years).to eq(years.sort.reverse)
     end
 
     it 'カレンダーをクリックするとそのカレンダーの詳細ページに遷移する' do
-      create(:user)
-      click_on '2025年のカレンダーのタイトル'
-      expect(page).to have_current_path(calendar_path(calendars.last))
+      visit calendars_path
+      click_on calendars.first.title
+      expect(page).to have_current_path(calendar_path(calendars.first))
     end
   end
 
   describe 'カレンダーの新規作成' do
     context '管理者の場合' do
-      let(:admin) { create(:user, :admin) }
-
       before do
-        sign_in admin
+        sign_in create(:user, :admin)
       end
 
       it 'カレンダーを作成できる' do
         visit root_path
-        within('header') { find('img[alt="プロフィール画像"]').click }
+        within('header') { find('img[src*="avatar1.png"]').click }
         click_on 'カレンダーを作成'
         fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
@@ -86,36 +78,37 @@ RSpec.describe 'Calendars', type: :system do
 
   describe 'カレンダーの更新' do
     let(:calendar) { create(:calendar) }
-    let(:admin) { create(:user, :admin) }
-    let(:user) { create(:user) }
 
-    it 'カレンダーを更新できる' do
-      sign_in admin
-      visit calendar_path(calendar)
-      click_on '編集'
-      fill_in 'タイトル', with: '更新したタイトル'
-      fill_in '説明', with: '更新した説明'
-      click_on '更新する'
-      expect(page).to have_content('カレンダーを更新しました')
-      expect(page).to have_content('更新したタイトル')
-      expect(page).to have_content('更新した説明')
-    end
+    context '管理者の場合' do
+      before do
+        sign_in create(:user, :admin)
+      end
 
-    it '必須項目が空だとエラーが表示される' do
-      sign_in admin
-      visit calendar_path(calendar)
-      click_on '編集'
-      fill_in 'タイトル', with: ''
-      click_on '更新する'
-      expect(page).to have_content('タイトルを入力してください')
-    end
+      it 'カレンダーを更新できる' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        fill_in 'タイトル', with: '更新したタイトル'
+        fill_in '説明', with: '更新した説明'
+        click_on '更新する'
+        expect(page).to have_content('カレンダーを更新しました')
+        expect(page).to have_content('更新したタイトル')
+        expect(page).to have_content('更新した説明')
+      end
 
-    it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
-      sign_in admin
-      visit calendar_path(calendar)
-      click_on '編集'
-      click_on 'キャンセル'
-      expect(page).to have_current_path(calendar_path(calendar))
+      it '必須項目が空だとエラーが表示される' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        fill_in 'タイトル', with: ''
+        click_on '更新する'
+        expect(page).to have_content('タイトルを入力してください')
+      end
+
+      it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
+        visit calendar_path(calendar)
+        click_on '編集'
+        click_on 'キャンセル'
+        expect(page).to have_current_path(calendar_path(calendar))
+      end
     end
 
     context '未ログインユーザーの場合' do
@@ -127,7 +120,7 @@ RSpec.describe 'Calendars', type: :system do
 
     context '一般のログインユーザーの場合' do
       it '編集ページにアクセスできない' do
-        sign_in user
+        sign_in build(:user)
         visit edit_calendar_path(calendar)
         expect(page).to have_content('アクセス権限がありません')
       end
@@ -136,7 +129,6 @@ RSpec.describe 'Calendars', type: :system do
 
   describe 'カレンダーの詳細' do
     let(:calendar) { create(:calendar) }
-    let(:user) { create(:user) }
 
     before do
       stub_all_requests
@@ -152,9 +144,7 @@ RSpec.describe 'Calendars', type: :system do
     it 'ユーザーアイコンが記事URLのリンクになっている' do
       visit calendar_path(calendar)
       within('#calendar') do
-        expect(page).to have_link(nil, href: 'http://example.com') do
-          expect(page).to have_selector('img[src="http://example.com/avatar1.png"]')
-        end
+        expect(page).to have_selector('a[href="http://example.com"] img[src*="avatar1.png"]')
       end
     end
 
@@ -168,42 +158,42 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     context '管理者の場合' do
-      let(:admin) { build(:user, :admin) }
+      before do
+        sign_in build(:user, :admin)
+      end
 
       it '記事登録ボタンが表示される' do
-        sign_in admin
         visit calendar_path(calendar)
         expect(page).to have_link('+')
       end
 
       it 'カレンダー編集ボタンが表示される' do
-        sign_in admin
         visit calendar_path(calendar)
         expect(page).to have_link('編集')
       end
 
       it '記事リストの記事に編集ボタンが表示される' do
-        sign_in admin
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).to have_link('編集') }
       end
     end
 
     context '一般のログインユーザーの場合' do
+      before do
+        sign_in build(:user)
+      end
+
       it '記事登録ボタンが表示される' do
-        sign_in user
         visit calendar_path(calendar)
         expect(page).to have_link('+')
       end
 
       it 'カレンダー編集ボタンが表示されない' do
-        sign_in user
         visit calendar_path(calendar)
         expect(page).not_to have_link('編集')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
-        sign_in user
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link('編集') }
       end
@@ -221,7 +211,6 @@ RSpec.describe 'Calendars', type: :system do
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
-        sign_in user
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link('編集') }
       end
@@ -229,12 +218,14 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの削除' do
-    let(:admin) { create(:user, :admin) }
-    let!(:calendar) { create(:calendar) }
+    let(:calendar) { create(:calendar) }
 
     context '管理者の場合' do
+      before do
+        sign_in create(:user, :admin)
+      end
+
       it 'カレンダーを削除できる' do
-        sign_in admin
         visit calendar_path(calendar)
         click_on '編集'
         accept_confirm { click_on '削除' }
