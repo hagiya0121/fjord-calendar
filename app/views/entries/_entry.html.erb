@@ -14,21 +14,7 @@
         <%= entry.title %>
       </div>
 
-      <% if entry.url.present? %>
-        <%= link_to entry.url,
-                    class: 'block border rounded-lg shadow-sm hover:shadow-lg flex items-center p-4 space-x-4',
-                    data: { copy_entries_target: 'url' } do %>
-          <div class="flex-1">
-            <div class="font-semibold text-gray-900">
-              <%= entry.meta_title %>
-            </div>
-            <p class="text-gray-600 text-sm mt-1">
-              <%= truncate(entry.meta_description, length: 60) %>
-            </p>
-          </div>
-          <%= image_tag entry.meta_image_url, class: 'w-32 h-20 object-cover rounded-md' if entry.meta_image_url %>
-        <% end %>
-      <% end %>
+      <%= render 'entries/link_preview', entry: entry %>
     </div>
 
     <% if current_user&.admin? %>
