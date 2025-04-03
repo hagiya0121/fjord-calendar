@@ -175,7 +175,7 @@ RSpec.describe 'Entries', type: :system do
 
     context '記事の登録者以外のユーザーがログインしている場合' do
       before do
-        sign_in build(:user, :second_user)
+        sign_in create(:user, :second_user)
       end
 
       it '記事編集ボタンが表示されない' do
@@ -224,7 +224,7 @@ RSpec.describe 'Entries', type: :system do
     let!(:calendar) { create(:calendar) }
     let(:primary_author) { build(:user) }
     let(:secondary_author) { build(:user, :second_user) }
-    let(:viewer) { build(:user, :third_user) }
+    let(:viewer) { create(:user, :third_user) }
 
     context '登録されている記事が25件未満の場合' do
       before do

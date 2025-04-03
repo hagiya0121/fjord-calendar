@@ -159,7 +159,7 @@ RSpec.describe 'Calendars', type: :system do
 
     context '管理者の場合' do
       before do
-        sign_in build(:user, :admin)
+        sign_in create(:user, :admin)
       end
 
       it '記事登録ボタンが表示される' do
@@ -180,7 +180,7 @@ RSpec.describe 'Calendars', type: :system do
 
     context '一般のログインユーザーの場合' do
       before do
-        sign_in build(:user)
+        sign_in create(:user)
       end
 
       it '記事登録ボタンが表示される' do
