@@ -2,6 +2,8 @@
 
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    include Devise::Controllers::Rememberable
+
     skip_before_action :verify_authenticity_token, only: :github
 
     def github
@@ -10,6 +12,7 @@ module Users
       if @user.persisted?
         sign_in @user, event: :authentication
         set_flash_message(:notice, :success, kind: 'GitHub') if is_navigational_format?
+        remember_me(@user)
       else
         session['devise.github_data'] = request.env['omniauth.auth'].except(:extra)
       end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :omniauthable, omniauth_providers: [:github]
+  devise :omniauthable, :rememberable, omniauth_providers: [:github]
 
   enum :role, { user: 0, admin: 1 }
 
