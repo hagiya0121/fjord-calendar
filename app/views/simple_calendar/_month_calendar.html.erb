@@ -14,7 +14,7 @@
       <% end %>
 
       <% start_weekday(start_date.year).times do %>
-        <div data-test="offset_cell" class="aspect-square p-2 border border-gray-300 bg-gray-100 max-sm:hidden"></div>
+        <div data-test="offset_cell" class="aspect-[3/4] p-2 border border-gray-300 bg-gray-100 max-sm:hidden"></div>
       <% end %>
     <% end %>
 
@@ -22,8 +22,8 @@
       <div data-test="day-<%= date.day %>"
            class="<%= class_names(
                         'p-1 border border-gray-300 flex justify-between',
-                        { 'aspect-square' => index_action?,
-                          'aspect-[4/1] sm:aspect-square' => !index_action?,
+                        { 'aspect-[3/4]' => index_action?,
+                          'aspect-[4/1] sm:aspect-[3/4]' => !index_action?,
                           'bg-yellow-100' => date == Time.zone.today }
                       ) %>">
         <% instance_exec(date, calendar.sorted_events_for(date), &passed_block) %>
