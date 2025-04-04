@@ -34,7 +34,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         click_button '保存'
-        expect(page).to have_content('一般ユーザー')
+        expect(page).to have_link(text: '一般ユーザー', href: user_path(user))
         expect(page).to have_content('テスト記事')
         expect(page).to have_selector('img[src*="avatar1.png"]')
       end

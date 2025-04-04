@@ -7,7 +7,9 @@
     <div class="flex-1 space-y-4">
       <div class="flex items-center space-x-2">
         <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full' %>
-        <span data-copy-entries-target="name" class="text-sm font-semibold text-gray-900"><%= entry.user.name %></span>
+        <span data-copy-entries-target="name" class="text-sm font-semibold text-gray-900">
+          <%= link_to entry.user.name, user_path(entry.user) %>
+        </span>
       </div>
 
       <div data-copy-entries-target="title" class="font-semibold text-gray-900">

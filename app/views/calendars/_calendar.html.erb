@@ -13,7 +13,7 @@
 
     <% if !index_action? && (entry = entries.find { |e| e.user == current_user }) %>
       <%= link_to '編集', edit_entry_path(entry),
-                  class: 'absolute text-blue-500 top-1 right-1 text-base',
+                  class: 'absolute text-blue-500 top-1 right-1 text-xs',
                   data: { turbo_frame: 'entry_modal' } %>
     <% elsif !index_action? && signed_in? && entries.size < calendar.max_entries %>
       <%= link_to '+', new_calendar_entry_path(calendar, registration_date: date),
@@ -26,19 +26,34 @@
                   data: { turbo_frame: 'entry_modal', test: date.to_s } %>
     <% end %>
 
-    <div class="h-full w-full flex p-1">
+    <div class="w-full h-full flex sm:flex-col items-center justify-center p-1">
       <% entries.each do |entry| %>
         <% if controller.action_name == "index" %>
-          <div class="w-full h-full flex items-end">
-            <%= image_tag(entry.user.avatar_url, class: 'rounded-full mx-auto max-h-[70%]', alt: 'プロフィール画像') %>
+          <div class="flex flex-col items-center">
+            <%= image_tag(entry.user.avatar_url,
+                          class: class_names(
+                            'rounded-full w-10 h-10 object-cover',
+                            'lg:w-20 lg:h-20' => entries.size < 3,
+                            'md:w-8 md:h-8 lg:w-14 lg:h-14' => entries.size >= 3
+                          ),
+                          alt: 'プロフィール画像') %>
           </div>
         <% else %>
-          <%= link_to entry.url, class: 'w-full h-full flex items-end' do %>
-            <%= image_tag(entry.user.avatar_url,
-                          class: class_names('rounded-full mx-auto max-h-[70%]',
-                                             'pointer-events-none opacity-50' => entry.url.blank?),
-                          alt: 'プロフィール画像') %>
-          <% end %>
+          <div class="flex flex-col items-center">
+            <%= link_to entry.url do %>
+              <%= image_tag(entry.user.avatar_url,
+                            class: class_names(
+                              'rounded-full w-10 h-10 object-cover',
+                              'lg:w-20 lg:h-20' => entries.size < 3,
+                              'md:w-8 md:h-8 lg:w-14 lg:h-14' => entries.size >= 3,
+                              'pointer-events-none opacity-50' => entry.url.blank?
+                            ),
+                            alt: 'プロフィール画像') %>
+            <% end %>
+            <div class="text-[10px] text-center">
+              <%= entry.user.name %>
+            </div>
+          </div>
         <% end %>
       <% end %>
     </div>
