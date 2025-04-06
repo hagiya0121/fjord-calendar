@@ -1,4 +1,4 @@
-<div class="bg-gray-100 p-2 my-2">
+<div class="bg-gray-100 my-2">
   <div class="<%= class_names(
                     'bg-white grid',
                     { 'grid-cols-7' => index_action?,
@@ -8,7 +8,7 @@
     <% unless index_action? %>
       <% date_range.first(7).each do |day| %>
         <div class="py-2 text-center font-semibold
-                  text-gray-600 border-b bg-gray-200 max-sm:hidden">
+                  text-gray-600 border-b bg-gray-300 max-sm:hidden">
           <%= t('date.abbr_day_names')[day.wday] %>
         </div>
       <% end %>

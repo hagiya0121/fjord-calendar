@@ -1,4 +1,4 @@
-<div class="container mx-auto px-5 bg-gray-200" data-controller="entry-modal copy-entries">
+<div class="px-5 bg-gray-200" data-controller="entry-modal copy-entries">
   <div class="flex justify-end">
     <%= link_to '記事のリンクをコピー', '#',
                 class: 'bg-blue-800 text-white px-4 py-2',
@@ -24,6 +24,6 @@
   </div>
 
   <div id="entries_list" class="space-y-2">
-    <%= render @calendar.entries.order(:registration_date) %>
+    <%= render @entries %>
   </div>
 </div>
