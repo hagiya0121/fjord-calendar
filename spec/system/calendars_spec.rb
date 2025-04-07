@@ -26,6 +26,11 @@ RSpec.describe 'Calendars', type: :system do
       click_on calendars.first.title
       expect(page).to have_current_path(calendar_path(calendars.first))
     end
+
+    it 'タイトルタグが正しく表示される' do
+      visit calendars_path
+      expect(page).to have_title('トップページ | Fjord Calendar')
+    end
   end
 
   describe 'カレンダーの新規作成' do
@@ -57,6 +62,11 @@ RSpec.describe 'Calendars', type: :system do
         fill_in '説明', with: 'カレンダーの説明です'
         click_on '登録する'
         expect(page).to have_content('この年度のカレンダーはすでに作成されています')
+      end
+
+      it 'タイトルタグが正しく表示される' do
+        visit new_calendar_path
+        expect(page).to have_title('カレンダーの新規作成 | Fjord Calendar')
       end
     end
 
@@ -109,6 +119,11 @@ RSpec.describe 'Calendars', type: :system do
         click_on 'キャンセル'
         expect(page).to have_current_path(calendar_path(calendar))
       end
+
+      it 'タイトルタグが正しく表示される' do
+        visit edit_calendar_path(calendar)
+        expect(page).to have_title('カレンダーの編集 | Fjord Calendar')
+      end
     end
 
     context '未ログインユーザーの場合' do
@@ -150,11 +165,17 @@ RSpec.describe 'Calendars', type: :system do
 
     it '各年の12月1日が適切な曜日位置に表示されるようにオフセットセルが挿入される' do
       (2000..2004).each do |year|
-        visit calendar_path(create(:calendar, year: year))
+        calendar = create(:calendar, year: year)
+        visit calendar_path(calendar)
         offset_cells = all('[data-test="offset_cell"]')
         expected_offset = Date.new(year, 12, 1).cwday - 1
         expect(offset_cells.size).to eq(expected_offset)
       end
+    end
+
+    it 'タイトルタグが正しく表示される' do
+      visit calendar_path(calendar)
+      expect(page).to have_title("#{calendar.title} | Fjord Calendar")
     end
 
     context '管理者の場合' do
