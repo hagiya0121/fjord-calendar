@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'commonmarker'
 gem 'devise'
 gem 'devise-i18n'
+gem 'high_voltage'
 gem 'http'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
