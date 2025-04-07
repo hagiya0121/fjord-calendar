@@ -280,13 +280,10 @@ RSpec.describe 'Entries', type: :system do
 
     it 'スクロールするたびに記事が読み込まれ、全件表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_selector('div[id^="entry_"]', count: 20)
+      expect(page).to have_selector('div[id^="entry_"]', count: 25)
 
       page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-      expect(page).to have_selector('div[id^="entry_"]', count: 40)
-
-      page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-      expect(page).to have_selector('div[id^="entry_"]', count: 60)
+      expect(page).to have_selector('div[id^="entry_"]', count: 50)
 
       page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
       expect(page).to have_selector('div[id^="entry_"]', count: 75)
