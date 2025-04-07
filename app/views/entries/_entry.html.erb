@@ -1,4 +1,4 @@
-<div id="entry_<%= entry.id %>" class="border border-gray-300 p-4 rounded-lg bg-white shadow-sm">
+<div id="entry_<%= entry.id %>" class="mt-2 border border-gray-300 p-4 rounded-lg bg-white shadow-sm">
   <div class="p-4 flex gap-4 ">
     <div data-copy-entries-target="day" class="text-gray-700 font-semibold w-6 text-left">
       <%= entry.registration_date.strftime('%-d') %>
@@ -8,7 +8,7 @@
       <div class="flex items-center space-x-2">
         <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full' %>
         <span data-copy-entries-target="name" class="text-sm font-semibold text-gray-900">
-          <%= link_to entry.user.name, user_path(entry.user) %>
+          <%= link_to entry.user.name, user_path(entry.user), data: { turbo: false } %>
         </span>
       </div>
 

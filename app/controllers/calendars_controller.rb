@@ -9,7 +9,9 @@ class CalendarsController < ApplicationController
     @calendars = Calendar.order(year: :desc)
   end
 
-  def show; end
+  def show
+    @entries = @calendar.entries.order(:registration_date).page(params[:page]).per(25)
+  end
 
   def new
     @calendar = Calendar.new

@@ -1,4 +1,4 @@
-<div class="container mx-auto px-5 bg-gray-200" data-controller="entry-modal copy-entries">
+<div class="px-5 bg-gray-200" data-controller="entry-modal copy-entries">
   <div class="flex justify-end">
     <%= link_to '記事のリンクをコピー', '#',
                 class: 'bg-blue-800 text-white px-4 py-2',
@@ -23,7 +23,15 @@
     </div>
   </div>
 
-  <div id="entries_list" class="space-y-2">
-    <%= render @calendar.entries.order(:registration_date) %>
+  <div id="entries_list">
+    <%= turbo_frame_tag "entries-page-#{@entries.current_page}" do %>
+      <%= render @entries %>
+
+      <%= if @entries.next_page
+            turbo_frame_tag "entries-page-#{@entries.next_page}",
+                            src: calendar_path(page: @entries.next_page),
+                            loading: :lazy
+          end %>
+    <% end %>
   </div>
 </div>
