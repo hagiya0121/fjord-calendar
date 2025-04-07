@@ -1,3 +1,5 @@
+<% title 'トップページ' %>
+
 <div class="px-2 bg-gray-200">
   <% @calendars.each do |calendar| %>
     <%= link_to calendar_path(calendar), data: { test: 'calendar', year: calendar.year } do %>
