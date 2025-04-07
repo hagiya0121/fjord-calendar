@@ -23,7 +23,15 @@
     </div>
   </div>
 
-  <div id="entries_list" class="space-y-2">
-    <%= render @entries %>
+  <div id="entries_list">
+    <%= turbo_frame_tag "entries-page-#{@entries.current_page}" do %>
+      <%= render @entries %>
+
+      <%= if @entries.next_page
+            turbo_frame_tag "entries-page-#{@entries.next_page}",
+                            src: calendar_path(page: @entries.next_page),
+                            loading: :lazy
+          end %>
+    <% end %>
   </div>
 </div>

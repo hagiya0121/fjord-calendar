@@ -269,4 +269,27 @@ RSpec.describe 'Entries', type: :system do
       end
     end
   end
+
+  describe '記事リストの読み込み' do
+    let(:calendar) { create(:calendar) }
+
+    before do
+      create_list(:entry, 75, :sequential_date, calendar: calendar)
+      sign_in create(:user)
+    end
+
+    it 'スクロールするたびに記事が読み込まれ、全件表示される' do
+      visit calendar_path(calendar)
+      expect(page).to have_selector('div[id^="entry_"]', count: 20)
+
+      page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+      expect(page).to have_selector('div[id^="entry_"]', count: 40)
+
+      page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+      expect(page).to have_selector('div[id^="entry_"]', count: 60)
+
+      page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+      expect(page).to have_selector('div[id^="entry_"]', count: 75)
+    end
+  end
 end
