@@ -50,6 +50,11 @@ RSpec.describe 'マイページ', type: :system do
       expect(page).to have_content('エントリータイトル')
     end
 
+    it 'タイトルタグが正しく表示される' do
+      visit user_path(user)
+      expect(page).to have_title("#{user.name}のマイページ")
+    end
+
     context '記事URLが登録されている場合' do
       it 'リンクプレビューが表示される' do
         visit user_path(user)
