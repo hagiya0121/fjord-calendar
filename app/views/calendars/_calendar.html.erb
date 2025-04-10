@@ -27,7 +27,7 @@
     <% end %>
 
     <div class="w-full h-full flex justify-evenly sm:flex-col items-center p-1">
-      <% entries.each do |entry| %>
+      <% entries.sort_by(&:created_at).each do |entry| %>
         <% if controller.action_name == "index" %>
           <div class="h-full flex flex-col justify-center mt-4">
             <%= image_tag(entry.user.avatar_url,
