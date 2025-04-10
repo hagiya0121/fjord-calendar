@@ -43,3 +43,6 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Max: 11
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
