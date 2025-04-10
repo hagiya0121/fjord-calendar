@@ -10,7 +10,7 @@ class CalendarsController < ApplicationController
   end
 
   def show
-    @entries = @calendar.entries.order(:registration_date).page(params[:page]).per(25)
+    @entries = @calendar.entries.order(:registration_date, :created_at).page(params[:page]).per(25)
   end
 
   def new
