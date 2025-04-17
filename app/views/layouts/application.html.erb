@@ -6,18 +6,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload' %>
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="max-w-4xl mx-auto min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-[url('background.jpg')] text-white">
     <%= render 'shared/header' %>
 
     <div id="flash-message" data-turbo-temporary>
       <%= render 'shared/flash' %>
     </div>
 
-    <main class="w-full mt-28 px-1 flex-1">
+    <main class="w-full flex-1">
       <%= yield %>
     </main>
 

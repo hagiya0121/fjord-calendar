@@ -1,14 +1,23 @@
 <% title 'トップページ' %>
 
-<div class="px-2 bg-gray-200">
+<section class="py-10 mb-8 px-2">
+  <h1 class="mb-4">
+    <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[400px] w-auto mx-auto' %>
+  </h1>
+  <p class="drop-shadow-md text-xl font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+</section>
+
+<div class="max-w-3xl mx-auto">
   <% @calendars.each do |calendar| %>
-    <%= link_to calendar_path(calendar), data: { test: 'calendar', year: calendar.year } do %>
-      <div class="mb-8 p-2 bg-white hover:bg-gray-500 transition cursor-pointer">
-        <h2 class="bg-gray-400 p-2 text-center text-2xl font-bold rounded-lg">
-          <%= calendar.title %>
-        </h2>
-        <div><%= render calendar %></div>
-      </div>
-    <% end %>
+    <article class="mb-10">
+      <%= link_to calendar_path(calendar),
+                  data: { test: 'calendar', year: calendar.year },
+                  class: 'bg-emerald-400/80 block border-2 p-6 rounded-2xl shadow-xl  space-y-4 hover:bg-white/10' do %>
+        <h2 class="drop-shadow-md text-2xl font-bold text-center"><%= calendar.title %></h2>
+        <div class="mx-auto max-w-2xl w-full">
+          <%= render calendar %>
+        </div>
+      <% end %>
+    </article>
   <% end %>
 </div>
