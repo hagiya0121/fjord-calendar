@@ -1,0 +1,18 @@
+<%= month_calendar(start_date: calendar.start_date, events: calendar.entries.includes(:user),
+                   attribute: :registration_date) do |date, entries| %>
+  <div class="relative w-full">
+    <div class="absolute top-1 left-1 text-[11px] sm:text-base text-black">
+      <%= date.day %>
+    </div>
+
+    <% if entries.present? %>
+      <div class="h-full w-fit mx-auto sm:py-3">
+        <div class="h-full flex flex-col justify-end">
+            <%= image_tag(entries.min_by(&:created_at).user.avatar_url,
+                          class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
+                          alt: 'プロフィール画像') %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

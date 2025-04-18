@@ -15,7 +15,7 @@
                   class: 'bg-[#B3DC7C] block border-2 p-6 rounded-2xl shadow-xl  space-y-4 hover:bg-white/10' do %>
         <h2 class="drop-shadow-md text-lg font-bold text-center"><%= calendar.title %></h2>
         <div class="mx-auto max-w-2xl w-full">
-          <%= render calendar %>
+          <%= render 'calendar_index', calendar: calendar %>
         </div>
       <% end %>
     </article>

@@ -4,6 +4,6 @@
 
 <%= turbo_stream.update "flash-message", partial: 'shared/flash' %>
 
-<%= turbo_stream.update 'calendar', partial: "calendars/calendar", locals: { calendar: entry.calendar } %>
+<%= turbo_stream.update 'calendar', partial: "calendars/calendar_show", locals: { calendar: entry.calendar } %>
 
 <%= turbo_stream.replace "entry_#{entry.id}", entry %>
