@@ -1,11 +1,17 @@
-<footer class="h-20 w-full">
-  <div class="max-w-3xl mx-auto flex justify-between items-center gap-4 text-sm h-full">
-    <%= link_to 'プライバシーポリシー', page_path('privacy'),
-                class: 'text-center py-1 px-2 rounded-lg hover:bg-white/10' %>
-    <%= link_to '利用規約', page_path('terms'),
-                class: 'text-center py-1 px-2 rounded-lg hover:bg-white/10' %>
-    <%= link_to 'GitHub', 'https://github.com/hagiya0121/fjord-calendar',
-                class: 'text-center py-1 px-2 rounded-lg hover:bg-white/10' %>
-    <span class="text-center">&copy; <%= Time.current.year %> hagiya</span>
+<footer class="w-full py-4">
+  <div class="max-w-3xl mx-auto flex flex-col items-center gap-2 text-xs">
+    <ul class="flex justify-evenly w-full">
+      <li class="rounded hover:bg-white/10 px-2 py-1">
+        <%= link_to '利用規約', page_path('terms') %>
+      </li>
+      <li class="rounded hover:bg-white/10 px-2 py-1">
+        <%= link_to 'プライバシーポリシー', page_path('privacy') %>
+      </li>
+      <li class="rounded hover:bg-white/10 px-2 py-1">
+        <%= link_to 'GitHub', 'https://github.com/hagiya0121/fjord-calendar' %>
+      </li>
+    </ul>
+
+    <span>&copy; <%= Time.current.year %> hagiya</span>
   </div>
 </footer>

@@ -1,7 +1,7 @@
-<header class="h-16 w-full z-40 px-2">
+<header class="h-16 w-full z-40 px-3">
   <div class="h-full max-w-3xl mx-auto flex items-center justify-between">
     <%= link_to 'Fjord Calendar', root_path,
-                class: 'text-lg bg-transparent text-white px-4 py-2 rounded-lg font-semibold hover:bg-white/10' %>
+                class: 'px-2 py-2 text-lg rounded-lg font-semibold hover:bg-white/10' %>
 
     <% if signed_in? %>
       <div data-controller="dropdown" class="relative">
