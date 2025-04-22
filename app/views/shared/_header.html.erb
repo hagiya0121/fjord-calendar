@@ -1,5 +1,5 @@
-<header class="h-16 w-full z-40 px-3">
-  <div class="h-full max-w-3xl mx-auto flex items-center justify-between">
+<header class="h-16 w-full z-40 container-wrapper">
+  <div class="h-full flex items-center justify-between">
     <%= link_to 'Fjord Calendar', root_path,
                 class: 'px-2 py-2 text-lg rounded-lg font-semibold hover:bg-white/10' %>
 
@@ -7,7 +7,7 @@
       <div data-controller="dropdown" class="relative">
         <button data-action="click->dropdown#toggle">
           <%= image_tag current_user.avatar_url,
-                        class: 'h-10 w-10 rounded-full object-cover cursor-pointer hover:brightness-110',
+                        class: 'h-10 w-10 rounded-full object-cover hover-border-white',
                         alt: 'プロフィール画像' %>
         </button>
 

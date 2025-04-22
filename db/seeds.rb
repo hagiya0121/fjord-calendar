@@ -62,7 +62,7 @@ calendar_description = <<~MARKDOWN
 MARKDOWN
 
 if Rails.env.development?
-  (2016..2025).each do |year|
+  (2016..2026).each do |year|
     Calendar.find_or_create_by!(
       year: year,
       title: "フィヨルドブートキャンプ Advent Calendar #{year}",

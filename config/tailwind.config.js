@@ -12,6 +12,10 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        ochre: "#DDA75B",
+        "light-ochre": "#FFF8E7",
+      },
       keyframes: {
         fadeOut: {
           "0%": { opacity: "1" },

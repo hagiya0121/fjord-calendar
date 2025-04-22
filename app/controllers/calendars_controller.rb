@@ -6,7 +6,7 @@ class CalendarsController < ApplicationController
   before_action :authenticate_admin!, except: %i[index show]
 
   def index
-    @calendars = Calendar.order(year: :desc)
+    @calendars = Calendar.includes(entries: :user).order(year: :desc)
   end
 
   def show
