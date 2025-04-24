@@ -10,7 +10,7 @@ require 'rspec/rails'
 require 'webmock/rspec'
 
 Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(allow_localhost: true, allow: 'kit.fontawesome.com')
 
 begin
   ActiveRecord::Migration.maintain_test_schema!

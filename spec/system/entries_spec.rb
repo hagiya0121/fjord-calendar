@@ -249,7 +249,7 @@ RSpec.describe 'Entries', type: :system do
       it '2周目が始まりカレンダーの各日付に登録ボタンが表示される' do
         visit calendar_path(calendar)
         within('#calendar') do
-          expect(all('a', text: '+').size).to eq 25
+          expect(all('a[title="新規作成"]').size).to eq 25
         end
       end
     end
@@ -264,7 +264,7 @@ RSpec.describe 'Entries', type: :system do
       it '3周目が始まりカレンダーの各日付に登録ボタンが表示される' do
         visit calendar_path(calendar)
         within('#calendar') do
-          expect(all('a', text: '+').size).to eq 25
+          expect(all('a[title="新規作成"]').size).to eq 25
         end
       end
     end

@@ -185,12 +185,12 @@ RSpec.describe 'Calendars', type: :system do
 
       it '記事登録ボタンが表示される' do
         visit calendar_path(calendar)
-        expect(page).to have_link('+')
+        expect(page).to have_link(title: '新規作成')
       end
 
       it 'カレンダー編集ボタンが表示される' do
         visit calendar_path(calendar)
-        expect(page).to have_link('編集')
+        expect(page).to have_link(title: '編集')
       end
 
       it '記事リストの記事に編集ボタンが表示される' do
@@ -206,34 +206,34 @@ RSpec.describe 'Calendars', type: :system do
 
       it '記事登録ボタンが表示される' do
         visit calendar_path(calendar)
-        expect(page).to have_link('+')
+        expect(page).to have_link(title: '新規作成')
       end
 
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
-        expect(page).not_to have_link('編集')
+        expect(page).not_to have_link(title: '編集')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
-        within('#entries_list') { expect(page).not_to have_link('編集') }
+        within('#entries_list') { expect(page).not_to have_link(title: '編集') }
       end
     end
 
     context '未ログインユーザーの場合' do
       it '記事登録ボタンが表示されない' do
         visit calendar_path(calendar)
-        expect(page).not_to have_link('+')
+        expect(page).not_to have_link(title: '新規作成')
       end
 
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
-        expect(page).not_to have_link('編集')
+        expect(page).not_to have_link(title: '編集')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
-        within('#entries_list') { expect(page).not_to have_link('編集') }
+        within('#entries_list') { expect(page).not_to have_link(title: '編集') }
       end
     end
   end
