@@ -1,48 +1,63 @@
-<div class="fixed inset-0 bg-gray-500 bg-opacity-25 flex items-center justify-center z-50"
+<div class="fixed inset-0 bg-gray-500/30 flex items-center justify-center z-50"
      data-controller="entry-modal"
      data-action="click->entry-modal#closeOnOutsideClick">
-  <div class="bg-white p-6 max-w-lg">
-    <div class="bg-gray-400 p-2 mb-4">
-      <h1 class="text-xl font-bold">カレンダーに参加する</h1>
+  <div class="bg-light-ochre rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden">
+
+    <div class="bg-dark-ochre px-5 py-4">
+      <h1 class="text-xl font-extrabold tracking-wide">
+        <%= "#{entry.registration_date.day} 日目に登録する" %>
+      </h1>
     </div>
-    <%= form_with model: [calendar, entry] do |form| %>
-      <% if entry.errors.any? %>
-        <div class="text-red-500 mb-4">
-          <ul>
-            <% entry.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
+
+    <div class="p-5">
+      <%= form_with model: [calendar, entry] do |form| %>
+        <% if entry.errors.any? %>
+          <div class="mb-4">
+            <ul>
+              <% entry.errors.full_messages.each do |message| %>
+                <li class="font-semibold text-red-500"><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form.hidden_field :registration_date, value: entry.registration_date %>
+
+        <div class="mb-5">
+          <%= form.label :title, class: 'text-lg font-bold tracking-wide block mb-2 text-dark-ochre' %>
+          <%= form.text_field :title,
+                              class: 'box-style bg-white text-gray-800 w-full h-10 placeholder-gray-400',
+                              placeholder: '投稿予定の内容など', autofocus: true %>
+        </div>
+
+        <div class="mb-5">
+          <%= form.label :url, class: 'text-lg font-bold tracking-wide block mb-2 text-dark-ochre' %>
+          <%= form.text_field :url,
+                              class: 'box-style bg-white text-gray-800 w-full h-10 placeholder-gray-400',
+                              placeholder: 'https://example.com' %>
+        </div>
+
+        <div class="flex justify-between mt-6 font-semibold">
+          <div class="flex gap-2">
+            <%= button_tag 'キャンセル', type: 'button', data: { action: 'entry-modal#close' },
+                                    class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
+
+            <% if entry.id %>
+              <%= link_to '削除', entry_path(entry),
+                          data: {
+                            turbo_method: :delete,
+                            turbo_confirm: '記事を削除しますか？',
+                            action: 'entry-modal#close'
+                          },
+                          class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
             <% end %>
-          </ul>
+          </div>
+
+          <%= form.submit '保存',
+                          class: 'box-style cursor-pointer bg-dark-ochre hover:bg-light-ochre hover:text-dark-ochre' %>
         </div>
       <% end %>
+    </div>
 
-      <div>
-        <%= form.hidden_field :registration_date, value: entry.registration_date %>
-        <div class="bg-gray-400 p-2 mb-4">
-          <%= form.label :title, class: 'text-xl font-semibold block mb-1' %>
-          <%= form.text_field :title, class: 'w-full h-10' %>
-        </div>
-
-        <div class="bg-gray-400 p-2 mb-4">
-          <%= form.label :url, class: 'text-xl font-semibold block mb-1' %>
-          <%= form.text_field :url, class: 'w-full h-10' %>
-        </div>
-
-        <div class="bg-gray-400 flex justify-end gap-2">
-          <%= form.submit '保存', class: 'bg-blue-500 text-white px-4 py-2' %>
-          <%= button_tag 'キャンセル', type: 'button', data: { action: 'entry-modal#close' },
-                                  class: 'bg-blue-500 text-white px-4 py-2' %>
-          <% if entry.id %>
-            <%= link_to '削除', entry_path(entry),
-                        data: {
-                          turbo_method: :delete,
-                          turbo_confirm: '記事を削除しますか？',
-                          action: 'entry-modal#close'
-                        },
-                        class: 'bg-blue-500 text-white px-4 py-2' %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>

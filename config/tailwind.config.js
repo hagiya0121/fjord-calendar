@@ -15,6 +15,7 @@ module.exports = {
       colors: {
         ochre: "#DDA75B",
         "light-ochre": "#FFF8E7",
+        "dark-ochre": "#C88A41",
       },
       keyframes: {
         fadeOut: {
