@@ -45,13 +45,13 @@ RSpec.describe 'Calendars', type: :system do
         click_on 'カレンダーを作成'
         fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
-        click_on '登録する'
+        click_on '保存'
         expect(page).to have_content('カレンダーが作成されました')
       end
 
       it '必須項目が空だとエラーが表示される' do
         visit new_calendar_path
-        click_on '登録する'
+        click_on '保存'
         expect(page).to have_content('タイトルを入力してください')
       end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Calendars', type: :system do
         visit new_calendar_path
         fill_in 'タイトル', with: '同じ年のカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
-        click_on '登録する'
+        click_on '保存'
         expect(page).to have_content('この年度のカレンダーはすでに作成されています')
       end
 
@@ -99,7 +99,7 @@ RSpec.describe 'Calendars', type: :system do
         click_on '編集'
         fill_in 'タイトル', with: '更新したタイトル'
         fill_in '説明', with: '更新した説明'
-        click_on '更新する'
+        click_on '保存'
         expect(page).to have_content('カレンダーを更新しました')
         expect(page).to have_content('更新したタイトル')
         expect(page).to have_content('更新した説明')
@@ -109,7 +109,7 @@ RSpec.describe 'Calendars', type: :system do
         visit calendar_path(calendar)
         click_on '編集'
         fill_in 'タイトル', with: ''
-        click_on '更新する'
+        click_on '保存'
         expect(page).to have_content('タイトルを入力してください')
       end
 
@@ -258,9 +258,13 @@ RSpec.describe 'Calendars', type: :system do
   describe '登録記事情報のエクスポート' do
     let(:calendar) { create(:calendar) }
 
+    before do
+      sign_in create(:user, :admin)
+    end
+
     it '登録記事情報をクリップボードにコピーできる' do
       visit calendar_path(calendar)
-      message = accept_alert { click_on '記事のリンクをコピー' }
+      message = accept_alert { find('button[title="記事のリンクをコピー"]').click }
       expect(message).to have_content('コピーしました！')
     end
   end

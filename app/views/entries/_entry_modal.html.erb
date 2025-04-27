@@ -12,13 +12,7 @@
     <div class="p-5">
       <%= form_with model: [calendar, entry] do |form| %>
         <% if entry.errors.any? %>
-          <div class="mb-4">
-            <ul>
-              <% entry.errors.full_messages.each do |message| %>
-                <li class="font-semibold text-red-500"><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
+          <%= render 'shared/error_messages', object: entry %>
         <% end %>
 
         <%= form.hidden_field :registration_date, value: entry.registration_date %>
@@ -37,7 +31,7 @@
                               placeholder: 'https://example.com' %>
         </div>
 
-        <div class="flex justify-between mt-6 font-semibold">
+        <div class="flex justify-between mt-6">
           <div class="flex gap-2">
             <%= button_tag 'キャンセル', type: 'button', data: { action: 'entry-modal#close' },
                                     class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
