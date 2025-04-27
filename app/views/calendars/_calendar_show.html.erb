@@ -13,7 +13,7 @@
                 class: 'absolute right-1',
                 title: '編集',
                 data: { turbo_frame: 'entry_modal' } do %>
-                <i class="fa-solid fa-pen-to-square text-dark-ochre py-2 text-2xl sm:text-lg hover:scale-125"></i>
+                <i class="fa-solid fa-pen-to-square text-dark-ochre py-2 text-2xl sm:text-lg hover-pop"></i>
     <% end %>
 
   <% elsif signed_in? && entries.size < calendar.max_entries %>
@@ -26,7 +26,7 @@
                 ),
                 title: '新規作成',
                 data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
-      <i class="fa-solid fa-plus text-dark-ochre py-2 hover:scale-125"></i>
+      <i class="fa-solid fa-plus text-dark-ochre py-2 hover-pop"></i>
     <% end %>
   <% end %>
 

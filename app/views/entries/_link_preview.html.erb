@@ -1,15 +1,17 @@
-<% if entry.url.present? %>
-  <%= link_to entry.url,
-              class: 'block border rounded-lg shadow-sm hover:shadow-lg flex items-center p-4 space-x-4',
-              data: { copy_entries_target: 'url' } do %>
-    <div class="flex-1">
-      <div class="font-semibold text-gray-900">
-        <%= entry.meta_title %>
-      </div>
-      <p class="text-gray-600 text-sm mt-1">
-        <%= truncate(entry.meta_description, length: 60) %>
-      </p>
+<%= link_to entry.url,
+            class: 'block rounded-lg shadow-sm hover:shadow-lg flex items-center p-3',
+            data: { copy_entries_target: 'url' } do %>
+
+  <div class="flex-1">
+    <div class="font-semibold text-gray-900 text-sm sm:text-base">
+      <%= truncate(entry.meta_title, length: 40) %>
     </div>
-    <%= image_tag entry.meta_image_url, class: 'w-32 h-20 object-cover rounded-md' if entry.meta_image_url %>
+    <p class="hidden sm:block text-gray-500 text-sm mt-1">
+      <%= truncate(entry.meta_description, length: 60) %>
+    </p>
+  </div>
+
+  <% if entry.meta_image_url %>
+    <%= image_tag entry.meta_image_url, class: 'w-28 h-15 sm:w-40 sm:h-21 object-cover rounded-md' %>
   <% end %>
 <% end %>

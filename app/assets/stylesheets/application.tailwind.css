@@ -14,4 +14,8 @@
   .box-style {
     @apply px-4 py-2 rounded-md shadow-md border border-ochre;
   }
+
+  .hover-pop {
+    @apply transition hover:scale-125;
+  }
 }
