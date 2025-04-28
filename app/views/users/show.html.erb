@@ -1,22 +1,43 @@
 <% title "#{@user.name}のマイページ" %>
 
-<div class="max-w-3xl mx-auto p-6">
-  <div class="flex items-center space-x-4 mb-6">
-    <%= image_tag @user.avatar_url, class: 'w-16 h-16 rounded-full object-cover' %>
-    <h1 class="text-xl font-semibold"><%= @user.name %></h1>
+<div class="container-wrapper py-10">
+  <div class="bg-light-ochre rounded-2xl shadow-xl overflow-hidden min-h-screen">
+    <section class="flex items-center bg-dark-ochre px-6 py-6 rounded-t-2xl gap-4">
+      <%= image_tag @user.avatar_url, class: 'w-16 h-16 rounded-full object-cover' %>
+      <h1 class="text-xl font-semibold text-white"><%= @user.name %></h1>
+    </section>
+
+    <section class="mt-8 p-6 space-y-6">
+      <h2 class="text-lg font-bold tracking-wide text-dark-ochre">
+        登録した記事一覧
+      </h2>
+
+      <% if @user.entries.empty? %>
+        <div class="bg-white border border-ochre/20 rounded-xl text-dark-ochre min-h-72 flex items-center justify-center">
+          <p class="text-lg">まだ登録された記事はありません</p>
+        </div>
+      <% end %>
+
+      <% @user.entries.each do |entry| %>
+        <article class="space-y-4 bg-light-ochre border-2 border-ochre/30 p-4 sm:p-6 rounded-2xl shadow-lg">
+          <%= link_to calendar_path(entry.calendar),
+                      class: 'inline-flex items-center gap-2 text-dark-ochre font-semibold hover:underline' do %>
+            <i class="fas fa-calendar text-dark-ochre"></i>
+            <%= entry.calendar.title %>
+          <% end %>
+
+          <h3 class="mt-2 font-semibold text-dark-ochre tracking-wide flex items-center gap-2">
+            <i class="fas fa-bullhorn text-dark-ochre"></i>
+            <%= entry.title %>
+          </h3>
+
+          <% if entry.url.present? %>
+            <div class="bg-white rounded-lg shadow-sm hover:scale-105 transition hover:drop-shadow-xl">
+              <%= render 'entries/link_preview', entry: entry %>
+            </div>
+          <% end %>
+        </article>
+      <% end %>
+    </section>
   </div>
-
-  <h2 class="text-lg font-medium mb-4">登録した記事一覧</h2>
-
-  <% @user.entries.each do |entry| %>
-    <div class="border rounded-xl p-4 mb-4 shadow-sm bg-white space-y-2">
-      <%= link_to entry.calendar.title, calendar_path(entry.calendar), class: 'text-sm text-blue-500 hover:underline' %>
-
-      <div class="text-lg font-semibold text-gray-900">
-        <%= entry.title %>
-      </div>
-
-      <%= render 'entries/link_preview', entry: entry %>
-    </div>
-  <% end %>
 </div>

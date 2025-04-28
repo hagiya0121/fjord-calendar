@@ -1,13 +1,22 @@
 <% title 'トップページ' %>
 
-<section class="py-10 mb-8 px-2">
-  <h1 class="mb-4">
-    <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[300px] md:h-[400px] mx-auto' %>
-  </h1>
-  <p class="drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
-</section>
-
 <div class="container-wrapper">
+  <section class="py-10 mb-8 px-2">
+    <h1 class="mb-4">
+      <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[300px] md:h-[400px] mx-auto' %>
+    </h1>
+    <p class="drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+  </section>
+
+  <% if @calendars.empty? %>
+    <div class="bg-light-ochre/80 rounded-lg min-h-72 flex items-center justify-center px-4">
+      <div class="text-center space-y-3">
+        <i class="fas fa-calendar-times text-4xl text-dark-ochre"></i>
+        <p class="text-lg font-semibold text-dark-ochre">登録されたカレンダーはありません</p>
+      </div>
+    </div>
+  <% end %>
+
   <% @calendars.each do |calendar| %>
     <article class="mb-10">
       <%= link_to calendar_path(calendar),

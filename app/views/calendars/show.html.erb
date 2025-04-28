@@ -9,7 +9,7 @@
         </h1>
       </section>
 
-      <div class="relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
+      <div class="min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
         <% if current_user&.admin? %>
           <div class="flex gap-4 absolute top-4 right-4">
             <%= link_to edit_calendar_path(@calendar),
