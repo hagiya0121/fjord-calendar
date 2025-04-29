@@ -1,7 +1,9 @@
 <header class="h-16 w-full z-40 container-wrapper">
   <div class="h-full flex items-center justify-between">
-    <%= link_to 'Fjord Calendar', root_path,
-                class: 'px-2 py-2 text-lg rounded-lg font-semibold hover:bg-white/10' %>
+    <%= link_to root_path, class: 'flex items-center p-1 text-lg rounded-lg font-semibold hover:bg-white/10' do %>
+      <span>Fjord Calendar</span>
+      <%= image_tag 'icon.svg', alt: 'アイコン', class: 'h-10 w-10' %>
+    <% end %>
 
     <% if signed_in? %>
       <div data-controller="dropdown" class="relative">
