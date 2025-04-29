@@ -9,11 +9,14 @@
     <link rel="icon" href="/assets/images/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" sizes="180x180">
     <link rel="icon" type="image/png" href="/assets/images/android-touch-icon.png" sizes="192x192">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <%= javascript_importmap_tags %>
     <script src="https://kit.fontawesome.com/6ec9e18fac.js" crossorigin="anonymous"></script>
   </head>
 
-  <body class="min-h-screen flex flex-col bg-[url('background.jpg')] text-white">
+  <body class="font-notosans min-h-screen flex flex-col bg-[url('background.jpg')] text-white">
     <%= render 'shared/header' %>
 
     <div id="flash-message" data-turbo-temporary>
