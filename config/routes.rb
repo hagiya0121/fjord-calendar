@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     delete 'users/sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
+
+  get 'up' => 'rails/health#show', as: :rails_health_check
 end
