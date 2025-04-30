@@ -1,28 +1,37 @@
-<div id="entry_<%= entry.id %>" class="mt-2 border border-gray-300 p-4 rounded-lg bg-white shadow-sm">
-  <div class="p-4 flex gap-4 ">
-    <div data-copy-entries-target="day" class="text-gray-700 font-semibold w-6 text-left">
-      <%= entry.registration_date.strftime('%-d') %>
+<article id="entry_<%= entry.id %>" class="mt-5 p-3 sm:p-6 rounded-2xl bg-light-ochre shadow-lg relative">
+  <div class="absolute inset-y-0 left-0 w-16 bg-ochre rounded-l-2xl">
+    <div data-copy-entries-target="day" class="mt-4 sm:mt-6 tracking-wide font-bold text-center sm:text-lg">
+      <%= entry.registration_date.strftime('%-m/%-d') %>
     </div>
+  </div>
 
-    <div class="flex-1 space-y-4">
-      <div class="flex items-center space-x-2">
-        <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full' %>
-        <span data-copy-entries-target="name" class="text-sm font-semibold text-gray-900">
-          <%= link_to entry.user.name, user_path(entry.user), data: { turbo: false } %>
-        </span>
+  <div class="pl-20">
+    <%= link_to user_path(entry.user), data: { turbo: false },
+                                       class: 'w-max flex items-center gap-2 mb-8 hover:scale-105 transition' do %>
+      <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full', alt: 'ユーザーアイコン' %>
+      <span data-copy-entries-target="name" class="text-sm font-bold text-dark-ochre">
+        <%= entry.user.name %>
+      </span>
+    <% end %>
+
+    <h3 data-copy-entries-target="title" class="mb-2 font-semibold text-dark-ochre sm:text-lg tracking-wide">
+      <i class="fas fa-bullhorn text-dark-ochre"></i>
+      <%= entry.title %>
+    </h3>
+
+    <% if entry.url.present? %>
+      <div class="bg-white rounded-lg shadow-sm hover:scale-105 transition hover:drop-shadow-xl">
+        <%= render 'entries/link_preview', entry: entry %>
       </div>
-
-      <div data-copy-entries-target="title" class="font-semibold text-gray-900">
-        <%= entry.title %>
-      </div>
-
-      <%= render 'entries/link_preview', entry: entry %>
-    </div>
-
-    <% if current_user&.admin? %>
-      <%= link_to '編集', edit_entry_path(entry),
-                  class: 'text-blue-500 text-base',
-                  data: { turbo_frame: 'entry_modal' } %>
     <% end %>
   </div>
-</div>
+
+  <% if current_user&.admin? %>
+    <%= link_to edit_entry_path(entry),
+                class: 'absolute top-3 right-3 text-dark-ochre',
+                title: '編集',
+                data: { turbo_frame: 'entry_modal' } do %>
+      <i class="fa-solid fa-pen-to-square text-xl p-2 hover-pop"></i>
+    <% end %>
+  <% end %>
+</article>

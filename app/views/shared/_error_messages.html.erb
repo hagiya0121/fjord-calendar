@@ -1,0 +1,7 @@
+<div class="w-max m-2 p-3 border border-red-500 bg-red-100 rounded-md">
+  <ul>
+    <% object.errors.full_messages.each do |message| %>
+      <li class="text-red-500">• <%= message %></li>
+    <% end %>
+  </ul>
+</div>

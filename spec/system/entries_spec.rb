@@ -249,7 +249,7 @@ RSpec.describe 'Entries', type: :system do
       it '2周目が始まりカレンダーの各日付に登録ボタンが表示される' do
         visit calendar_path(calendar)
         within('#calendar') do
-          expect(all('a', text: '+').size).to eq 25
+          expect(all('a[title="新規作成"]').size).to eq 25
         end
       end
     end
@@ -264,7 +264,7 @@ RSpec.describe 'Entries', type: :system do
       it '3周目が始まりカレンダーの各日付に登録ボタンが表示される' do
         visit calendar_path(calendar)
         within('#calendar') do
-          expect(all('a', text: '+').size).to eq 25
+          expect(all('a[title="新規作成"]').size).to eq 25
         end
       end
     end
@@ -280,13 +280,13 @@ RSpec.describe 'Entries', type: :system do
 
     it 'スクロールするたびに記事が読み込まれ、全件表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_selector('div[id^="entry_"]', count: 25)
+      expect(page).to have_selector('article[id^="entry_"]', count: 25)
 
       page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-      expect(page).to have_selector('div[id^="entry_"]', count: 50)
+      expect(page).to have_selector('article[id^="entry_"]', count: 50)
 
       page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-      expect(page).to have_selector('div[id^="entry_"]', count: 75)
+      expect(page).to have_selector('article[id^="entry_"]', count: 75)
     end
   end
 end

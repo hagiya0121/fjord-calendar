@@ -1,9 +1,5 @@
 <% title 'カレンダーの編集' %>
 
-<div class="px-5 bg-gray-200">
-  <div class="bg-gray-400 p-2 mb-4">
-    <h1 class="text-3xl font-bold">カレンダーを編集</h1>
-  </div>
-
+<%= render 'shared/content_card', title: 'カレンダーの編集' do %>
   <%= render 'form', calendar: @calendar %>
-</div>
+<% end %>

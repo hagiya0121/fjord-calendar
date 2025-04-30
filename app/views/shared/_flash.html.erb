@@ -1,9 +1,17 @@
-<% if flash[:notice] %>
-  <div class="z-50 animate-fade-out absolute top-10 right-5
-              w-fit bg-green-100 border-2 border-green-500 text-green-700 p-2 m-2"><%= flash[:notice] %></div>
-<% end %>
+<div class="container-wrapper w-full fixed top-16 left-1/2 -translate-x-1/2 z-10">
+  <% if flash[:notice] %>
+    <div class="flex justify-end mb-2">
+      <div class="flex items-center gap-3 max-w-xs rounded-lg border border-green-500 bg-green-50 px-4 py-3 text-sm text-green-800 shadow-md animate-fade-out">
+        <span><%= flash[:notice] %></span>
+      </div>
+    </div>
+  <% end %>
 
-<% if flash[:alert] %>
-  <div class="z-50 animate-fade-out fixed top-10 right-5
-              w-fit bg-red-100 border-2 border-red-500 text-red-700 p-2 m-2"><%= flash[:alert] %></div>
-<% end %>
+  <% if flash[:alert] %>
+    <div class="flex justify-end">
+      <div class="flex items-center gap-3 max-w-xs rounded-lg border border-red-500 bg-red-50 px-4 py-3 text-sm text-red-800 shadow-md animate-fade-out">
+        <span><%= flash[:alert] %></span>
+      </div>
+    </div>
+  <% end %>
+</div>

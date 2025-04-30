@@ -6,18 +6,24 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload' %>
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png', sizes: '180x180' %>
+    <%= favicon_link_tag 'android-touch-icon.png', rel: 'icon', type: 'image/png', sizes: '192x192' %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <%= javascript_importmap_tags %>
+    <script src="https://kit.fontawesome.com/6ec9e18fac.js" crossorigin="anonymous"></script>
   </head>
 
-  <body class="max-w-4xl mx-auto min-h-screen flex flex-col">
+  <body class="font-notosans min-h-screen flex flex-col bg-[url('background.jpg')] text-white">
     <%= render 'shared/header' %>
 
     <div id="flash-message" data-turbo-temporary>
       <%= render 'shared/flash' %>
     </div>
 
-    <main class="w-full mt-28 px-1 flex-1">
+    <main class="w-full flex-1">
       <%= yield %>
     </main>
 

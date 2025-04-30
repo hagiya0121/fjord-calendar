@@ -1,31 +1,33 @@
-  <%= form_with model: calendar, local: true do |form| %>
-    <% if calendar.errors.any? %>
-      <div class="text-red-500 mb-4">
-        <ul>
-          <% calendar.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+<%= form_with model: calendar, local: true do |form| %>
+  <% if calendar.errors.any? %>
+    <%= render 'shared/error_messages', object: calendar %>
+  <% end %>
+
+  <div class="space-y-10 p-6">
+    <div>
+      <%= form.label :title, class: 'block mb-3 text-lg font-bold tracking-wide text-dark-ochre' %>
+      <%= form.text_field :title,
+                          class: 'box-style bg-white text-gray-800 w-full h-10' %>
+    </div>
 
     <div>
-      <div class="bg-gray-400 p-2 mb-4">
-        <%= form.label :title, class: 'text-xl font-semibold block mb-1' %>
-        <%= form.text_field :title, class: 'w-full h-10' %>
-      </div>
-
-      <div class="bg-gray-400 p-2 mb-4">
-        <%= form.label :description, class: 'text-xl font-semibold block mb-1' %>
-        <%= form.text_area :description, class: 'w-full h-96' %>
-      </div>
-
-      <div class="bg-gray-400 flex justify-end gap-2">
-        <%= form.submit class: 'bg-blue-500 text-white px-4 py-2' %>
-        <%= link_to 'キャンセル', calendar, class: 'bg-blue-500 text-white px-4 py-2' %>
-        <%= link_to '削除', calendar,
-                    data: { turbo_method: :delete, turbo_confirm: 'カレンダーを削除しますか？' },
-                    class: 'bg-blue-500 text-white px-4 py-2' %>
-      </div>
+      <%= form.label :description, class: 'block mb-3 text-lg font-bold tracking-wide block mb-2 text-dark-ochre' %>
+      <%= form.text_area :description, class: 'min-h-96 box-style bg-white text-gray-800 w-full' %>
     </div>
-  <% end %>
+
+    <div class="flex justify-between">
+      <div class="flex gap-2">
+        <%= link_to 'キャンセル', calendar, class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
+
+        <% if calendar.persisted? %>
+          <%= link_to '削除', calendar,
+                      data: { turbo_method: :delete, turbo_confirm: 'カレンダーを削除しますか？' },
+                      class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
+        <% end %>
+      </div>
+
+      <%= form.submit '保存',
+                      class: 'box-style cursor-pointer bg-dark-ochre hover:bg-light-ochre hover:text-dark-ochre' %>
+    </div>
+  </div>
+<% end %>

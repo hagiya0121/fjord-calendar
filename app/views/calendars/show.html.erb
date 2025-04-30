@@ -1,39 +1,51 @@
 <% title @calendar.title.to_s %>
 
-<div class="px-5 bg-gray-200" data-controller="entry-modal copy-entries">
-  <div class="flex justify-end">
-    <%= link_to '記事のリンクをコピー', '#',
-                class: 'bg-blue-800 text-white px-4 py-2',
-                data: { action: 'copy-entries#copy' } %>
-    <% if user_signed_in? && current_user.admin? %>
-      <%= link_to '編集', edit_calendar_path(@calendar), class: 'bg-blue-500 text-white px-4 py-2' %>
-    <% end %>
-  </div>
+<div class="container-wrapper py-8">
+  <div class="space-y-8" data-controller="entry-modal copy-entries">
+    <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
+      <section class="rounded-xl bg-dark-ochre px-8 py-6">
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-wide drop-shadow-md">
+          <%= @calendar.title %>
+        </h1>
+      </section>
 
-  <div class="bg-gray-400 p-2 mb-4">
-    <h1 class="text-3xl font-bold"><%= @calendar.title %></h1>
-  </div>
+      <div class="min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
+        <% if current_user&.admin? %>
+          <div class="flex gap-4 absolute top-4 right-4">
+            <%= link_to edit_calendar_path(@calendar),
+                        class: 'text-dark-ochre hover-pop p-1',
+                        title: '編集' do %>
+              <i class="fa-solid fa-pen-to-square text-2xl"></i>
+            <% end %>
 
-  <div class="prose bg-white mx-auto max-w-full p-2">
-      <%= markdown_to_html(@calendar.description) %>
-  </div>
+            <%= button_to '#',
+                          class: 'text-dark-ochre hover-pop p-1',
+                          title: '記事のリンクをコピー',
+                          data: { action: 'copy-entries#copy' } do %>
+              <i class="fa-solid fa-copy text-2xl"></i>
+            <% end %>
+          </div>
+        <% end %>
 
-  <div class="bg-gray-400">
+        <%= markdown_to_html(@calendar.description) %>
+      </div>
+    </div>
+
     <%= turbo_frame_tag 'entry_modal' %>
     <div id="calendar">
-      <%= render 'calendar', calendar: @calendar %>
+      <%= render 'calendar_show', calendar: @calendar %>
     </div>
-  </div>
 
-  <div id="entries_list">
-    <%= turbo_frame_tag "entries-page-#{@entries.current_page}" do %>
-      <%= render @entries %>
+    <section id="entries_list">
+      <%= turbo_frame_tag "entries-page-#{@entries.current_page}" do %>
+        <%= render @entries %>
 
-      <%= if @entries.next_page
-            turbo_frame_tag "entries-page-#{@entries.next_page}",
-                            src: calendar_path(page: @entries.next_page),
-                            loading: :lazy
-          end %>
-    <% end %>
+        <% if @entries.next_page %>
+          <%= turbo_frame_tag "entries-page-#{@entries.next_page}",
+                              src: calendar_path(page: @entries.next_page),
+                              loading: :lazy %>
+        <% end %>
+      <% end %>
+    </section>
   </div>
 </div>

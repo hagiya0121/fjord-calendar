@@ -1,0 +1,20 @@
+<div class="grid grid-cols-7 bg-light-ochre rounded-lg shadow-xl">
+  <% (1..25).each do |day| %>
+    <div data-test="day-<%= day %>"
+         class="border-b border-r border-ochre p-1 aspect-[3/4]">
+      <div class="relative h-full">
+        <div class="absolute top-1 left-1 text-xs sm:text-base text-ochre">
+          <%= day %>
+        </div>
+
+        <% if entry = entries.find { |e| e.registration_date.day == day } %>
+          <div class="h-full flex flex-col justify-end items-center sm:py-2">
+            <%= image_tag(entry.user.avatar_url,
+                          class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
+                          alt: 'プロフィール画像') %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
