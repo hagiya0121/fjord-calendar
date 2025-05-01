@@ -5,8 +5,4 @@ module CalendarsHelper
     converted_html = Commonmarker.to_html(text, options: { extension: { header_ids: nil } })
     raw(converted_html) # rubocop:disable Rails/OutputSafety
   end
-
-  def index_action?
-    action_name == 'index'
-  end
 end
