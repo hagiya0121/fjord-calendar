@@ -37,6 +37,7 @@
         <%= image_tag(entry.user.avatar_url,
                       class: class_names(
                         'rounded-full object-cover mx-auto hover-pop',
+                        'ring-4 brightness-110 ring-sky-400' => entry.url.present?,
                         'w-12 h-12' => entries.size == 1,
                         'w-10 h-10' => entries.size == 2,
                         'w-8 h-8' => entries.size >= 3
