@@ -50,7 +50,7 @@ class EntriesController < ApplicationController
   end
 
   def require_owner!
-    return if @entry.user == current_user
+    return if @entry.user == current_user || current_user.role == 'admin'
 
     redirect_to root_path, alert: 'アクセス権限がありません'
   end
