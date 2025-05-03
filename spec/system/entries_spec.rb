@@ -289,4 +289,30 @@ RSpec.describe 'Entries', type: :system do
       expect(page).to have_selector('article[id^="entry_"]', count: 75)
     end
   end
+
+  describe '管理者による他ユーザーの記事管理' do
+    let(:calendar) { create(:calendar) }
+
+    before do
+      sign_in create(:user, :admin)
+      create(:entry, calendar: calendar, user: create(:user))
+    end
+
+    it '管理者は他ユーザーの記事を削除できる' do
+      visit calendar_path(calendar)
+      within('#entries_list') { find('a[title="編集"]').click }
+      accept_confirm { click_on '削除' }
+      expect(page).to have_content('記事を削除しました')
+    end
+
+    it '管理者は他ユーザーの記事を編集できる' do
+      visit calendar_path(calendar)
+      within('#entries_list') { find('a[title="編集"]').click }
+      fill_in 'タイトル', with: '管理者による更新'
+      click_button '保存'
+      expect(page).to have_content('記事を更新しました')
+    end
+
+    # 管理者以外のユーザーは編集ボタンが表示されない
+  end
 end
