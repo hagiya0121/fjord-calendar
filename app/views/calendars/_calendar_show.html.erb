@@ -20,8 +20,8 @@
       <%= link_to new_calendar_entry_path(calendar, registration_date: date),
                   class: class_names(
                     'absolute', {
-                      'text-2xl sm:text-lg right-1' => calendar.entry_on?(date),
-                      'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => !calendar.entry_on?(date)
+                      'text-2xl sm:text-lg right-1' => entries.any?,
+                      'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
                     }
                   ),
                   title: '新規作成',

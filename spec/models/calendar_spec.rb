@@ -3,24 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Calendar, type: :model do
-  describe '#entry_on?' do
-    let(:calendar) { build(:calendar) }
-    let(:date) { Date.new(2025, 12, 1) }
-
-    context 'カレンダーに記事が登録されている場合' do
-      it 'trueを返す' do
-        create(:entry, calendar: calendar, registration_date: date)
-        expect(calendar.entry_on?(date)).to be(true)
-      end
-    end
-
-    context 'カレンダーに記事が登録されていない場合' do
-      it 'falseを返す' do
-        expect(calendar.entry_on?(date)).to be(false)
-      end
-    end
-  end
-
   describe '#max_entries' do
     let(:calendar) { build(:calendar) }
 
