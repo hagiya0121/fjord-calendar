@@ -33,9 +33,7 @@
           </h3>
 
           <% if entry.url.present? %>
-            <div class="bg-white rounded-lg shadow-sm hover:scale-105 transition hover:drop-shadow-xl">
-              <%= render 'entries/link_preview', entry: entry %>
-            </div>
+            <%= render 'entries/link_preview', entry: entry %>
           <% end %>
         </article>
       <% end %>
