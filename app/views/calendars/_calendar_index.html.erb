@@ -1,9 +1,9 @@
 <div class="grid grid-cols-7 bg-light-ochre rounded-lg shadow-xl">
   <% (1..25).each do |day| %>
     <div data-test="day-<%= day %>"
-         class="border-b border-r border-ochre p-1 aspect-[3/4]">
+         class="calendar-border p-1 aspect-[3/4]">
       <div class="relative h-full">
-        <div class="absolute top-1 left-1 text-xs sm:text-base text-ochre">
+        <div class="absolute top-1 left-1 text-xs sm:text-base">
           <%= day %>
         </div>
 

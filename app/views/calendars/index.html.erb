@@ -5,14 +5,14 @@
     <h1 class="mb-4">
       <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[300px] md:h-[400px] mx-auto' %>
     </h1>
-    <p class="drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+    <p class="text-white drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
   </section>
 
   <% if @calendars.empty? %>
     <div class="bg-light-ochre/80 rounded-lg min-h-72 flex items-center justify-center px-4">
       <div class="text-center space-y-3">
-        <i class="fas fa-calendar-times text-4xl text-dark-ochre"></i>
-        <p class="text-lg font-semibold text-dark-ochre">登録されたカレンダーはありません</p>
+        <i class="fas fa-calendar-times text-4xl"></i>
+        <p class="text-lg font-semibold">登録されたカレンダーはありません</p>
       </div>
     </div>
   <% end %>
@@ -22,7 +22,7 @@
       <%= link_to calendar_path(calendar),
                   data: { test: 'calendar', year: calendar.year },
                   class: 'bg-ochre block p-6 rounded-xl shadow-xl space-y-4 hover-border-white' do %>
-        <h2 class="drop-shadow-md text-lg font-bold text-center"><%= calendar.title %></h2>
+        <h2 class="text-white drop-shadow-md text-lg font-bold text-center"><%= calendar.title %></h2>
         <%= render 'calendar_index', entries: calendar.entries %>
       <% end %>
     </article>

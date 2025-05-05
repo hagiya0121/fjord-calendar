@@ -1,7 +1,7 @@
 <%= month_calendar(start_date: calendar.start_date, events: calendar.entries.includes(:user),
                    attribute: :registration_date) do |date, entries| %>
   <div class="relative w-full h-full">
-    <div class="absolute top-1 left-1 text-xl sm:text-base text-dark-ochre">
+    <div class="absolute top-1 left-1 text-xl sm:text-base">
       <%= date.day %>
       <div class="sm:hidden text-base">
         <%= date.strftime('%a') %>
@@ -13,7 +13,7 @@
                   class: 'absolute right-1',
                   title: '編集',
                   data: { turbo_frame: 'entry_modal' } do %>
-        <i class="fa-solid fa-pen-to-square text-dark-ochre py-2 text-2xl sm:text-lg hover-pop"></i>
+        <i class="fa-solid fa-pen-to-square py-2 text-2xl sm:text-lg hover-pop"></i>
       <% end %>
 
     <% elsif signed_in? && entries.size < calendar.max_entries %>
@@ -26,7 +26,7 @@
                   ),
                   title: '新規作成',
                   data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
-        <i class="fa-solid fa-plus text-dark-ochre py-2 hover-pop"></i>
+        <i class="fa-solid fa-plus py-2 hover-pop"></i>
       <% end %>
     <% end %>
 
@@ -48,12 +48,12 @@
           <div class="<%= class_names(
                             'text-xs mt-1 px-2 py-1',
                             {
-                              'text-dark-ochre text-center' => entries.size == 1,
+                              'text-center' => entries.size == 1,
                               'pointer-events-none
                                absolute top-full left-1/2 -translate-x-1/2
                                opacity-0 group-hover:opacity-100
                                bg-ochre/80 rounded-md whitespace-nowrap
-                               group-hover:z-10' => entries.size > 1
+                               group-hover:z-10 text-white' => entries.size > 1
                             }
                           ) %>">
             <%= entry.user.name %>

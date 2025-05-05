@@ -18,4 +18,12 @@
   .hover-pop {
     @apply transition hover:scale-125;
   }
+
+  .calendar-border {
+    @apply border-b border-r border-ochre;
+  }
+
+  .hover-ochre-invert {
+    @apply cursor-pointer hover:bg-light-ochre hover:text-dark-ochre;
+  }
 }
