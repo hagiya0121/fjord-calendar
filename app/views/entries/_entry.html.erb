@@ -1,6 +1,6 @@
 <article id="entry_<%= entry.id %>" class="mt-5 p-3 sm:p-6 rounded-2xl bg-light-ochre shadow-lg relative">
   <div class="absolute inset-y-0 left-0 w-16 bg-ochre rounded-l-2xl">
-    <div data-copy-entries-target="day" class="mt-4 sm:mt-6 tracking-wide font-bold text-center sm:text-lg">
+    <div data-copy-entries-target="day" class="text-white mt-4 sm:mt-6 tracking-wide font-bold text-center sm:text-lg">
       <%= entry.registration_date.strftime('%-m/%-d') %>
     </div>
   </div>
@@ -9,26 +9,24 @@
     <%= link_to user_path(entry.user), data: { turbo: false },
                                        class: 'w-max flex items-center gap-2 mb-8 hover:scale-105 transition' do %>
       <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full', alt: 'ユーザーアイコン' %>
-      <span data-copy-entries-target="name" class="text-sm font-bold text-dark-ochre">
+      <span data-copy-entries-target="name" class="text-sm font-bold">
         <%= entry.user.name %>
       </span>
     <% end %>
 
-    <h3 data-copy-entries-target="title" class="mb-2 font-semibold text-dark-ochre sm:text-lg tracking-wide">
-      <i class="fas fa-bullhorn text-dark-ochre"></i>
+    <h3 data-copy-entries-target="title" class="mb-2 font-semibold sm:text-lg tracking-wide">
+      <i class="fas fa-bullhorn"></i>
       <%= entry.title %>
     </h3>
 
     <% if entry.url.present? %>
-      <div class="bg-white rounded-lg shadow-sm hover:scale-105 transition hover:drop-shadow-xl">
-        <%= render 'entries/link_preview', entry: entry %>
-      </div>
+      <%= render 'entries/link_preview', entry: entry %>
     <% end %>
   </div>
 
   <% if current_user&.admin? %>
     <%= link_to edit_entry_path(entry),
-                class: 'absolute top-3 right-3 text-dark-ochre',
+                class: 'absolute top-3 right-3',
                 title: '編集',
                 data: { turbo_frame: 'entry_modal' } do %>
       <i class="fa-solid fa-pen-to-square text-xl p-2 hover-pop"></i>

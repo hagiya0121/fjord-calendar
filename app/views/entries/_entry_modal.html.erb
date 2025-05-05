@@ -4,12 +4,12 @@
   <div class="bg-light-ochre rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden">
 
     <div class="bg-dark-ochre px-5 py-4">
-      <h1 class="text-xl font-extrabold tracking-wide">
+      <h1 class="text-white text-xl font-bold tracking-wide">
         <%= "#{entry.registration_date.day} 日目に登録する" %>
       </h1>
     </div>
 
-    <div class="p-5">
+    <div class="p-5 ">
       <%= form_with model: [calendar, entry] do |form| %>
         <% if entry.errors.any? %>
           <%= render 'shared/error_messages', object: entry %>
@@ -18,14 +18,14 @@
         <%= form.hidden_field :registration_date, value: entry.registration_date %>
 
         <div class="mb-5">
-          <%= form.label :title, class: 'text-lg font-bold tracking-wide block mb-2 text-dark-ochre' %>
+          <%= form.label :title, class: 'text-lg font-bold tracking-wide block mb-2' %>
           <%= form.text_field :title,
                               class: 'box-style bg-white text-gray-800 w-full h-10 placeholder-gray-400',
                               placeholder: '投稿予定の内容など', autofocus: true %>
         </div>
 
         <div class="mb-5">
-          <%= form.label :url, class: 'text-lg font-bold tracking-wide block mb-2 text-dark-ochre' %>
+          <%= form.label :url, class: 'text-lg font-bold tracking-wide block mb-2' %>
           <%= form.text_field :url,
                               class: 'box-style bg-white text-gray-800 w-full h-10 placeholder-gray-400',
                               placeholder: 'https://example.com' %>
@@ -34,7 +34,7 @@
         <div class="flex justify-between mt-6">
           <div class="flex gap-2">
             <%= button_tag 'キャンセル', type: 'button', data: { action: 'entry-modal#close' },
-                                    class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
+                                    class: 'box-style hover:bg-dark-ochre hover:text-white' %>
 
             <% if entry.id %>
               <%= link_to '削除', entry_path(entry),
@@ -43,12 +43,12 @@
                             turbo_confirm: '記事を削除しますか？',
                             action: 'entry-modal#close'
                           },
-                          class: 'box-style hover:bg-dark-ochre text-dark-ochre hover:text-white' %>
+                          class: 'box-style hover:bg-dark-ochre hover:text-white' %>
             <% end %>
           </div>
 
           <%= form.submit '保存',
-                          class: 'box-style cursor-pointer bg-dark-ochre hover:bg-light-ochre hover:text-dark-ochre' %>
+                          class: 'text-white box-style bg-dark-ochre hover-ochre-invert' %>
         </div>
       <% end %>
     </div>

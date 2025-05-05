@@ -12,11 +12,12 @@ class EntriesController < ApplicationController
   def edit; end
 
   def create
-    @entry = Entry.new(entry_params)
-    @entry.calendar_id = params[:calendar_id]
-    @entry.user = current_user
+    @entry = current_user.entries.new(
+      entry_params.merge(calendar_id: params[:calendar_id])
+    )
 
     if @entry.save
+      @entry.update_meta_info
       flash.now[:notice] = '記事を登録しました'
       render :create, locals: { entry: @entry }
     else
@@ -26,6 +27,7 @@ class EntriesController < ApplicationController
 
   def update
     if @entry.update(entry_params)
+      @entry.update_meta_info
       flash.now[:notice] = '記事を更新しました'
       render :update, locals: { entry: @entry }
     else

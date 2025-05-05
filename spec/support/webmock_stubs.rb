@@ -20,12 +20,10 @@ module WebMockStubs
       </html>
     HTML
 
-    %i[head get].each do |method|
-      stub_request(method, 'http://example.com')
-        .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
-    end
+    stub_request(:get, 'http://example.com')
+      .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
 
-    stub_request(:head, 'http://invalid.example.com').to_raise(HTTP::ConnectionError)
+    stub_request(:get, 'http://invalid.example.com').to_raise(HTTP::ConnectionError)
   end
 
   def stub_ogp_updated_entry
@@ -39,10 +37,8 @@ module WebMockStubs
       </html>
     HTML
 
-    %i[head get].each do |method|
-      stub_request(method, 'http://example.com/updated')
-        .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
-    end
+    stub_request(:get, 'http://example.com/updated')
+      .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
   end
 
   def stub_ogp_without_fallback
@@ -56,10 +52,8 @@ module WebMockStubs
       </html>
     HTML
 
-    %i[head get].each do |method|
-      stub_request(method, 'http://example.com/meta_without')
-        .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
-    end
+    stub_request(:get, 'http://example.com/meta_without')
+      .to_return(status: 200, body: response, headers: { 'Content-Type' => 'text/html' })
   end
 end
 

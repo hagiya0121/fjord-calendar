@@ -98,13 +98,13 @@ RSpec.describe 'Entries', type: :system do
         expect(page).to have_content('記事URLの形式が不正です')
       end
 
-      it 'アクセスできないURLは登録できない' do
+      it '無効なURLを入力するとエラーメッセージが表示される' do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://invalid.example.com'
         click_button '保存'
-        expect(page).to have_content('記事URLにアクセスできません')
+        expect(page).to have_content('無効なURLです')
       end
     end
 

@@ -1,7 +1,7 @@
 <% title "#{@user.name}のマイページ" %>
 <% set_meta_tags description: "#{@user.name}さんが登録した記事の一覧ページです。" %>
 
-<div class="container-wrapper py-10">
+<div class="container-wrapper py-10 text-dark-ochre">
   <div class="bg-light-ochre rounded-2xl shadow-xl overflow-hidden min-h-screen">
     <section class="flex items-center bg-dark-ochre px-6 py-6 rounded-t-2xl gap-4">
       <%= image_tag @user.avatar_url, class: 'w-16 h-16 rounded-full object-cover', alt: 'ユーザーアイコン' %>
@@ -9,12 +9,12 @@
     </section>
 
     <section class="mt-8 p-6 space-y-6">
-      <h2 class="text-lg font-bold tracking-wide text-dark-ochre">
+      <h2 class="text-lg font-bold tracking-wide">
         登録した記事一覧
       </h2>
 
       <% if @user.entries.empty? %>
-        <div class="bg-white border border-ochre/20 rounded-xl text-dark-ochre min-h-72 flex items-center justify-center">
+        <div class="bg-white border border-ochre/20 rounded-xl min-h-72 flex items-center justify-center">
           <p class="text-lg">まだ登録された記事はありません</p>
         </div>
       <% end %>
@@ -23,19 +23,17 @@
         <article class="space-y-4 bg-light-ochre border-2 border-ochre/30 p-4 sm:p-6 rounded-2xl shadow-lg">
           <%= link_to calendar_path(entry.calendar),
                       class: 'inline-flex items-center gap-2 text-dark-ochre font-semibold hover:underline' do %>
-            <i class="fas fa-calendar text-dark-ochre"></i>
+            <i class="fas fa-calendar"></i>
             <%= entry.calendar.title %>
           <% end %>
 
-          <h3 class="mt-2 font-semibold text-dark-ochre tracking-wide flex items-center gap-2">
-            <i class="fas fa-bullhorn text-dark-ochre"></i>
+          <h3 class="mt-2 font-semibold tracking-wide flex items-center gap-2">
+            <i class="fas fa-bullhorn"></i>
             <%= entry.title %>
           </h3>
 
           <% if entry.url.present? %>
-            <div class="bg-white rounded-lg shadow-sm hover:scale-105 transition hover:drop-shadow-xl">
-              <%= render 'entries/link_preview', entry: entry %>
-            </div>
+            <%= render 'entries/link_preview', entry: entry %>
           <% end %>
         </article>
       <% end %>
