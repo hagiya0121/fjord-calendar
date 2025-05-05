@@ -8,58 +8,58 @@
       </div>
     </div>
 
-  <% if entry = entries.find { |e| e.user == current_user } %>
-    <%= link_to edit_entry_path(entry),
-                class: 'absolute right-1',
-                title: '編集',
-                data: { turbo_frame: 'entry_modal' } do %>
-                <i class="fa-solid fa-pen-to-square text-dark-ochre py-2 text-2xl sm:text-lg hover-pop"></i>
-    <% end %>
-
-  <% elsif signed_in? && entries.size < calendar.max_entries %>
-    <%= link_to new_calendar_entry_path(calendar, registration_date: date),
-                class: class_names(
-                  'absolute', {
-                    'text-2xl sm:text-lg right-1' => calendar.entry_on?(date),
-                    'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => !calendar.entry_on?(date)
-                  }
-                ),
-                title: '新規作成',
-                data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
-      <i class="fa-solid fa-plus text-dark-ochre py-2 hover-pop"></i>
-    <% end %>
-  <% end %>
-
-<div class="h-full flex justify-evenly sm:justify-end sm:flex-col items-center p-1">
-  <% entries.sort_by(&:created_at).each do |entry| %>
-    <div class="relative group mt-2">
-      <%= link_to entry.url do %>
-        <%= image_tag(entry.user.avatar_url,
-                      class: class_names(
-                        'rounded-full object-cover mx-auto hover-pop',
-                        'ring-4 brightness-110 ring-sky-400' => entry.url.present?,
-                        'w-12 h-12' => entries.size == 1,
-                        'w-10 h-10' => entries.size == 2,
-                        'w-8 h-8' => entries.size >= 3
-                      ),
-                      alt: 'プロフィール画像') %>
+    <% if entry = entries.find { |e| e.user == current_user } %>
+      <%= link_to edit_entry_path(entry),
+                  class: 'absolute right-1',
+                  title: '編集',
+                  data: { turbo_frame: 'entry_modal' } do %>
+        <i class="fa-solid fa-pen-to-square text-dark-ochre py-2 text-2xl sm:text-lg hover-pop"></i>
       <% end %>
 
-      <div class="<%= class_names(
-                        'text-xs mt-1 px-2 py-1',
-                        {
-                          'text-dark-ochre text-center' => entries.size == 1,
-                          'pointer-events-none
-                           absolute top-full left-1/2 -translate-x-1/2
-                           opacity-0 group-hover:opacity-100
-                           bg-ochre/80 rounded-md whitespace-nowrap
-                           group-hover:z-10' => entries.size > 1
-                        }
-                      ) %>">
-        <%= entry.user.name %>
-      </div>
+    <% elsif signed_in? && entries.size < calendar.max_entries %>
+      <%= link_to new_calendar_entry_path(calendar, registration_date: date),
+                  class: class_names(
+                    'absolute', {
+                      'text-2xl sm:text-lg right-1' => calendar.entry_on?(date),
+                      'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => !calendar.entry_on?(date)
+                    }
+                  ),
+                  title: '新規作成',
+                  data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
+        <i class="fa-solid fa-plus text-dark-ochre py-2 hover-pop"></i>
+      <% end %>
+    <% end %>
+
+    <div class="h-full flex justify-evenly sm:justify-end sm:flex-col items-center p-1">
+      <% entries.sort_by(&:created_at).each do |entry| %>
+        <div class="relative group mt-2">
+          <%= link_to entry.url do %>
+            <%= image_tag(entry.user.avatar_url,
+                          class: class_names(
+                            'rounded-full object-cover mx-auto hover-pop',
+                            'ring-4 brightness-110 ring-sky-400' => entry.url.present?,
+                            'w-12 h-12' => entries.size == 1,
+                            'w-10 h-10' => entries.size == 2,
+                            'w-8 h-8' => entries.size >= 3
+                          ),
+                          alt: 'プロフィール画像') %>
+          <% end %>
+
+          <div class="<%= class_names(
+                            'text-xs mt-1 px-2 py-1',
+                            {
+                              'text-dark-ochre text-center' => entries.size == 1,
+                              'pointer-events-none
+                               absolute top-full left-1/2 -translate-x-1/2
+                               opacity-0 group-hover:opacity-100
+                               bg-ochre/80 rounded-md whitespace-nowrap
+                               group-hover:z-10' => entries.size > 1
+                            }
+                          ) %>">
+            <%= entry.user.name %>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
   </div>
 <% end %>
