@@ -15,7 +15,7 @@ RSpec.describe 'Calendars', type: :system do
       end
     end
 
-    it 'カレンダー一覧が年の新しい順に表示される' do
+    it 'カレンダーが年の新しい順に一覧表示される' do
       visit calendars_path
       years = all('[data-test="calendar"]').map { |e| e['data-year'].to_i }
       expect(years).to eq(years.sort.reverse)
@@ -49,7 +49,15 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).to have_content('カレンダーが作成されました')
       end
 
-      it '必須項目が空だとエラーが表示される' do
+      it 'キャンセルを押すとトップページにリダイレクトされる' do
+        visit root_path
+        within('header') { find('img[src*="avatar1.png"]').click }
+        click_on 'カレンダーを作成'
+        click_on 'キャンセル'
+        expect(page).to have_current_path(calendars_path)
+      end
+
+      it 'タイトルが空だとエラーが表示される' do
         visit new_calendar_path
         click_on '保存'
         expect(page).to have_content('タイトルを入力してください')
@@ -193,6 +201,11 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).to have_link(title: '編集')
       end
 
+      it '記事リンクコピーボタンが表示される' do
+        visit calendar_path(calendar)
+        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
+      end
+
       it '記事リストの記事に編集ボタンが表示される' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).to have_link('編集') }
@@ -214,6 +227,11 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).not_to have_link(title: '編集')
       end
 
+      it '記事リンクコピーボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_selector('button[title="記事のリンクをコピー"]')
+      end
+
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link(title: '編集') }
@@ -229,6 +247,11 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '編集')
+      end
+
+      it '記事リンクコピーボタンが表示されない' do
+        visit calendar_path(calendar)
+        expect(page).not_to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
