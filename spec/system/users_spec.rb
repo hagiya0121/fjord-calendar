@@ -25,7 +25,7 @@ RSpec.describe 'Users', type: :system do
       end
     end
 
-    context 'ログインに失敗した場合' do
+    context 'GitHub認証に失敗した場合' do
       before do
         mock_github_auth_failure
       end
@@ -34,6 +34,18 @@ RSpec.describe 'Users', type: :system do
         visit root_path
         click_on 'ログイン'
         expect(page).to have_content('GitHub認証に失敗しました。')
+      end
+    end
+
+    context 'ユーザー情報の登録に失敗した場合' do
+      before do
+        mock_github_auth_invalid
+      end
+
+      it 'エラーメッセージが表示される' do
+        visit root_path
+        click_on 'ログイン'
+        expect(page).to have_content('ユーザー登録に失敗しました')
       end
     end
 

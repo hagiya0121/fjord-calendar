@@ -11,10 +11,10 @@ module Users
 
       if @user.persisted?
         sign_in @user, event: :authentication
-        set_flash_message(:notice, :success, kind: 'GitHub') if is_navigational_format?
+        set_flash_message(:notice, :success, kind: 'GitHub')
         remember_me(@user)
       else
-        session['devise.github_data'] = request.env['omniauth.auth'].except(:extra)
+        set_flash_message(:notice, :failure, kind: 'GitHub', reason: 'ユーザー登録に失敗しました')
       end
 
       redirect_to after_sign_in_path_for(@user)
