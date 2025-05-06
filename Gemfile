@@ -35,6 +35,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman', require: false
   gem 'bullet'
   gem 'erb_lint', require: false
   gem 'rubocop', require: false
