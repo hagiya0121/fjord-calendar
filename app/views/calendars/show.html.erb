@@ -11,12 +11,13 @@
       </section>
 
       <div class="min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
-        <% if current_user&.admin? %>
           <div class="flex gap-4 absolute top-4 right-4">
-            <%= link_to edit_calendar_path(@calendar),
-                        class: 'hover-pop p-1',
-                        title: '編集' do %>
-              <i class="fa-solid fa-pen-to-square text-2xl text-dark-ochre"></i>
+            <% if current_user&.admin? %>
+                <%= link_to edit_calendar_path(@calendar),
+                            class: 'hover-pop p-1',
+                            title: '編集' do %>
+                  <i class="fa-solid fa-pen-to-square text-2xl text-dark-ochre"></i>
+                <% end %>
             <% end %>
 
             <%= button_to '#',
@@ -26,7 +27,6 @@
               <i class="fa-solid fa-copy text-2xl text-dark-ochre"></i>
             <% end %>
           </div>
-        <% end %>
 
         <%= markdown_to_html(@calendar.description) %>
       </div>

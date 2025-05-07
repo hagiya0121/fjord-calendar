@@ -227,9 +227,9 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).not_to have_link(title: '編集')
       end
 
-      it '記事リンクコピーボタンが表示されない' do
+      it '記事リンクコピーボタンが表示さる' do
         visit calendar_path(calendar)
-        expect(page).not_to have_selector('button[title="記事のリンクをコピー"]')
+        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
@@ -249,9 +249,9 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).not_to have_link(title: '編集')
       end
 
-      it '記事リンクコピーボタンが表示されない' do
+      it '記事リンクコピーボタンが表示される' do
         visit calendar_path(calendar)
-        expect(page).not_to have_selector('button[title="記事のリンクをコピー"]')
+        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
