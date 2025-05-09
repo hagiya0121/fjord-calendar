@@ -70,6 +70,14 @@ if Rails.env.development?
     )
   end
 
+  (2025..2028).each do |year|
+    Calendar.find_or_create_by!(
+      year: year,
+      title: "フィヨルドブートキャンプ Advent Calendar #{year}",
+      description: calendar_description
+    )
+  end
+
   (1..3).each do |i|
     User.find_or_create_by!(
       name: "テストユーザー_#{i}",
@@ -95,29 +103,21 @@ if Rails.env.development?
   user_2 = User.find_by!(provider_uid: 'test-user-2')
   user_3 = User.find_by!(provider_uid: 'test-user-3')
 
+  calendar_2027 = Calendar.find_by!(year: 2027)
+  (1..25).each do |day|
+    find_or_create_entry(user_1, calendar_2027, day)
+  end
+
+  calendar_2026 = Calendar.find_by!(year: 2026)
+  (1..25).each do |day|
+    find_or_create_entry(user_1, calendar_2026, day)
+    find_or_create_entry(user_2, calendar_2026, day)
+  end
+
   calendar_2025 = Calendar.find_by!(year: 2025)
   (1..25).each do |day|
     find_or_create_entry(user_1, calendar_2025, day)
-  end
-
-  calendar_2024 = Calendar.find_by!(year: 2024)
-  (1..25).each do |day|
-    find_or_create_entry(user_1, calendar_2024, day)
-    find_or_create_entry(user_2, calendar_2024, day)
-  end
-
-  calendar_2023 = Calendar.find_by!(year: 2023)
-  (1..25).each do |day|
-    find_or_create_entry(user_1, calendar_2023, day)
-    find_or_create_entry(user_2, calendar_2023, day)
-    find_or_create_entry(user_3, calendar_2023, day)
-  end
-
-  (2016..2022).each do |year|
-    calendar = Calendar.find_by!(year: year)
-    (1..25).each do |day|
-      find_or_create_entry(user_1, calendar, day)
-      find_or_create_entry(user_2, calendar, day)
-    end
+    find_or_create_entry(user_2, calendar_2025, day)
+    find_or_create_entry(user_3, calendar_2025, day)
   end
 end
