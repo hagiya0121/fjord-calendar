@@ -38,5 +38,16 @@ RSpec.describe User, type: :model do
         end.not_to change(described_class, :count)
       end
     end
+
+    context 'auth情報に名前と画像が存在しない場合' do
+      it 'デフォルトの名前と画像がセットされる' do
+        auth.info.name = nil
+        auth.info.image = nil
+
+        user = described_class.from_omniauth(auth)
+        expect(user.name).to eq('Anonymous')
+        expect(user.avatar_url).to eq('/assets/default_avatar.png')
+      end
+    end
   end
 end

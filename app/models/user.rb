@@ -12,8 +12,8 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, provider_uid: auth.uid) do |user|
-      user.name = auth.info.name
-      user.avatar_url = auth.info.image
+      user.name = auth.info.name.presence || 'Anonymous'
+      user.avatar_url = auth.info.image.presence || '/assets/default_avatar.png'
     end
   end
 end
