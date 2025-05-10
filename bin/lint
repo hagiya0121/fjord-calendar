@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "Running RuboCop..."
+bundle exec rubocop -a
+
+echo "Running ERB Lint..."
+bundle exec erb_lint --lint-all -a
+
+echo "Running Prettier..."
+npx prettier --write app/javascript/
+
+echo "Running ESLint..."
+npx eslint --fix app/javascript/
+
+echo "Linting completed!"
