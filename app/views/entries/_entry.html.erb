@@ -10,7 +10,7 @@
                                        class: 'w-max flex items-center gap-2 mb-8 hover:scale-105 transition' do %>
       <%= image_tag entry.user.avatar_url,
                     class: 'w-8 h-8 rounded-full',
-                    onerror: "this.src='#{asset_path('default_avatar.png')}'; this.removeAttribute('onerror');",
+                    data: fallback_image_data,
                     alt: 'ユーザーアイコン' %>
       <span data-copy-entries-target="name" class="text-sm font-bold">
         <%= entry.user.name %>

@@ -6,7 +6,7 @@
     <section class="flex items-center bg-dark-ochre px-6 py-6 rounded-t-2xl gap-4">
       <%= image_tag @user.avatar_url,
                     class: 'w-16 h-16 rounded-full object-cover',
-                    onerror: "this.src='#{asset_path('default_avatar.png')}'; this.removeAttribute('onerror');",
+                    data: fallback_image_data,
                     alt: 'ユーザーアイコン' %>
       <h1 class="text-xl font-semibold text-white"><%= @user.name %></h1>
     </section>
