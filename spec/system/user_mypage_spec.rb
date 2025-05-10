@@ -19,11 +19,11 @@ RSpec.describe 'マイページ', type: :system do
 
       it '自分のマイページにアクセスできる' do
         visit root_path
-        within('header') { find('img[src*="avatar1.png"]').click }
+        within('header') { find('img[src*="test_avatar1"]').click }
         click_on 'マイページ'
         expect(page).to have_current_path(user_path(user))
         expect(page).to have_content('一般ユーザー')
-        expect(page).to have_selector('img[src*="avatar1.png"]')
+        expect(page).to have_selector('img[src*="test_avatar1"]')
       end
     end
 

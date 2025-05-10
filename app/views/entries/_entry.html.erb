@@ -8,7 +8,10 @@
   <div class="pl-20">
     <%= link_to user_path(entry.user), data: { turbo: false },
                                        class: 'w-max flex items-center gap-2 mb-8 hover:scale-105 transition' do %>
-      <%= image_tag entry.user.avatar_url, class: 'w-8 h-8 rounded-full', alt: 'ユーザーアイコン' %>
+      <%= image_tag entry.user.avatar_url,
+                    class: 'w-8 h-8 rounded-full',
+                    onerror: "this.src='#{asset_path('default_avatar.png')}'; this.removeAttribute('onerror');",
+                    alt: 'ユーザーアイコン' %>
       <span data-copy-entries-target="name" class="text-sm font-bold">
         <%= entry.user.name %>
       </span>

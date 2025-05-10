@@ -42,6 +42,7 @@
                             'w-10 h-10' => entries.size == 2,
                             'w-8 h-8' => entries.size >= 3
                           ),
+                          onerror: "this.src='#{asset_path('default_avatar.png')}'; this.removeAttribute('onerror');",
                           alt: 'プロフィール画像') %>
           <% end %>
 
