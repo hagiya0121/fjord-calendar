@@ -41,7 +41,7 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'カレンダーを作成できる' do
         visit root_path
-        within('header') { find('img[src*="avatar1.png"]').click }
+        within('header') { find('img[src*="test_avatar1"]').click }
         click_on 'カレンダーを作成'
         fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
@@ -51,7 +51,7 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'キャンセルを押すとトップページにリダイレクトされる' do
         visit root_path
-        within('header') { find('img[src*="avatar1.png"]').click }
+        within('header') { find('img[src*="test_avatar1"]').click }
         click_on 'カレンダーを作成'
         click_on 'キャンセル'
         expect(page).to have_current_path(calendars_path)
@@ -167,7 +167,7 @@ RSpec.describe 'Calendars', type: :system do
     it 'ユーザーアイコンが記事URLのリンクになっている' do
       visit calendar_path(calendar)
       within('#calendar') do
-        expect(page).to have_selector('a[href="http://example.com"] img[src*="avatar1.png"]')
+        expect(page).to have_selector('a[href="http://example.com"] img[src*="test_avatar1"]')
       end
     end
 

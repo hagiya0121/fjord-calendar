@@ -26,7 +26,7 @@ RSpec.describe 'Entries', type: :system do
         fill_in 'URL', with: 'http://example.com'
         click_button '保存'
         expect(page).to have_content('記事を登録しました')
-        expect(page).to have_selector('img[src*="avatar1.png"]')
+        expect(page).to have_selector('img[src*="test_avatar1"]')
       end
 
       it '記事リストに表示される' do
@@ -36,7 +36,7 @@ RSpec.describe 'Entries', type: :system do
         click_button '保存'
         expect(page).to have_link(text: '一般ユーザー', href: user_path(user))
         expect(page).to have_content('テスト記事')
-        expect(page).to have_selector('img[src*="avatar1.png"]')
+        expect(page).to have_selector('img[src*="test_avatar1"]')
       end
 
       it 'キャンセルボタンを押すと登録モーダルを閉じることができる' do
@@ -205,7 +205,7 @@ RSpec.describe 'Entries', type: :system do
       accept_confirm { click_on '削除' }
       expect(page).to have_content('記事を削除しました')
       within('#calendar') do
-        expect(page).to have_no_selector('img[src*="avatar1.png"]')
+        expect(page).to have_no_selector('img[src*="test_avatar1"]')
       end
     end
 

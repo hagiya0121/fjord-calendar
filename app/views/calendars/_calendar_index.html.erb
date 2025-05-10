@@ -12,7 +12,7 @@
             <%= image_tag(
                   entry.user.avatar_url,
                   class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
-                  onerror: "this.src='#{asset_path('default_avatar.png')}'; this.removeAttribute('onerror');",
+                  data: fallback_image_data,
                   alt: 'プロフィール画像'
                 ) %>
           </div>

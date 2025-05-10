@@ -14,6 +14,14 @@ module ApplicationHelper
     }
   end
 
+  def fallback_image_data(fallback: 'default_avatar.png')
+    {
+      controller: 'fallback-image',
+      fallback_image_target: 'img',
+      fallback_src: asset_path(fallback)
+    }
+  end
+
   private
 
   def og_tags
