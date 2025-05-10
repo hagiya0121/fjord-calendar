@@ -10,10 +10,11 @@
         <% if entry = entries.find { |e| e.registration_date.day == day } %>
           <div class="h-full flex flex-col justify-end items-center sm:py-2">
             <%= image_tag(
-              entry.user.avatar_url,
-              class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
-              data: fallback_image_data,
-              alt: 'プロフィール画像') %>
+                  entry.user.avatar_url,
+                  class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
+                  data: fallback_image_data,
+                  alt: 'プロフィール画像'
+                ) %>
           </div>
         <% end %>
       </div>
