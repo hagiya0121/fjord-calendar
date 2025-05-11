@@ -5,10 +5,16 @@ export default class extends Controller {
 
   connect() {
     this.imgTargets.forEach((img) => {
-      img.onerror = () => {
+      const fallback = () => {
         img.src = img.dataset.fallbackSrc;
         img.onerror = null;
       };
+
+      img.onerror = fallback;
+
+      if (img.complete && img.naturalWidth === 0) {
+        fallback();
+      }
     });
   }
 }
