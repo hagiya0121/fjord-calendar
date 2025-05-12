@@ -1,11 +1,15 @@
 <% title 'トップページ' %>
 
 <div class="container-wrapper">
-  <section class="py-10 mb-8 px-2">
+  <section class="py-10 mb-8 px-2 text-center text-white">
     <h1 class="mb-4">
       <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[300px] md:h-[400px] mx-auto' %>
     </h1>
-    <p class="text-white drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+    <p class="drop-shadow-md text-lg font-bold tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+    <% if current_user&.admin? %>
+      <%= link_to 'カレンダーを作成', new_calendar_path,
+                  class: 'mt-8 inline-block border-2 border-white px-4 py-2 rounded-lg font-semibold hover:bg-white/10' %>
+    <% end %>
   </section>
 
   <% if @calendars.empty? %>

@@ -41,7 +41,6 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'カレンダーを作成できる' do
         visit root_path
-        within('header') { find('img[src*="test_avatar1"]').click }
         click_on 'カレンダーを作成'
         fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
@@ -51,7 +50,6 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'キャンセルを押すとトップページにリダイレクトされる' do
         visit root_path
-        within('header') { find('img[src*="test_avatar1"]').click }
         click_on 'カレンダーを作成'
         click_on 'キャンセル'
         expect(page).to have_current_path(calendars_path)
