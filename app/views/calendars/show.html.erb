@@ -10,7 +10,7 @@
         </h1>
       </section>
 
-      <div class="min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
+      <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
           <div class="flex gap-4 absolute top-4 right-4">
             <% if current_user&.admin? %>
                 <%= link_to edit_calendar_path(@calendar),
@@ -19,16 +19,18 @@
                   <i class="fa-solid fa-pen-to-square text-2xl text-dark-ochre"></i>
                 <% end %>
             <% end %>
-
-            <%= button_to '#',
-                          class: 'hover-pop p-1',
-                          title: '記事のリンクをコピー',
-                          data: { action: 'copy-entries#copy' } do %>
-              <i class="fa-solid fa-copy text-2xl text-dark-ochre"></i>
-            <% end %>
           </div>
 
         <%= markdown_to_html(@calendar.description) %>
+
+        <div class="mt-auto">
+          <%= button_to '#',
+                        class: 'box-style transition hover:scale-105 flex items-center gap-2',
+                        data: { action: 'copy-entries#copy' } do %>
+            <i class="fa-solid fa-copy text-dark-ochre"></i>
+            <span class="text-dark-ochre text-sm">全ての記事のリンクをコピー</span>
+          <% end %>
+        </div>
       </div>
     </div>
 

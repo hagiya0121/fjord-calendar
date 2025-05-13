@@ -197,11 +197,6 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).to have_link(title: '編集')
       end
 
-      it '記事リンクコピーボタンが表示される' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
-      end
-
       it '記事リストの記事に編集ボタンが表示される' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).to have_link('編集') }
@@ -223,11 +218,6 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).not_to have_link(title: '編集')
       end
 
-      it '記事リンクコピーボタンが表示さる' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
-      end
-
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link(title: '編集') }
@@ -243,11 +233,6 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '編集')
-      end
-
-      it '記事リンクコピーボタンが表示される' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
@@ -283,7 +268,7 @@ RSpec.describe 'Calendars', type: :system do
 
     it '登録記事情報をクリップボードにコピーできる' do
       visit calendar_path(calendar)
-      message = accept_alert { find('button[title="記事のリンクをコピー"]').click }
+      message = accept_alert { click_button '全ての記事のリンクをコピー' }
       expect(message).to have_content('コピーしました！')
     end
   end
