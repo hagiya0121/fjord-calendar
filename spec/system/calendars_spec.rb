@@ -74,9 +74,20 @@ RSpec.describe 'Calendars', type: :system do
         visit new_calendar_path
         expect(page).to have_title('カレンダーの新規作成 | Fjord Calendar')
       end
+
+      it '今年のカレンダーがすでに作成されている場合は新規作成ボタンが表示されない' do
+        create(:calendar)
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
     end
 
     context '未ログインユーザーの場合' do
+      it 'カレンダー新規作成ボタンが表示されない' do
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
+
       it 'カレンダー新規作成ページにアクセスできない' do
         visit new_calendar_path
         expect(page).to have_content('ログインもしくはアカウント登録してください。')
@@ -84,6 +95,11 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     context '一般のログインユーザーの場合' do
+      it 'カレンダー新規作成ボタンが表示されない' do
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
+
       it 'カレンダー新規作成ページにアクセスできない' do
         sign_in build(:user)
         visit new_calendar_path
