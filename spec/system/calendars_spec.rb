@@ -42,7 +42,6 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダーを作成できる' do
         visit root_path
         click_on 'カレンダーを作成'
-        fill_in 'タイトル', with: '新しいカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
         click_on '保存'
         expect(page).to have_content('カレンダーが作成されました')
@@ -55,16 +54,9 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).to have_current_path(calendars_path)
       end
 
-      it 'タイトルが空だとエラーが表示される' do
-        visit new_calendar_path
-        click_on '保存'
-        expect(page).to have_content('タイトルを入力してください')
-      end
-
       it '同じ年のカレンダーは作成できない' do
         create(:calendar)
         visit new_calendar_path
-        fill_in 'タイトル', with: '同じ年のカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
         click_on '保存'
         expect(page).to have_content('この年度のカレンダーはすでに作成されています')
@@ -119,20 +111,10 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダーを更新できる' do
         visit calendar_path(calendar)
         click_on '編集'
-        fill_in 'タイトル', with: '更新したタイトル'
         fill_in '説明', with: '更新した説明'
         click_on '保存'
         expect(page).to have_content('カレンダーを更新しました')
-        expect(page).to have_content('更新したタイトル')
         expect(page).to have_content('更新した説明')
-      end
-
-      it '必須項目が空だとエラーが表示される' do
-        visit calendar_path(calendar)
-        click_on '編集'
-        fill_in 'タイトル', with: ''
-        click_on '保存'
-        expect(page).to have_content('タイトルを入力してください')
       end
 
       it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
@@ -174,7 +156,7 @@ RSpec.describe 'Calendars', type: :system do
 
     it 'カレンダーのタイトルと説明が表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_content('カレンダーのタイトル')
+      expect(page).to have_content('フィヨルドブートキャンプ Advent Calendar 2025')
       expect(page).to have_content('カレンダーの説明')
     end
 
@@ -197,7 +179,7 @@ RSpec.describe 'Calendars', type: :system do
 
     it 'タイトルタグが正しく表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_title("#{calendar.title} | Fjord Calendar")
+      expect(page).to have_title('フィヨルドブートキャンプ Advent Calendar 2025 | Fjord Calendar')
     end
 
     context '管理者の場合' do

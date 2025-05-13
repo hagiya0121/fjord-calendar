@@ -46,7 +46,7 @@ RSpec.describe 'マイページ', type: :system do
     it '登録カレンダーと登録記事タイトルが表示される' do
       create(:entry, calendar: calendar, user: user)
       visit user_path(user)
-      expect(page).to have_link('2025年のカレンダーのタイトル', href: calendar_path(calendar))
+      expect(page).to have_link('フィヨルドブートキャンプ Advent Calendar 2025', href: calendar_path(calendar))
       expect(page).to have_content('エントリータイトル')
     end
 

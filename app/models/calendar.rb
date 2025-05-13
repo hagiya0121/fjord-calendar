@@ -6,6 +6,8 @@ class Calendar < ApplicationRecord
 
   has_many :entries, dependent: :destroy
 
+  before_validation :set_title
+
   def max_entries
     (entries.count / 25) + 1
   end
@@ -16,5 +18,11 @@ class Calendar < ApplicationRecord
 
   def to_param
     year.to_s
+  end
+
+  private
+
+  def set_title
+    self.title = "フィヨルドブートキャンプ Advent Calendar #{year}"
   end
 end
