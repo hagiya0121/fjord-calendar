@@ -61,7 +61,7 @@ RSpec.describe 'マイページ', type: :system do
         find('[data-test="2025-12-01"]').click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('記事を登録しました')
 
         visit user_path(user)

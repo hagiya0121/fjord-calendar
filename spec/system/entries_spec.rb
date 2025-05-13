@@ -24,7 +24,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('記事を登録しました')
         expect(page).to have_selector('img[src*="test_avatar1"]')
       end
@@ -33,7 +33,7 @@ RSpec.describe 'Entries', type: :system do
         visit calendar_path(calendar)
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_link(text: '一般ユーザー', href: user_path(user))
         expect(page).to have_content('テスト記事')
         expect(page).to have_selector('img[src*="test_avatar1"]')
@@ -57,7 +57,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('リンクプレビューのタイトル')
         expect(page).to have_content('リンクプレビューの説明')
         expect(page).to have_selector("img[src*='og_image.png']")
@@ -68,7 +68,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://example.com/meta_without'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('フォールバック時のタイトル')
         expect(page).to have_content('フォールバック時の説明')
         expect(page).to have_selector("img[src*='favicon.png']")
@@ -85,7 +85,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: ''
         fill_in 'URL', with: 'http://example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('タイトルを入力してください')
       end
 
@@ -94,7 +94,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'ftp://ftp.example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('記事URLの形式が不正です')
       end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Entries', type: :system do
         find(entry_date).click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://invalid.example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('無効なURLです')
       end
     end
@@ -131,7 +131,7 @@ RSpec.describe 'Entries', type: :system do
         click_on '編集'
         fill_in 'タイトル', with: '更新したタイトル'
         fill_in 'URL', with: 'http://example.com/updated'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('記事を更新しました')
 
         click_on '編集'
@@ -144,7 +144,7 @@ RSpec.describe 'Entries', type: :system do
         click_on '編集'
         fill_in 'タイトル', with: '更新したタイトル'
         fill_in 'URL', with: 'http://example.com/updated'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('一般ユーザー')
         expect(page).to have_content('更新したタイトル')
       end
@@ -154,7 +154,7 @@ RSpec.describe 'Entries', type: :system do
         click_on '編集'
         fill_in 'タイトル', with: '更新したタイトル'
         fill_in 'URL', with: 'http://example.com/updated'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('更新されたリンクプレビューのタイトル')
         expect(page).to have_content('更新されたリンクプレビューの説明')
         expect(page).to have_selector("img[src*='updated_og_image.png']")
@@ -310,7 +310,7 @@ RSpec.describe 'Entries', type: :system do
       visit calendar_path(calendar)
       within('#entries_list') { find('a[title="編集"]').click }
       fill_in 'タイトル', with: '管理者による更新'
-      click_button '保存'
+      click_button '登録する'
       expect(page).to have_content('記事を更新しました')
     end
   end
