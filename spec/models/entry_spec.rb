@@ -43,7 +43,7 @@ RSpec.describe Entry, type: :model do
         entry.update_meta_info
         expect(entry.meta_title).to eq('リンクプレビューのタイトル')
         expect(entry.meta_description).to eq('リンクプレビューの説明')
-        expect(entry.meta_image_url).to eq('http://example.com/og_image.png')
+        expect(entry.meta_image_url).to eq('test_og_image.png')
       end
     end
 

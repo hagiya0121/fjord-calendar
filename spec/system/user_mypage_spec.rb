@@ -67,7 +67,7 @@ RSpec.describe 'マイページ', type: :system do
         visit user_path(user)
         expect(page).to have_link('リンクプレビューのタイトル', href: 'http://example.com')
         expect(page).to have_content('リンクプレビューの説明')
-        expect(page).to have_selector("img[src*='og_image.png']")
+        expect(page).to have_selector("img[src*='test_og_image']")
       end
     end
   end

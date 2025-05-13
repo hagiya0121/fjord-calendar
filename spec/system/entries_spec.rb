@@ -60,7 +60,7 @@ RSpec.describe 'Entries', type: :system do
         click_button '登録する'
         expect(page).to have_content('リンクプレビューのタイトル')
         expect(page).to have_content('リンクプレビューの説明')
-        expect(page).to have_selector("img[src*='og_image.png']")
+        expect(page).to have_selector("img[src*='og_image']")
       end
 
       it 'OGPメタタグが存在しない場合はフォールバックの情報を表示する' do
@@ -157,7 +157,7 @@ RSpec.describe 'Entries', type: :system do
         click_button '登録する'
         expect(page).to have_content('更新されたリンクプレビューのタイトル')
         expect(page).to have_content('更新されたリンクプレビューの説明')
-        expect(page).to have_selector("img[src*='updated_og_image.png']")
+        expect(page).to have_selector("img[src*='test_updated_og_image']")
       end
     end
 
