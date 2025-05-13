@@ -13,4 +13,8 @@ class Calendar < ApplicationRecord
   def start_date
     Date.new(year, 12, 1)
   end
+
+  def to_param
+    year.to_s
+  end
 end

@@ -43,4 +43,12 @@ RSpec.describe Calendar, type: :model do
       expect(calendar.start_date).to eq(Date.new(2025, 12, 1))
     end
   end
+
+  describe '#to_param' do
+    let(:calendar) { build(:calendar, year: 2025) }
+
+    it 'カレンダーの年を文字列として返す' do
+      expect(calendar.to_param).to eq('2025')
+    end
+  end
 end
