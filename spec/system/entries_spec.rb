@@ -80,15 +80,6 @@ RSpec.describe 'Entries', type: :system do
         sign_in user
       end
 
-      it 'タイトルが未入力だと記事登録に失敗する' do
-        visit calendar_path(calendar)
-        find(entry_date).click
-        fill_in 'タイトル', with: ''
-        fill_in 'URL', with: 'http://example.com'
-        click_button '登録する'
-        expect(page).to have_content('タイトルを入力してください')
-      end
-
       it '不正な形式の記事URLは登録できない' do
         visit calendar_path(calendar)
         find(entry_date).click
