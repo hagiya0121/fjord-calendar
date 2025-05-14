@@ -4,22 +4,16 @@
 <div class="container-wrapper py-8 rounded-xl">
   <div class="space-y-8" data-controller="entry-modal copy-entries">
     <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
-      <section class="rounded-xl bg-dark-ochre px-8 py-6">
-        <h1 class="text-white text-xl sm:text-2xl font-extrabold tracking-wide drop-shadow-md">
-          <%= @calendar.title %>
-        </h1>
-      </section>
-
-      <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
+      <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl max-w-full">
+        <% if current_user&.admin? %>
           <div class="flex gap-4 absolute top-4 right-4">
-            <% if current_user&.admin? %>
                 <%= link_to edit_calendar_path(@calendar),
                             class: 'hover-pop p-1',
                             title: '編集' do %>
                   <i class="fa-solid fa-pen-to-square text-2xl text-dark-ochre"></i>
                 <% end %>
-            <% end %>
           </div>
+        <% end %>
 
         <%= markdown_to_html(@calendar.description) %>
 

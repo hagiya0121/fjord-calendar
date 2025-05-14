@@ -154,9 +154,8 @@ RSpec.describe 'Calendars', type: :system do
       create(:entry, calendar: calendar, url: 'http://example.com')
     end
 
-    it 'カレンダーのタイトルと説明が表示される' do
+    it 'カレンダーの説明が表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_content('フィヨルドブートキャンプ Advent Calendar 2025')
       expect(page).to have_content('カレンダーの説明')
     end
 
