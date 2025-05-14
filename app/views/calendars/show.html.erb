@@ -34,6 +34,16 @@
       </div>
     </div>
 
+    <% unless signed_in? %>
+      <%= button_to user_github_omniauth_authorize_path,
+                    method: :post,
+                    data: { turbo: false },
+                    class: 'flex items-center mx-auto text-white login-button  gap-2' do %>
+        ログインしてカレンダーに登録しよう
+        <i class="fa-solid fa-pen"></i>
+      <% end %>
+    <% end %>
+
     <%= turbo_frame_tag 'entry_modal' %>
     <div id="calendar">
       <%= render 'calendar_show', calendar: @calendar %>

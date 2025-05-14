@@ -225,6 +225,11 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     context '未ログインユーザーの場合' do
+      it 'ログインを促すボタンが表示される' do
+        visit calendar_path(calendar)
+        expect(page).to have_selector('button', text: 'ログインしてカレンダーに登録しよう')
+      end
+
       it '記事登録ボタンが表示されない' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '新規作成')
