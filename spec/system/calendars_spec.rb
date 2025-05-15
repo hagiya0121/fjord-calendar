@@ -147,11 +147,29 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの詳細' do
+    include ActiveSupport::Testing::TimeHelpers
+
     let(:calendar) { create(:calendar) }
 
     before do
       stub_all_requests
       create(:entry, calendar: calendar, url: 'http://example.com')
+    end
+
+    it '12月24日までは案内メッセージが表示される' do
+      travel_to Date.new(calendar.year, 12, 24) do
+        visit calendar_path(calendar)
+        expect(page).to have_content('🎉 今年のカレンダーが作成されました！')
+        expect(page).to have_content('みんなにカレンダーができたことを知らせましょう')
+      end
+    end
+
+    it '12月25日以降は案内メッセージが表示されない' do
+      travel_to Date.new(calendar.year, 12, 25) do
+        visit calendar_path(calendar)
+        expect(page).not_to have_content('今年のカレンダーが作成されました！')
+        expect(page).not_to have_content('みんなにカレンダーができたことを知らせましょう')
+      end
     end
 
     it 'カレンダーの説明が表示される' do

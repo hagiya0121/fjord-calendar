@@ -2,6 +2,17 @@
 <% set_meta_tags description: "#{@calendar.title}の説明と登録された記事一覧を表示します。" %>
 
 <div class="container-wrapper py-8 rounded-xl">
+  <% if Date.today < Date.new(@calendar.year, 12, 25) %>
+    <div class="bg-light-ochre p-4 rounded-md shadow-md mb-6 gap-3">
+      <p class="font-semibold">
+        🎉 今年のカレンダーが作成されました！
+      </p>
+      <p>
+        みんなにカレンダーができたことを知らせましょう
+      </p>
+    </div>
+  <% end %>
+
   <div class="space-y-8" data-controller="entry-modal copy-entries">
     <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
       <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl max-w-full">
