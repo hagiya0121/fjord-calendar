@@ -41,7 +41,7 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'カレンダーを作成できる' do
         visit root_path
-        click_on 'カレンダーを作成'
+        click_on '今年のカレンダーを作成する'
         fill_in '説明', with: 'カレンダーの説明です'
         click_on '登録する'
         expect(page).to have_content('カレンダーが作成されました')
@@ -49,7 +49,7 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'キャンセルを押すとトップページにリダイレクトされる' do
         visit root_path
-        click_on 'カレンダーを作成'
+        click_on '今年のカレンダーを作成する'
         click_on 'キャンセル'
         expect(page).to have_current_path(calendars_path)
       end
