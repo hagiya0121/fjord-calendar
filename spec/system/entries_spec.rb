@@ -71,7 +71,7 @@ RSpec.describe 'Entries', type: :system do
         click_button '登録する'
         expect(page).to have_content('フォールバック時のタイトル')
         expect(page).to have_content('フォールバック時の説明')
-        expect(page).to have_selector("img[src*='favicon.png']")
+        expect(page).to have_selector("img[src*='test_favicon']")
       end
     end
 

@@ -47,7 +47,7 @@ module WebMockStubs
         <head>
           <meta name="description" content="フォールバック時の説明">
           <title>フォールバック時のタイトル</title>
-          <link rel="icon" href="http://example.com/favicon.png">
+          <link rel="icon" href="test_favicon.png">
         </head>
       </html>
     HTML

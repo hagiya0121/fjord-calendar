@@ -53,7 +53,7 @@ RSpec.describe Entry, type: :model do
         entry.update_meta_info
         expect(entry.meta_title).to eq('フォールバック時のタイトル')
         expect(entry.meta_description).to eq('フォールバック時の説明')
-        expect(entry.meta_image_url).to eq('http://example.com/favicon.png')
+        expect(entry.meta_image_url).to eq('test_favicon.png')
       end
     end
 
