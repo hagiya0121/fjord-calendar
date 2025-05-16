@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  <div class="space-y-8" data-controller="entry-modal copy-entries">
+  <div class="space-y-8" data-controller="entry-modal copy-entries login-modal">
     <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
       <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl max-w-full">
         <% if current_user&.admin? %>
@@ -50,7 +50,9 @@
     <% end %>
 
     <%= turbo_frame_tag 'entry_modal' %>
+
     <div id="calendar">
+      <%= render 'login_modal' %>
       <%= render 'calendar_show', calendar: @calendar %>
     </div>
 

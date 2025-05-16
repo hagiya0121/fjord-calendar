@@ -247,9 +247,10 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).to have_selector('button', text: 'ログインしてカレンダーに登録しよう')
       end
 
-      it '記事登録ボタンが表示されない' do
+      it '記事登録ボタンの代わりにログインモーダルボタンが表示される' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '新規作成')
+        expect(page).to have_button(title: 'ログインが必要です')
       end
 
       it 'カレンダー編集ボタンが表示されない' do

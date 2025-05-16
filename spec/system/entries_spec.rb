@@ -100,6 +100,12 @@ RSpec.describe 'Entries', type: :system do
     end
 
     context '未ログインユーザーの場合' do
+      it '記事登録ボタンを押すとログインを促すモーダルが表示される' do
+        visit calendar_path(calendar)
+        first('button[title="ログインが必要です"]').click
+        expect(page).to have_content('ログインが必要です')
+      end
+
       it '記事登録ページにアクセスできない' do
         visit new_calendar_entry_path(calendar)
         expect(page).to have_content('ログインもしくはアカウント登録してください。')

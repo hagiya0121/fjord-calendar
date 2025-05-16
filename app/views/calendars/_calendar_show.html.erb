@@ -16,17 +16,32 @@
         <i class="fa-solid fa-pen-to-square py-2 text-2xl sm:text-lg hover-pop"></i>
       <% end %>
 
-    <% elsif signed_in? && entries.size < calendar.max_entries %>
-      <%= link_to new_calendar_entry_path(calendar, registration_date: date),
-                  class: class_names(
-                    'absolute', {
-                      'text-2xl sm:text-lg right-1' => entries.any?,
-                      'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
-                    }
-                  ),
-                  title: '新規作成',
-                  data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
-        <i class="fa-solid fa-plus py-2 hover-pop"></i>
+    <% elsif entries.size < calendar.max_entries %>
+      <% if signed_in? %>
+        <%= link_to new_calendar_entry_path(calendar, registration_date: date),
+                    class: class_names(
+                      'absolute', {
+                        'text-2xl sm:text-lg right-1' => entries.any?,
+                        'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
+                      }
+                    ),
+                    title: '新規作成',
+                    data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
+          <i class="fa-solid fa-plus py-2 hover-pop"></i>
+        <% end %>
+      <% else %>
+        <%= button_tag(
+              class: class_names(
+                'absolute', {
+                  'text-2xl sm:text-lg right-1' => entries.any?,
+                  'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
+                }
+              ),
+              title: 'ログインが必要です',
+              data: { action: 'click->login-modal#open' }
+            ) do %>
+          <i class="fa-solid fa-plus py-2 hover-pop"></i>
+        <% end %>
       <% end %>
     <% end %>
 
