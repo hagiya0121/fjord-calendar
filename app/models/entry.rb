@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Entry < ApplicationRecord
-  validates :title, :registration_date, presence: true
+  validates :registration_date, presence: true
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/, message: 'の形式が不正です' },
                   allow_blank: true
 

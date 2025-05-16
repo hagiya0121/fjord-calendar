@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :calendar do
     year { '2025' }
-    title { "#{year}年のカレンダーのタイトル" }
     description { 'カレンダーの説明' }
 
     trait :sequential_years do

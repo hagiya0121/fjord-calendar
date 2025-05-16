@@ -5,12 +5,6 @@
 
   <div class="space-y-10 p-6 text-dark-ochre">
     <div>
-      <%= form.label :title, class: 'block mb-3 text-lg font-bold tracking-wide' %>
-      <%= form.text_field :title,
-                          class: 'box-style bg-white text-gray-800 w-full h-10' %>
-    </div>
-
-    <div>
       <%= form.label :description, class: 'block mb-3 text-lg font-bold tracking-wide block mb-2' %>
       <%= form.text_area :description, class: 'min-h-96 box-style bg-white text-gray-800 w-full' %>
     </div>
@@ -26,7 +20,7 @@
         <% end %>
       </div>
 
-      <%= form.submit '保存',
+      <%= form.submit '登録する',
                       class: 'text-white box-style bg-dark-ochre hover-ochre-invert' %>
     </div>
   </div>

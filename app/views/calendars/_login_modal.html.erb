@@ -1,0 +1,22 @@
+<div class="fixed inset-0 bg-gray-500/30 flex items-center justify-center z-50 hidden"
+     data-action="click->login-modal#close"
+     data-login-modal-target="modal">
+  <div class="bg-light-ochre rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden">
+    <div class="bg-dark-ochre px-5 py-4">
+      <h1 class="text-white text-xl font-bold tracking-wide text-center">
+        ログインが必要です
+      </h1>
+    </div>
+
+    <div class="p-6 flex items-center justify-evenly">
+      <%= button_tag 'キャンセル',
+                     class: 'text-dark-ochre box-style hover:bg-dark-ochre hover:text-white',
+                     data: { action: 'click->login-modal#close' } %>
+
+      <%= button_to 'ログイン', user_github_omniauth_authorize_path,
+                    method: :post,
+                    data: { turbo: false },
+                    class: 'box-style bg-dark-ochre text-white hover-ochre-invert' %>
+    </div>
+  </div>
+</div>

@@ -41,34 +41,24 @@ RSpec.describe 'Calendars', type: :system do
 
       it 'カレンダーを作成できる' do
         visit root_path
-        within('header') { find('img[src*="test_avatar1"]').click }
-        click_on 'カレンダーを作成'
-        fill_in 'タイトル', with: '新しいカレンダー'
+        click_on '今年のカレンダーを作成する'
         fill_in '説明', with: 'カレンダーの説明です'
-        click_on '保存'
+        click_on '登録する'
         expect(page).to have_content('カレンダーが作成されました')
       end
 
       it 'キャンセルを押すとトップページにリダイレクトされる' do
         visit root_path
-        within('header') { find('img[src*="test_avatar1"]').click }
-        click_on 'カレンダーを作成'
+        click_on '今年のカレンダーを作成する'
         click_on 'キャンセル'
         expect(page).to have_current_path(calendars_path)
-      end
-
-      it 'タイトルが空だとエラーが表示される' do
-        visit new_calendar_path
-        click_on '保存'
-        expect(page).to have_content('タイトルを入力してください')
       end
 
       it '同じ年のカレンダーは作成できない' do
         create(:calendar)
         visit new_calendar_path
-        fill_in 'タイトル', with: '同じ年のカレンダー'
         fill_in '説明', with: 'カレンダーの説明です'
-        click_on '保存'
+        click_on '登録する'
         expect(page).to have_content('この年度のカレンダーはすでに作成されています')
       end
 
@@ -76,9 +66,20 @@ RSpec.describe 'Calendars', type: :system do
         visit new_calendar_path
         expect(page).to have_title('カレンダーの新規作成 | Fjord Calendar')
       end
+
+      it '今年のカレンダーがすでに作成されている場合は新規作成ボタンが表示されない' do
+        create(:calendar)
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
     end
 
     context '未ログインユーザーの場合' do
+      it 'カレンダー新規作成ボタンが表示されない' do
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
+
       it 'カレンダー新規作成ページにアクセスできない' do
         visit new_calendar_path
         expect(page).to have_content('ログインもしくはアカウント登録してください。')
@@ -86,6 +87,11 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     context '一般のログインユーザーの場合' do
+      it 'カレンダー新規作成ボタンが表示されない' do
+        visit root_path
+        expect(page).not_to have_link('カレンダーを作成')
+      end
+
       it 'カレンダー新規作成ページにアクセスできない' do
         sign_in build(:user)
         visit new_calendar_path
@@ -105,20 +111,10 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダーを更新できる' do
         visit calendar_path(calendar)
         click_on '編集'
-        fill_in 'タイトル', with: '更新したタイトル'
         fill_in '説明', with: '更新した説明'
-        click_on '保存'
+        click_on '登録する'
         expect(page).to have_content('カレンダーを更新しました')
-        expect(page).to have_content('更新したタイトル')
         expect(page).to have_content('更新した説明')
-      end
-
-      it '必須項目が空だとエラーが表示される' do
-        visit calendar_path(calendar)
-        click_on '編集'
-        fill_in 'タイトル', with: ''
-        click_on '保存'
-        expect(page).to have_content('タイトルを入力してください')
       end
 
       it 'キャンセルを押すとカレンダー詳細ページにリダイレクトされる' do
@@ -151,6 +147,8 @@ RSpec.describe 'Calendars', type: :system do
   end
 
   describe 'カレンダーの詳細' do
+    include ActiveSupport::Testing::TimeHelpers
+
     let(:calendar) { create(:calendar) }
 
     before do
@@ -158,9 +156,24 @@ RSpec.describe 'Calendars', type: :system do
       create(:entry, calendar: calendar, url: 'http://example.com')
     end
 
-    it 'カレンダーのタイトルと説明が表示される' do
+    it '12月24日までは案内メッセージが表示される' do
+      travel_to Date.new(calendar.year, 12, 24) do
+        visit calendar_path(calendar)
+        expect(page).to have_content('🎉 今年のカレンダーが作成されました！')
+        expect(page).to have_content('みんなにカレンダーができたことを知らせましょう')
+      end
+    end
+
+    it '12月25日以降は案内メッセージが表示されない' do
+      travel_to Date.new(calendar.year, 12, 25) do
+        visit calendar_path(calendar)
+        expect(page).not_to have_content('今年のカレンダーが作成されました！')
+        expect(page).not_to have_content('みんなにカレンダーができたことを知らせましょう')
+      end
+    end
+
+    it 'カレンダーの説明が表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_content('カレンダーのタイトル')
       expect(page).to have_content('カレンダーの説明')
     end
 
@@ -183,7 +196,7 @@ RSpec.describe 'Calendars', type: :system do
 
     it 'タイトルタグが正しく表示される' do
       visit calendar_path(calendar)
-      expect(page).to have_title("#{calendar.title} | Fjord Calendar")
+      expect(page).to have_title('フィヨルドブートキャンプ Advent Calendar 2025 | Fjord Calendar')
     end
 
     context '管理者の場合' do
@@ -199,11 +212,6 @@ RSpec.describe 'Calendars', type: :system do
       it 'カレンダー編集ボタンが表示される' do
         visit calendar_path(calendar)
         expect(page).to have_link(title: '編集')
-      end
-
-      it '記事リンクコピーボタンが表示される' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示される' do
@@ -227,11 +235,6 @@ RSpec.describe 'Calendars', type: :system do
         expect(page).not_to have_link(title: '編集')
       end
 
-      it '記事リンクコピーボタンが表示さる' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
-      end
-
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link(title: '編集') }
@@ -239,19 +242,20 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     context '未ログインユーザーの場合' do
-      it '記事登録ボタンが表示されない' do
+      it 'ログインを促すボタンが表示される' do
+        visit calendar_path(calendar)
+        expect(page).to have_selector('button', text: 'ログインしてカレンダーに登録しよう')
+      end
+
+      it '記事登録ボタンの代わりにログインモーダルボタンが表示される' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '新規作成')
+        expect(page).to have_button(title: 'ログインが必要です')
       end
 
       it 'カレンダー編集ボタンが表示されない' do
         visit calendar_path(calendar)
         expect(page).not_to have_link(title: '編集')
-      end
-
-      it '記事リンクコピーボタンが表示される' do
-        visit calendar_path(calendar)
-        expect(page).to have_selector('button[title="記事のリンクをコピー"]')
       end
 
       it '記事リストの記事に編集ボタンが表示されない' do
@@ -287,7 +291,7 @@ RSpec.describe 'Calendars', type: :system do
 
     it '登録記事情報をクリップボードにコピーできる' do
       visit calendar_path(calendar)
-      message = accept_alert { find('button[title="記事のリンクをコピー"]').click }
+      message = accept_alert { click_button '全ての記事のリンクをコピー' }
       expect(message).to have_content('コピーしました！')
     end
   end

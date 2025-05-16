@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'users/show'
   root to: 'calendars#index'
 
-  resources :calendars do
+  resources :calendars, param: :year do
     resources :entries, shallow: true
   end
 

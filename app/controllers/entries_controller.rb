@@ -4,16 +4,17 @@ class EntriesController < ApplicationController
   before_action :set_entry, only: %i[edit update destroy]
   before_action :authenticate_user!
   before_action :require_owner!, only: %i[edit update destroy]
+  before_action :current_calendar, only: %i[new create]
 
   def new
-    @entry = Entry.new(calendar_id: params[:calendar_id], registration_date: params[:registration_date])
+    @entry = Entry.new(calendar: @current_calendar, registration_date: params[:registration_date])
   end
 
   def edit; end
 
   def create
     @entry = current_user.entries.new(
-      entry_params.merge(calendar_id: params[:calendar_id])
+      entry_params.merge(calendar: @current_calendar)
     )
 
     if @entry.save
@@ -55,5 +56,9 @@ class EntriesController < ApplicationController
     return if @entry.user == current_user || current_user.role == 'admin'
 
     redirect_to root_path, alert: 'アクセス権限がありません'
+  end
+
+  def current_calendar
+    @current_calendar = Calendar.find_by(year: params[:calendar_year])
   end
 end

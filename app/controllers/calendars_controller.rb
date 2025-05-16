@@ -48,7 +48,7 @@ end
 private
 
 def set_calendar
-  @calendar = Calendar.find(params[:id])
+  @calendar = Calendar.find_by(year: params[:year])
 end
 
 def calendar_params

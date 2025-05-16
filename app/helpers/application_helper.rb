@@ -14,11 +14,11 @@ module ApplicationHelper
     }
   end
 
-  def fallback_image_data(fallback: 'default_avatar.png')
+  def fallback_image_data(src: 'default_avatar.png')
     {
       controller: 'fallback-image',
       fallback_image_target: 'img',
-      fallback_src: asset_path(fallback)
+      fallback_src: asset_path(src)
     }
   end
 
