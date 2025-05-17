@@ -8,40 +8,34 @@
       </div>
     </div>
 
-    <% if entry = entries.find { |e| e.user == current_user } %>
-      <%= link_to edit_entry_path(entry),
-                  class: 'absolute right-1',
-                  title: '編集',
-                  data: { turbo_frame: 'entry_modal' } do %>
-        <i class="fa-solid fa-pen-to-square py-2 text-2xl sm:text-lg hover-pop"></i>
+    <% case %>
+    <% when current_user.blank? && entries.size < calendar.max_entries %>
+      <%= button_tag class: class_names(
+            'absolute-right-corner text-2xl' => entries.any?,
+            'absolute-center text-4xl' => entries.empty?
+          ),
+                     title: 'ログインが必要です',
+                     data: { action: 'click->login-modal#open' } do %>
+        <i class="fa-solid fa-plus py-1 hover-pop"></i>
       <% end %>
 
-    <% elsif entries.size < calendar.max_entries %>
-      <% if signed_in? %>
-        <%= link_to new_calendar_entry_path(calendar, registration_date: date),
-                    class: class_names(
-                      'absolute', {
-                        'text-2xl sm:text-lg right-1' => entries.any?,
-                        'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
-                      }
-                    ),
-                    title: '新規作成',
-                    data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
-          <i class="fa-solid fa-plus py-2 hover-pop"></i>
-        <% end %>
-      <% else %>
-        <%= button_tag(
-              class: class_names(
-                'absolute', {
-                  'text-2xl sm:text-lg right-1' => entries.any?,
-                  'text-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' => entries.empty?
-                }
-              ),
-              title: 'ログインが必要です',
-              data: { action: 'click->login-modal#open' }
-            ) do %>
-          <i class="fa-solid fa-plus py-2 hover-pop"></i>
-        <% end %>
+    <% when entry = entries.find { |e| e.user == current_user } %>
+      <%= link_to edit_entry_path(entry),
+                  class: 'absolute-right-corner',
+                  title: '編集',
+                  data: { turbo_frame: 'entry_modal' } do %>
+        <i class="fa-solid fa-pen-to-square py-1 text-2xl hover-pop"></i>
+      <% end %>
+
+    <% when entries.size < calendar.max_entries %>
+      <%= link_to new_calendar_entry_path(calendar, registration_date: date),
+                  class: class_names(
+                    'absolute-right-corner text-2xl' => entries.any?,
+                    'absolute-center text-4xl' => entries.empty?
+                  ),
+                  title: '新規作成',
+                  data: { turbo_frame: 'entry_modal', test: date.to_s } do %>
+        <i class="fa-solid fa-plus py-1 hover-pop"></i>
       <% end %>
     <% end %>
 

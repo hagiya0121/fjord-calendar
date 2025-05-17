@@ -30,4 +30,12 @@
   .login-button {
     @apply shadow-md border-2 border-white px-4 py-2 rounded-md font-semibold hover:bg-white/10;
   }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .absolute-right-corner {
+    @apply absolute right-0;
+  }
 }
