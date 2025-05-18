@@ -2,8 +2,8 @@
 <% set_meta_tags description: "#{@calendar.title}の説明と登録された記事一覧を表示します。" %>
 
 <div class="container-wrapper py-8 rounded-xl">
-  <% if Date.today < Date.new(@calendar.year, 12, 25) %>
-    <div class="bg-light-ochre p-4 rounded-md shadow-md mb-6 gap-3">
+  <% if @calendar.open? %>
+    <div class="info-box mb-6">
       <p class="font-semibold">
         🎉 今年のカレンダーが作成されました！
       </p>
@@ -39,14 +39,16 @@
       </div>
     </div>
 
-    <% unless signed_in? %>
+    <% if current_user.blank? %>
       <%= button_to user_github_omniauth_authorize_path,
                     method: :post,
                     data: { turbo: false },
-                    class: 'text-white bg-dark-ochre flex items-center mx-auto login-button  gap-2' do %>
+                    class: 'text-white bg-dark-ochre flex items-center mx-auto login-button gap-2' do %>
         ログインしてカレンダーに登録しよう
         <i class="fa-solid fa-pen"></i>
       <% end %>
+    <% else %>
+      <%= render 'info_box', calendar: @calendar %>
     <% end %>
 
     <%= turbo_frame_tag 'entry_modal' %>

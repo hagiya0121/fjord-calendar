@@ -20,6 +20,10 @@ class Calendar < ApplicationRecord
     year.to_s
   end
 
+  def open?
+    Time.zone.today <= Date.new(year, 12, 25)
+  end
+
   private
 
   def set_title

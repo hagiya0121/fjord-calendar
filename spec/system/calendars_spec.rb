@@ -153,19 +153,18 @@ RSpec.describe 'Calendars', type: :system do
 
     before do
       stub_all_requests
-      create(:entry, calendar: calendar, url: 'http://example.com')
     end
 
-    it '12月24日までは案内メッセージが表示される' do
-      travel_to Date.new(calendar.year, 12, 24) do
+    it '12月25日までは案内メッセージが表示される' do
+      travel_to Date.new(calendar.year, 12, 25) do
         visit calendar_path(calendar)
         expect(page).to have_content('🎉 今年のカレンダーが作成されました！')
         expect(page).to have_content('みんなにカレンダーができたことを知らせましょう')
       end
     end
 
-    it '12月25日以降は案内メッセージが表示されない' do
-      travel_to Date.new(calendar.year, 12, 25) do
+    it '12月26日以降は案内メッセージが表示されない' do
+      travel_to Date.new(calendar.year, 12, 26) do
         visit calendar_path(calendar)
         expect(page).not_to have_content('今年のカレンダーが作成されました！')
         expect(page).not_to have_content('みんなにカレンダーができたことを知らせましょう')
@@ -178,6 +177,7 @@ RSpec.describe 'Calendars', type: :system do
     end
 
     it 'ユーザーアイコンが記事URLのリンクになっている' do
+      create(:entry, calendar: calendar, url: 'http://example.com')
       visit calendar_path(calendar)
       within('#calendar') do
         expect(page).to have_selector('a[href="http://example.com"] img[src*="test_avatar1"]')
@@ -215,6 +215,7 @@ RSpec.describe 'Calendars', type: :system do
       end
 
       it '記事リストの記事に編集ボタンが表示される' do
+        create(:entry, calendar: calendar, url: 'http://example.com')
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).to have_link('編集') }
       end
@@ -238,6 +239,23 @@ RSpec.describe 'Calendars', type: :system do
       it '記事リストの記事に編集ボタンが表示されない' do
         visit calendar_path(calendar)
         within('#entries_list') { expect(page).not_to have_link(title: '編集') }
+      end
+
+      it '12月25日までは案内メッセージが表示される' do
+        travel_to Date.new(calendar.year, 12, 25) do
+          visit calendar_path(calendar)
+          expect(page).to have_content('1周目のカレンダー登録が始まりました！')
+          expect(page).to have_content('＋ボタンを押してカレンダーに登録しよう')
+          expect(page).to have_content('登録人数: 0 / 25')
+        end
+      end
+
+      it '12月26日以降は終了メッセージが表示される' do
+        travel_to Date.new(calendar.year, 12, 26) do
+          visit calendar_path(calendar)
+          expect(page).to have_content('このアドベントカレンダーは終了しました')
+          expect(page).to have_content('ご参加ありがとうございました！')
+        end
       end
     end
 
