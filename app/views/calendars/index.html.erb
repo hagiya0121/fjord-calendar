@@ -1,11 +1,15 @@
 <% title 'トップページ' %>
 
-<div class="container-wrapper">
-  <section class="py-10 mb-8 px-2">
+<div class="container-wrapper" data-controller="anchor-scroll">
+  <section class="py-10 mb-8 px-2 text-center text-white">
     <h1 class="mb-4">
       <%= image_tag 'logo.png', alt: 'ロゴ', class: 'h-[300px] md:h-[400px] mx-auto' %>
     </h1>
-    <p class="text-white drop-shadow-md text-lg font-bold text-center tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+    <p class="drop-shadow-md text-lg font-bold tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
+    <% if current_user&.admin? && !Calendar.exists?(year: Time.current.year) %>
+      <%= link_to '今年のカレンダーを作成する', new_calendar_path,
+                  class: 'login-button bg-[#65B1DF] mt-8 inline-block' %>
+    <% end %>
   </section>
 
   <% if @calendars.empty? %>
@@ -18,13 +22,9 @@
   <% end %>
 
   <% @calendars.each do |calendar| %>
-    <article class="mb-10">
-      <%= link_to calendar_path(calendar),
-                  data: { test: 'calendar', year: calendar.year },
-                  class: 'bg-ochre block p-6 rounded-xl shadow-xl space-y-4 hover-border-white' do %>
-        <h2 class="text-white drop-shadow-md text-lg font-bold text-center"><%= calendar.title %></h2>
-        <%= render 'calendar_index', entries: calendar.entries %>
-      <% end %>
-    </article>
+    <div class="mb-10">
+      <%= render 'calendar_index', calendar: calendar %>
+    </div>
+
   <% end %>
 </div>

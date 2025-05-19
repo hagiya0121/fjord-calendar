@@ -43,4 +43,34 @@ RSpec.describe Calendar, type: :model do
       expect(calendar.start_date).to eq(Date.new(2025, 12, 1))
     end
   end
+
+  describe '#to_param' do
+    let(:calendar) { build(:calendar, year: 2025) }
+
+    it 'カレンダーの年を文字列として返す' do
+      expect(calendar.to_param).to eq('2025')
+    end
+  end
+
+  describe '#open?' do
+    include ActiveSupport::Testing::TimeHelpers
+
+    let(:calendar) { build(:calendar, year: 2025) }
+
+    context '現在の日付が12月25日までのとき' do
+      it 'trueを返す' do
+        travel_to Date.new(2025, 12, 25) do
+          expect(calendar.open?).to be true
+        end
+      end
+    end
+
+    context '現在の日付が12月26日以降のとき' do
+      it 'falseを返す' do
+        travel_to Date.new(2025, 12, 26) do
+          expect(calendar.open?).to be false
+        end
+      end
+    end
+  end
 end

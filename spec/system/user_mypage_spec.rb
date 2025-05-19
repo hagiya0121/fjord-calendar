@@ -46,7 +46,7 @@ RSpec.describe 'マイページ', type: :system do
     it '登録カレンダーと登録記事タイトルが表示される' do
       create(:entry, calendar: calendar, user: user)
       visit user_path(user)
-      expect(page).to have_link('2025年のカレンダーのタイトル', href: calendar_path(calendar))
+      expect(page).to have_link('フィヨルドブートキャンプ Advent Calendar 2025', href: calendar_path(calendar))
       expect(page).to have_content('エントリータイトル')
     end
 
@@ -61,13 +61,13 @@ RSpec.describe 'マイページ', type: :system do
         find('[data-test="2025-12-01"]').click
         fill_in 'タイトル', with: 'テスト記事'
         fill_in 'URL', with: 'http://example.com'
-        click_button '保存'
+        click_button '登録する'
         expect(page).to have_content('記事を登録しました')
 
         visit user_path(user)
         expect(page).to have_link('リンクプレビューのタイトル', href: 'http://example.com')
         expect(page).to have_content('リンクプレビューの説明')
-        expect(page).to have_selector("img[src*='og_image.png']")
+        expect(page).to have_selector("img[src*='test_og_image']")
       end
     end
   end

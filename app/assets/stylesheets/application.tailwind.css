@@ -26,4 +26,20 @@
   .hover-ochre-invert {
     @apply cursor-pointer hover:bg-light-ochre hover:text-dark-ochre;
   }
+
+  .login-button {
+    @apply shadow-md border-2 border-white px-4 py-2 rounded-md font-semibold hover:bg-white/10;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .absolute-right-corner {
+    @apply absolute right-0;
+  }
+
+  .info-box {
+    @apply p-4 rounded-md shadow-md bg-ochre;
+  }
 }

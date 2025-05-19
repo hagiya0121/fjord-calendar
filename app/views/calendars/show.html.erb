@@ -2,38 +2,57 @@
 <% set_meta_tags description: "#{@calendar.title}の説明と登録された記事一覧を表示します。" %>
 
 <div class="container-wrapper py-8 rounded-xl">
-  <div class="space-y-8" data-controller="entry-modal copy-entries">
-    <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
-      <section class="rounded-xl bg-dark-ochre px-8 py-6">
-        <h1 class="text-white text-xl sm:text-2xl font-extrabold tracking-wide drop-shadow-md">
-          <%= @calendar.title %>
-        </h1>
-      </section>
+  <% if @calendar.open? %>
+    <div class="info-box mb-6 text-white">
+      <p class="font-semibold">
+        🎉 今年のカレンダーが作成されました！
+      </p>
+      <p>
+        みんなにカレンダーができたことを知らせましょう
+      </p>
+    </div>
+  <% end %>
 
-      <div class="min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl mt-6 max-w-full">
+  <div class="space-y-8" data-controller="entry-modal copy-entries login-modal">
+      <div class="rounded-xl shadow-xl p-4 flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 max-w-full">
+        <% if current_user&.admin? %>
           <div class="flex gap-4 absolute top-4 right-4">
-            <% if current_user&.admin? %>
                 <%= link_to edit_calendar_path(@calendar),
                             class: 'hover-pop p-1',
                             title: '編集' do %>
                   <i class="fa-solid fa-pen-to-square text-2xl text-dark-ochre"></i>
                 <% end %>
-            <% end %>
-
-            <%= button_to '#',
-                          class: 'hover-pop p-1',
-                          title: '記事のリンクをコピー',
-                          data: { action: 'copy-entries#copy' } do %>
-              <i class="fa-solid fa-copy text-2xl text-dark-ochre"></i>
-            <% end %>
           </div>
+        <% end %>
 
         <%= markdown_to_html(@calendar.description) %>
+
+        <div class="mt-auto">
+          <%= button_to '#',
+                        class: 'box-style transition hover:scale-105 flex items-center gap-2',
+                        data: { action: 'copy-entries#copy' } do %>
+            <i class="fa-solid fa-copy text-dark-ochre"></i>
+            <span class="text-dark-ochre text-sm">全ての記事のリンクをコピー</span>
+          <% end %>
+        </div>
       </div>
-    </div>
+
+    <% if current_user.blank? %>
+      <%= button_to user_github_omniauth_authorize_path,
+                    method: :post,
+                    data: { turbo: false },
+                    class: 'text-white bg-ochre flex items-center mx-auto login-button gap-2' do %>
+        ログインしてカレンダーに登録しよう
+        <i class="fa-solid fa-pen"></i>
+      <% end %>
+    <% else %>
+      <%= render 'info_box', calendar: @calendar %>
+    <% end %>
 
     <%= turbo_frame_tag 'entry_modal' %>
+
     <div id="calendar">
+      <%= render 'login_modal' %>
       <%= render 'calendar_show', calendar: @calendar %>
     </div>
 

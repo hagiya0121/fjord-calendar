@@ -15,6 +15,7 @@
     <% if entry.meta_image_url %>
       <%= image_tag entry.meta_image_url,
                     class: 'ml-2 w-28 aspect-[4/3] sm:w-40 sm:h-21 object-cover rounded-md',
+                    data: fallback_image_data(src: 'failed_load.png'),
                     alt: 'アイキャッチ画像' %>
     <% end %>
   <% end %>

@@ -7,15 +7,17 @@
 
     <% if signed_in? %>
       <div data-controller="dropdown" class="relative">
-        <button data-action="click->dropdown#toggle">
-          <%= image_tag current_user.avatar_url,
-                        class: 'h-10 w-10 rounded-full object-cover hover-border-white',
-                        data: fallback_image_data,
-                        alt: 'プロフィール画像' %>
-        </button>
+        <div class="flex items-center space-x-4">
+          <button data-action="click->dropdown#toggle">
+            <%= image_tag current_user.avatar_url,
+                          class: 'h-10 w-10 rounded-full object-cover hover-border-white',
+                          data: fallback_image_data,
+                          alt: 'プロフィール画像' %>
+          </button>
+        </div>
 
         <ul data-dropdown-target="menu"
-            class="hidden bg-white/10 z-50 text-sm absolute right-0 mt-2 w-36 border border-white/20 rounded shadow p-2 backdrop-blur-sm">
+            class="hidden bg-white/10 z-50 text-sm absolute-right-corner mt-2 w-36 border border-white/20 rounded shadow p-2 backdrop-blur-sm">
           <li>
             <%= link_to 'マイページ', user_path(current_user),
                         class: 'block px-2 py-1 hover:bg-white/20 rounded' %>
@@ -25,19 +27,13 @@
                         data: { turbo_method: :delete },
                         class: 'block px-2 py-1 hover:bg-white/20 rounded' %>
           </li>
-          <% if current_user&.admin? %>
-            <li>
-              <%= link_to 'カレンダーを作成', new_calendar_path,
-                          class: 'block px-2 py-1 hover:bg-white/20 rounded' %>
-            </li>
-          <% end %>
         </ul>
       </div>
     <% else %>
       <%= button_to 'ログイン', user_github_omniauth_authorize_path,
                     method: :post,
                     data: { turbo: false },
-                    class: 'border-2 border-white px-4 py-2 rounded-lg font-semibold hover:bg-white/10' %>
+                    class: 'login-button' %>
     <% end %>
   </div>
 </header>

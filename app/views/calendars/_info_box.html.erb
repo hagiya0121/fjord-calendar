@@ -1,0 +1,25 @@
+<div class="info-box text-white">
+  <div class="mb-2 flex flex-col sm:flex-row sm:justify-between items-start">
+    <% if calendar.open? %>
+      <p class="font-semibold">
+        <%= "#{calendar.max_entries}周目のカレンダー登録が始まりました！" %>
+      </p>
+    <% else %>
+      <p class="font-semibold">
+        このアドベントカレンダーは終了しました
+      </p>
+    <% end %>
+
+    <p class="font-semibold">
+      登録人数: <span><%= calendar.entries.size %></span> / <%= 25 * calendar.max_entries %>
+    </p>
+  </div>
+
+  <% if calendar.open? %>
+    <p>
+      ＋ボタンを押してカレンダーに登録しよう
+    </p>
+  <% else %>
+    <p>ご参加ありがとうございました！</p>
+  <% end %>
+</div>

@@ -7,7 +7,7 @@
 
   <div class="pl-20">
     <%= link_to user_path(entry.user), data: { turbo: false },
-                                       class: 'w-max flex items-center gap-2 mb-8 hover:scale-105 transition' do %>
+                                       class: 'w-max flex items-center gap-2 mb-4 hover:scale-105 transition' do %>
       <%= image_tag entry.user.avatar_url,
                     class: 'w-8 h-8 rounded-full',
                     data: fallback_image_data,

@@ -14,7 +14,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it 'フォールバック画像を指定した場合に正しく反映される' do
-      result = helper.fallback_image_data(fallback: 'test_avatar1.png')
+      result = helper.fallback_image_data(src: 'test_avatar1.png')
       expect(result[:fallback_src]).to eq(helper.asset_path('test_avatar1.png'))
     end
   end

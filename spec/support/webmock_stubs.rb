@@ -15,7 +15,7 @@ module WebMockStubs
         <head>
           <meta property="og:title" content="リンクプレビューのタイトル">
           <meta property="og:description" content="リンクプレビューの説明">
-          <meta property="og:image" content="http://example.com/og_image.png">
+          <meta property="og:image" content="test_og_image.png">
         </head>
       </html>
     HTML
@@ -32,7 +32,7 @@ module WebMockStubs
         <head>
           <meta property="og:title" content="更新されたリンクプレビューのタイトル">
           <meta property="og:description" content="更新されたリンクプレビューの説明">
-          <meta property="og:image" content="http://example/updated_og_image.png">
+          <meta property="og:image" content="test_updated_og_image.png">
         </head>
       </html>
     HTML
@@ -47,7 +47,7 @@ module WebMockStubs
         <head>
           <meta name="description" content="フォールバック時の説明">
           <title>フォールバック時のタイトル</title>
-          <link rel="icon" href="http://example.com/favicon.png">
+          <link rel="icon" href="test_favicon.png">
         </head>
       </html>
     HTML
