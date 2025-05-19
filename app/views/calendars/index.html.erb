@@ -8,7 +8,7 @@
     <p class="drop-shadow-md text-lg font-bold tracking-wider">Fjord Bootcampのアドベントカレンダー</p>
     <% if current_user&.admin? && !Calendar.exists?(year: Time.current.year) %>
       <%= link_to '今年のカレンダーを作成する', new_calendar_path,
-                  class: 'mt-8 inline-block border-2 border-white px-4 py-2 rounded-lg font-semibold hover:bg-white/10' %>
+                  class: 'login-button bg-[#65B1DF] mt-8 inline-block' %>
     <% end %>
   </section>
 

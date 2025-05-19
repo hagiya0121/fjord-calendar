@@ -3,7 +3,7 @@
 
 <div class="container-wrapper py-8 rounded-xl">
   <% if @calendar.open? %>
-    <div class="info-box mb-6">
+    <div class="info-box mb-6 text-white">
       <p class="font-semibold">
         🎉 今年のカレンダーが作成されました！
       </p>
@@ -14,8 +14,7 @@
   <% end %>
 
   <div class="space-y-8" data-controller="entry-modal copy-entries login-modal">
-    <div class="rounded-xl shadow-xl bg-ochre p-4 md:p-6">
-      <div class="flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 p-6 md:p-8 rounded-xl max-w-full">
+      <div class="rounded-xl shadow-xl p-4 flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 max-w-full">
         <% if current_user&.admin? %>
           <div class="flex gap-4 absolute top-4 right-4">
                 <%= link_to edit_calendar_path(@calendar),
@@ -37,13 +36,12 @@
           <% end %>
         </div>
       </div>
-    </div>
 
     <% if current_user.blank? %>
       <%= button_to user_github_omniauth_authorize_path,
                     method: :post,
                     data: { turbo: false },
-                    class: 'text-white bg-dark-ochre flex items-center mx-auto login-button gap-2' do %>
+                    class: 'text-white bg-ochre flex items-center mx-auto login-button gap-2' do %>
         ログインしてカレンダーに登録しよう
         <i class="fa-solid fa-pen"></i>
       <% end %>

@@ -40,6 +40,6 @@
   }
 
   .info-box {
-    @apply p-4 rounded-md shadow-md bg-light-ochre;
+    @apply p-4 rounded-md shadow-md bg-ochre;
   }
 }
