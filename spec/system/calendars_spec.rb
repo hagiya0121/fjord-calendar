@@ -6,25 +6,28 @@ RSpec.describe 'Calendars', type: :system do
   include WebMockStubs
 
   describe 'カレンダーの一覧表示' do
-    let!(:calendars) { create_list(:calendar, 5, :sequential_years) }
-
-    it 'カレンダーが一覧表示される' do
-      visit calendars_path
-      calendars.each do |calendar|
-        expect(page).to have_link(calendar.title)
-      end
-    end
-
     it 'カレンダーが年の新しい順に一覧表示される' do
+      create_list(:calendar, 4, :sequential_years)
       visit calendars_path
-      years = all('[data-test="calendar"]').map { |e| e['data-year'].to_i }
-      expect(years).to eq(years.sort.reverse)
+      calendars = all('[data-test="calendar"]')
+      expect(calendars[0]).to have_selector('h2', text: '2028年')
+      expect(calendars[1]).to have_selector('h2', text: '2027年')
+      expect(calendars[2]).to have_selector('h2', text: '2026年')
+      expect(calendars[3]).to have_selector('h2', text: '2025年')
     end
 
-    it 'カレンダーをクリックするとそのカレンダーの詳細ページに遷移する' do
+    it 'カレンダーに登録されている記事数が表示される' do
+      calendar = create(:calendar)
+      create_list(:entry, 5, :sequential_date, calendar: calendar)
       visit calendars_path
-      click_on calendars.first.title
-      expect(page).to have_current_path(calendar_path(calendars.first))
+      expect(page).to have_content('5 記事')
+    end
+
+    it 'カレンダーに登録しているユーザーのアイコンが表示される' do
+      calendar = create(:calendar)
+      create_list(:entry, 5, :sequential_date, calendar: calendar)
+      visit calendars_path
+      expect(page).to have_selector('img[alt="プロフィール画像"]', count: 5)
     end
 
     it 'タイトルタグが正しく表示される' do

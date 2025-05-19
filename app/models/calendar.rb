@@ -9,7 +9,7 @@ class Calendar < ApplicationRecord
   before_validation :set_title
 
   def max_entries
-    (entries.count / 25) + 1
+    (entries.size / 25) + 1
   end
 
   def start_date

@@ -1,23 +1,46 @@
-<div class="grid grid-cols-7 bg-light-ochre rounded-lg shadow-xl">
-  <% (1..25).each do |day| %>
-    <div data-test="day-<%= day %>"
-         class="calendar-border p-1 aspect-[3/4]">
-      <div class="relative h-full">
-        <div class="absolute top-1 left-1 text-xs sm:text-base">
-          <%= day %>
+<article class="relative hover:scale-105 transition" data-test="calendar">
+  <%= link_to calendar_path(calendar),
+              class: 'absolute inset-0 z-0' do %>
+    <span class="sr-only"><%= calendar.year %>年カレンダー</span>
+  <% end %>
+
+  <div class="relative z-10 pointer-events-none bg-light-ochre rounded-xl shadow-xl overflow-hidden">
+    <header class="bg-dark-ochre px-4 py-3 flex justify-between items-center text-white font-semibold">
+      <h2><%= calendar.year %>年</h2>
+      <div class="bg-white text-dark-ochre font-bold text-sm px-2 py-1 rounded-md">
+        <%= calendar.entries.size %> 記事
+      </div>
+    </header>
+
+    <section class="px-4 py-3 min-h-24 flex items-center">
+      <% if calendar.entries.any? %>
+        <div class="flex items-center gap-2 max-sm:[&>*:nth-child(n+6)]:hidden">
+          <% calendar.entries.first(11).each do |entry| %>
+            <%= link_to calendar_path(calendar, anchor: "entry_#{entry.id}"),
+                        class: 'z-10 relative pointer-events-auto',
+                        data: { test: "entry_#{entry.id}" } do %>
+              <%= image_tag(
+                    entry.user.avatar_url,
+                    class: 'hover-pop rounded-full w-12 h-12 object-cover',
+                    data: fallback_image_data,
+                    alt: 'プロフィール画像'
+                  ) %>
+            <% end %>
+          <% end %>
         </div>
 
-        <% if entry = entries.find { |e| e.registration_date.day == day } %>
-          <div class="h-full flex flex-col justify-end items-center sm:py-2">
-            <%= image_tag(
-                  entry.user.avatar_url,
-                  class: 'rounded-full w-7 h-7 sm:w-12 sm:h-12 object-cover',
-                  data: fallback_image_data,
-                  alt: 'プロフィール画像'
-                ) %>
-          </div>
+        <% if calendar.entries.size > 11 %>
+          <div class="ml-1 mt-9 text-2xl font-bold">…</div>
         <% end %>
-      </div>
-    </div>
-  <% end %>
-</div>
+      <% else %>
+        <p class="text-lg">まだ記事が登録されていません</p>
+      <% end %>
+    </section>
+  </div>
+</article>
+
+<% if calendar.open? %>
+  <p class="text-right text-rose-500 font-semibold mt-2">
+    あと <%= (25 * calendar.max_entries) - calendar.entries.size %> 記事でカレンダーが埋まります。
+  </p>
+<% end %>
