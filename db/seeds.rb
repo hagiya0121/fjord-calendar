@@ -83,7 +83,7 @@ if Rails.env.development?
       name: "テストユーザー_#{i}",
       provider: 'github',
       provider_uid: "test-user-#{i}",
-      avatar_url: "/images/avatar_#{i}.png",
+      avatar_url: "test_avatar#{i}.png",
       role: 0
     )
   end
@@ -95,7 +95,7 @@ if Rails.env.development?
       title: "記事タイトル_#{day}",
       meta_title: 'リンクプレビューのタイトル',
       meta_description: 'リンクプレビューの説明',
-      meta_image_url: '/images/link_preview.png'
+      meta_image_url: 'test_og_image.png'
     )
   end
 
