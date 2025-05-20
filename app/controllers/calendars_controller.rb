@@ -52,7 +52,7 @@ def set_calendar
 end
 
 def calendar_params
-  params.require(:calendar).permit(:title, :description)
+  params.expect(calendar: %i[title description])
 end
 
 def authenticate_admin!

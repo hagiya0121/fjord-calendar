@@ -49,7 +49,7 @@ class EntriesController < ApplicationController
   end
 
   def entry_params
-    params.require(:entry).permit(:title, :url, :registration_date)
+    params.expect(entry: %i[title url registration_date])
   end
 
   def require_owner!
