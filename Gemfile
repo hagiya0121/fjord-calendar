@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.7'
+ruby '3.4.4'
 
 gem 'bootsnap', require: false
 gem 'commonmarker'
