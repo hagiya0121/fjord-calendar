@@ -37,6 +37,7 @@ group :development do
   gem 'bullet'
   gem 'dockerfile-rails'
   gem 'erb_lint', require: false
+  gem 'hanmoto'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
