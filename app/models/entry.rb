@@ -35,6 +35,7 @@ class Entry < ApplicationRecord
     HTTP.headers('User-Agent' => 'Mozilla/5.0').get(url).to_s
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def extract_meta_info(html)
     doc = Nokogiri::HTML(html)
 
@@ -47,4 +48,5 @@ class Entry < ApplicationRecord
         doc.at('link[rel="icon"]')&.attr('href')
     }
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end
