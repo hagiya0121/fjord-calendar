@@ -2,7 +2,6 @@
 
 class EntriesController < ApplicationController
   before_action :set_entry, only: %i[edit update destroy]
-  before_action :authenticate_user!
   before_action :require_owner!, only: %i[edit update destroy]
   before_action :current_calendar, only: %i[new create]
 

@@ -2,7 +2,7 @@
 
 class CalendarsController < ApplicationController
   before_action :set_calendar, only: %i[show edit update destroy]
-  before_action :authenticate_user!, except: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :authenticate_admin!, except: %i[index show]
 
   def index
