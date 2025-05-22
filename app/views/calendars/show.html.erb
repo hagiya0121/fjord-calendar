@@ -2,16 +2,16 @@
 <% set_meta_tags description: "#{@calendar.title}の説明と登録された記事一覧を表示します。" %>
 
 <div class="container-wrapper py-8 rounded-xl">
-  <% if @calendar.open? %>
-    <div class="info-box mb-6 text-white">
-      <p class="font-semibold">
-        🎉 今年のカレンダーが作成されました！
-      </p>
-      <p>
-        みんなにカレンダーができたことを知らせましょう
-      </p>
+<% if @calendar.open? %>
+  <div class="flex justify-start mb-6">
+    <div class="flex items-center gap-3 max-w-sm rounded-lg border border-green-500 bg-green-50 px-4 py-3 text-sm text-green-800 shadow-md">
+      <div>
+        <p class="font-semibold">🎉 今年のカレンダーが作成されました！</p>
+        <p>みんなにカレンダーができたことを知らせましょう</p>
+      </div>
     </div>
-  <% end %>
+  </div>
+<% end %>
 
   <div class="space-y-8" data-controller="entry-modal copy-entries login-modal">
       <div class="rounded-xl shadow-xl p-4 flex flex-col min-h-96 relative prose bg-light-ochre text-gray-700 max-w-full">
