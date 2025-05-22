@@ -10,10 +10,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 
 require 'spec_helper'
 require 'rspec/rails'
-require 'webmock/rspec'
 
 Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
-WebMock.disable_net_connect!(allow_localhost: true, allow: 'kit.fontawesome.com')
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -25,6 +23,4 @@ RSpec.configure do |config|
   config.fixture_paths = [Rails.root.join('spec/fixtures')]
   config.use_transactional_fixtures = true
   config.filter_rails_from_backtrace!
-
-  config.include Devise::Test::IntegrationHelpers, type: :system
 end
