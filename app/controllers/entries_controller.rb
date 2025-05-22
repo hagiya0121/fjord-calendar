@@ -12,27 +12,29 @@ class EntriesController < ApplicationController
   def edit; end
 
   def create
-    @entry = current_user.entries.new(
-      entry_params.merge(calendar: @current_calendar)
-    )
+    @entry = current_user.entries.new(entry_params.merge(calendar: @current_calendar))
 
-    if @entry.save
-      @entry.update_meta_info
-      flash.now[:notice] = '記事を登録しました'
-      render :create, locals: { entry: @entry }
-    else
-      render :new, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      @entry.save!
+      @entry.update_meta_info!
     end
+
+    flash.now[:notice] = '記事を登録しました'
+    render :create, locals: { entry: @entry }
+  rescue ActiveRecord::RecordInvalid
+    render :new, status: :unprocessable_entity
   end
 
   def update
-    if @entry.update(entry_params)
-      @entry.update_meta_info
-      flash.now[:notice] = '記事を更新しました'
-      render :update, locals: { entry: @entry }
-    else
-      render :edit, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      @entry.update!(entry_params)
+      @entry.update_meta_info!
     end
+
+    flash.now[:notice] = '記事を更新しました'
+    render :update, locals: { entry: @entry }
+  rescue ActiveRecord::RecordInvalid
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
