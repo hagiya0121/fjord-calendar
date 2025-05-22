@@ -43,20 +43,20 @@ class CalendarsController < ApplicationController
     @calendar.destroy
     redirect_to calendars_path, notice: 'カレンダーを削除しました'
   end
-end
 
-private
+  private
 
-def set_calendar
-  @calendar = Calendar.find_by(year: params[:year])
-end
+  def set_calendar
+    @calendar = Calendar.find_by(year: params[:year])
+  end
 
-def calendar_params
-  params.expect(calendar: %i[title description])
-end
+  def calendar_params
+    params.expect(calendar: %i[title description])
+  end
 
-def authenticate_admin!
-  return if current_user&.admin?
+  def authenticate_admin!
+    return if current_user&.admin?
 
-  redirect_to root_path, alert: 'アクセス権限がありません'
+    redirect_to root_path, alert: 'アクセス権限がありません'
+  end
 end
