@@ -6,7 +6,7 @@ class User < ApplicationRecord
   enum :role, { user: 0, admin: 1 }
 
   validates :name, :provider_uid, presence: true
-  validates :provider_uid, uniqueness: true
+  validates :provider_uid, uniqueness: { scope: :provider }
 
   has_many :entries, dependent: :destroy
 
