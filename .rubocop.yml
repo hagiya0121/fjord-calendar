@@ -1,6 +1,4 @@
-inherit_from: .rubocop_todo.yml
-
-require:
+plugins:
   - "rubocop-rails"
   - "rubocop-performance"
   - "rubocop-rspec"
@@ -34,15 +32,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ContextWording:
   Enabled: false
-
-Metrics/AbcSize:
-  Max: 25
-
-Metrics/CyclomaticComplexity:
-  Max: 11
-
-Metrics/PerceivedComplexity:
-  Max: 11
 
 Naming/VariableNumber:
   EnforcedStyle: snake_case

@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.7'
+ruby '3.4.4'
 
 gem 'bootsnap', require: false
 gem 'commonmarker'
@@ -10,7 +10,6 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'high_voltage'
 gem 'http'
-gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'kaminari'
@@ -18,15 +17,14 @@ gem 'meta-tags'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
-gem 'pg', '~> 1.1'
-gem 'puma', '>= 5.0'
-gem 'rails', '~> 7.2.0'
+gem 'pg'
+gem 'puma'
+gem 'rails', '~> 8.0.2'
 gem 'rails-i18n'
-gem 'ruby-vips'
 gem 'simple_calendar'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '~> 3.3.2'
 gem 'turbo-rails'
 
 group :development, :test do
@@ -37,6 +35,7 @@ end
 group :development do
   gem 'brakeman', require: false
   gem 'bullet'
+  gem 'dockerfile-rails'
   gem 'erb_lint', require: false
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
@@ -53,7 +52,3 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock'
 end
-
-gem 'dockerfile-rails', '>= 1.7', group: :development
-
-gem 'aws-sdk-s3', '~> 1.183', require: false
