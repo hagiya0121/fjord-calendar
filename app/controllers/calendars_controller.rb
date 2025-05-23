@@ -47,7 +47,7 @@ class CalendarsController < ApplicationController
   private
 
   def set_calendar
-    @calendar = Calendar.find_by(year: params[:year])
+    @calendar = Calendar.find_by!(year: params[:year])
   end
 
   def calendar_params

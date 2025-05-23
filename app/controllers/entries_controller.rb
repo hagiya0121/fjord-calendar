@@ -60,6 +60,6 @@ class EntriesController < ApplicationController
   end
 
   def current_calendar
-    @current_calendar = Calendar.find_by(year: params[:calendar_year])
+    @current_calendar = Calendar.find_by!(year: params[:calendar_year])
   end
 end

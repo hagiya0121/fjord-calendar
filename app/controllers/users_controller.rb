@@ -2,6 +2,6 @@
 
 class UsersController < ApplicationController
   def show
-    @user = User.includes(entries: :calendar).find_by(id: params[:id])
+    @user = User.includes(entries: :calendar).find(params[:id])
   end
 end
