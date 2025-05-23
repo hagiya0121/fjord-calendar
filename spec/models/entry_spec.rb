@@ -40,7 +40,7 @@ RSpec.describe Entry, type: :model do
     context '有効なURLの場合' do
       it 'メタ情報を更新する' do
         entry = create(:entry, url: 'http://example.com')
-        entry.update_meta_info
+        entry.update_meta_info!
         expect(entry.meta_title).to eq('リンクプレビューのタイトル')
         expect(entry.meta_description).to eq('リンクプレビューの説明')
         expect(entry.meta_image_url).to eq('test_og_image.png')
@@ -50,7 +50,7 @@ RSpec.describe Entry, type: :model do
     context 'OGPが設定されていない場合' do
       it 'フォールバックのメタ情報を使用する' do
         entry = create(:entry, url: 'http://example.com/meta_without')
-        entry.update_meta_info
+        entry.update_meta_info!
         expect(entry.meta_title).to eq('フォールバック時のタイトル')
         expect(entry.meta_description).to eq('フォールバック時の説明')
         expect(entry.meta_image_url).to eq('test_favicon.png')
@@ -60,7 +60,7 @@ RSpec.describe Entry, type: :model do
     context '無効なURLの場合' do
       it 'エラーメッセージを設定する' do
         entry = create(:entry, url: 'http://invalid.example.com')
-        entry.update_meta_info
+        entry.update_meta_info!
         expect(entry.meta_title).to eq('無効なURLです')
         expect(entry.meta_description).to be_nil
         expect(entry.meta_image_url).to be_nil

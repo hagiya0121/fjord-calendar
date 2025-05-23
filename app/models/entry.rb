@@ -15,12 +15,12 @@ class Entry < ApplicationRecord
          .last
   end
 
-  def update_meta_info
+  def update_meta_info!
     return if url.blank?
 
     html = fetch_html
     meta_info = extract_meta_info(html)
-    update(meta_info)
+    update!(meta_info)
   rescue HTTP::Error, Addressable::URI::InvalidURIError
     update(
       meta_title: '無効なURLです',

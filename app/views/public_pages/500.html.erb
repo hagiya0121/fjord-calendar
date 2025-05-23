@@ -1,0 +1,10 @@
+<% title '予期しないエラーが発生しました（500 Internal Server Error）' %>
+<% set_meta_tags description: 'サーバーで予期しないエラーが発生しました。' %>
+
+<%= render 'shared/content_card', title: '予期しないエラーが発生しました（500 Internal Server Error）' do %>
+  <div class="px-6 py-8 space-y-4 text-dark-ochre text-lg">
+    <p>申し訳ありません。サーバーでエラーが発生しました。</p>
+    <p>時間をおいて再度お試しください。</p>
+    <p><%= link_to 'トップページに戻る', root_path, class: 'underline' %></p>
+  </div>
+<% end %>

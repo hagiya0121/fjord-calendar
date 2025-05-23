@@ -1,0 +1,10 @@
+<% title 'お探しのページは見つかりませんでした（404 Not Found)' %>
+<% set_meta_tags description: 'お探しのページが見つかりませんでした。' %>
+
+<%= render 'shared/content_card', title: 'お探しのページが見つかりませんでした（404 Not Found)' do %>
+  <div class="px-6 py-8 space-y-4 text-dark-ochre text-lg">
+    <p>お探しのページは見つかりませんでした。</p>
+    <p>アドレスの入力ミス、またはページが移動された可能性があります。</p>
+    <p><%= link_to 'トップページに戻る', root_path, class: 'underline' %></p>
+  </div>
+<% end %>

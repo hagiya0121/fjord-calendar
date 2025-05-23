@@ -1,0 +1,10 @@
+<% title '操作は拒否されました（422 Unprocessable Entity）' %>
+<% set_meta_tags description: 'アクセス権限がない内容を変更しようとした可能性があります。' %>
+
+<%= render 'shared/content_card', title: '操作は拒否されました（422 Unprocessable Entity）' do %>
+  <div class="px-6 py-8 space-y-4 text-dark-ochre text-lg">
+    <p>行おうとした操作は許可されていない可能性があります。</p>
+    <p>アクセス権限が不足しているか、無効なリクエストの可能性があります。</p>
+    <p><%= link_to 'トップページに戻る', root_path, class: 'underline' %></p>
+  </div>
+<% end %>

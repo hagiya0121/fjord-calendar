@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%= display_meta_tags(default_meta_tags) %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="bg-[#63B3E0] font-notosans min-h-screen flex flex-col bg-[url('background.png')] text-dark-ochre">
+    <main class="w-full flex-1">
+      <%= yield %>
+    </main>
+  </body>
+</html>

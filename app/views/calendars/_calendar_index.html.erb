@@ -15,7 +15,7 @@
     <section class="px-4 py-3 min-h-24 flex items-center">
       <% if calendar.entries.any? %>
         <div class="flex items-center gap-2 max-sm:[&>*:nth-child(n+6)]:hidden">
-          <% calendar.entries.first(11).each do |entry| %>
+          <% calendar.entries.first(max_calendar_avatars).each do |entry| %>
             <%= link_to calendar_path(calendar, anchor: "entry_#{entry.id}"),
                         class: 'z-10 relative pointer-events-auto',
                         data: { test: "entry_#{entry.id}" } do %>
@@ -29,7 +29,7 @@
           <% end %>
         </div>
 
-        <% if calendar.entries.size > 11 %>
+        <% if calendar.entries.size > max_calendar_avatars %>
           <div class="ml-1 mt-9 text-2xl font-bold">…</div>
         <% end %>
       <% else %>
