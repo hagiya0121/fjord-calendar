@@ -24,6 +24,7 @@ gem 'rails-i18n'
 gem 'simple_calendar'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
+# Tailwind V4は破壊的変更が多いので、V3を使用
 gem 'tailwindcss-rails', '~> 3.3.2'
 gem 'turbo-rails'
 
