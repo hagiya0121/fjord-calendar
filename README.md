@@ -44,8 +44,8 @@ https://fjord-calendar.jp
 
 ## 動作環境
 
-- Ruby 3.3.7
-- Ruby on Rails 7.2.2
+- Ruby 3.4.4
+- Ruby on Rails 8.0.2
 - Hotwire
 <br>
 
