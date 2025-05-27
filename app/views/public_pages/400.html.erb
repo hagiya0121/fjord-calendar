@@ -1,0 +1,10 @@
+<% title 'リクエストに誤りがあります（400 Bad Request）' %>
+<% set_meta_tags description: 'サーバーはリクエストを処理できませんでした。' %>
+
+<%= render 'shared/content_card', title: 'リクエストに誤りがあります（400 Bad Request）' do %>
+  <div class="px-6 py-8 space-y-4 text-dark-ochre text-lg">
+    <p>サーバーはリクエストを処理できませんでした。</p>
+    <p>リクエスト内容に誤りがある可能性があります。もう一度お試しください。</p>
+    <p><%= link_to 'トップページに戻る', root_path, class: 'underline' %></p>
+  </div>
+<% end %>

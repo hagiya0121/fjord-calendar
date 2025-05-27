@@ -1,0 +1,10 @@
+<% title 'ご利用のブラウザはサポートされていません（406 Not Acceptable）' %>
+<% set_meta_tags description: 'ご利用のブラウザはサポートされていません。' %>
+
+<%= render 'shared/content_card', title: 'ご利用のブラウザはサポートされていません（406 Not Acceptable）' do %>
+  <div class="px-6 py-8 space-y-4 text-dark-ochre text-lg">
+    <p>このサイトはご利用のブラウザに対応していません。</p>
+    <p>ブラウザをアップグレードして、もう一度アクセスしてください。</p>
+    <p><%= link_to 'トップページに戻る', root_path, class: 'underline' %></p>
+  </div>
+<% end %>
