@@ -38,8 +38,4 @@
   .absolute-right-corner {
     @apply absolute right-0;
   }
-
-  .info-box {
-    @apply p-4 rounded-md shadow-md bg-ochre;
-  }
 }
